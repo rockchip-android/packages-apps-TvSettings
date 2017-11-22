@@ -23,6 +23,13 @@
         android:title="@string/resolution"
         android:entries="@array/resolution_list"
         android:entryValues="@array/resolution_list"/>
+
+    <ListPreference
+        android:key="color"
+        android:title="@string/color"
+        android:entries="@array/color_list"
+        android:entryValues="@array/color_list"/>
+
     <Preference
         android:key="zoom"
         android:title="@string/zoom" />

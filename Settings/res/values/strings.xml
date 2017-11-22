@@ -1516,6 +1516,7 @@
     <string name="rk3399_resolutions">RK3399 resolutions</string>
     <string name="display">Display</string>
     <string name="resolution">Resolution</string>
+    <string name="color">Color</string>
     <string name="display_devices">Display devices</string>
     <string name="zoom">Zoom</string>
     <string name="confirm_dialog_title">Save Confirm</string>

@@ -51,6 +51,7 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
 Preference.OnPreferenceClickListener{
     protected static final String TAG = "DeviceFragment";
     public static final String KEY_RESOLUTION = "resolution";
+    public static final String KEY_COLOR = "color";
     public static final String KEY_ZOOM = "zoom";
     public static final String KEY_ADVANCED_SETTINGS = "advanced_settings";
     public static final String KEY_CEC_ENABLE = "cec_enable";
@@ -59,6 +60,10 @@ Preference.OnPreferenceClickListener{
      * 分辨率设置
      */
     protected ListPreference mResolutionPreference;
+    /**
+     * 屏幕颜色率设置
+     */
+    protected ListPreference mColorPreference;
     /**
      * 缩放设置
      */
@@ -132,6 +137,8 @@ Preference.OnPreferenceClickListener{
         mAdvancedSettingsPreference = findPreference(KEY_ADVANCED_SETTINGS);
         mCecEnablePreference = (SwitchPreference)findPreference(KEY_CEC_ENABLE);
         mResolutionPreference = (ListPreference)findPreference(KEY_RESOLUTION);
+        mColorPreference = (ListPreference)findPreference(KEY_COLOR);
+
         mZoomPreference = findPreference(KEY_ZOOM);
         mTextTitle = (TextView)getActivity().findViewById(android.support.v7.preference.R.id.decor_title);
         if (!mIsUseDisplayd) {
@@ -160,7 +167,7 @@ Preference.OnPreferenceClickListener{
           } catch (IOException e) {
             e.printStackTrace();
           }
-              
+
        }
 
     }
@@ -179,12 +186,15 @@ Preference.OnPreferenceClickListener{
     		return;
         mResolutionPreference.setEntries(mDisplayInfo.getModes());
         mResolutionPreference.setEntryValues(mDisplayInfo.getModes());
+        mColorPreference.setEntries(mDisplayInfo.getColors());
+        mColorPreference.setEntryValues(mDisplayInfo.getColors());
         mTextTitle.setText(mDisplayInfo.getDescription());
     }
 
 
     protected void initEvent(){
         mResolutionPreference.setOnPreferenceChangeListener(this);
+        mColorPreference.setOnPreferenceChangeListener(this);
         mZoomPreference.setOnPreferenceClickListener(this);
         mAdvancedSettingsPreference.setOnPreferenceClickListener(this);
     }
@@ -247,7 +257,11 @@ Preference.OnPreferenceClickListener{
                     showConfirmSetModeDialog();
                 }
             }
-
+        }else if(preference == mColorPreference) {
+            if (!mIsUseDisplayd) {
+                 DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(),mDisplayInfo.getType(),(String)obj);
+            } else {
+                }
         }
         return true;
     }

@@ -14,6 +14,7 @@ class DisplayInfo implements Serializable {
 	private int type;
 	private String description;
 	private String[] modes;
+	private String[] colors;
 	private String[] orginModes;
 
 	public int getDisplayId() {
@@ -44,8 +45,15 @@ class DisplayInfo implements Serializable {
 		return modes;
 	}
 
+	public String[] getColors() {
+		return colors;
+	}
 	public void setModes(String[] modes) {
 		this.modes = modes;
+	}
+
+	public void setColors(String[] colors) {
+		this.colors = colors;
 	}
 
 	public String[] getOrginModes() {

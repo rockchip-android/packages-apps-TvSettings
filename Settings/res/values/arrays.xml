@@ -261,6 +261,13 @@
         <item>1280x720p-60</item>
         <item>720x480p-60</item>
     </string-array>
+    
+    <!-- fly.gao resolution list -->
+    <string-array name="color_list" translatable="false">
+        <item>color1</item>
+        <item>color2</item>
+        <item>color3</item>
+    </string-array>
 
     <!-- fly.gao audio device list -->
      <string-array name="audio_device_list">
