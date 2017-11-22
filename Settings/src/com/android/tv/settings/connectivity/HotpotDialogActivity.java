@@ -50,28 +50,28 @@ import java.nio.charset.Charset;
 public class HotpotDialogActivity extends BaseInputActivity implements View.OnClickListener,
         TextWatcher, AdapterView.OnItemSelectedListener,DataSaverBackend.Listener{
 
-	static final int BUTTON_SUBMIT = DialogInterface.BUTTON_POSITIVE;
+    static final int BUTTON_SUBMIT = DialogInterface.BUTTON_POSITIVE;
     private static final String DATA_SAVER_FOOTER = "disabled_on_data_saver";
 
-//	private final DialogInterface.OnClickListener mListener;
+//  private final DialogInterface.OnClickListener mListener;
 
     public static final int OPEN_INDEX = 0;
     public static final int WPA2_INDEX = 1;
 
-	private String[] mSecurityType;
+    private String[] mSecurityType;
 
     private DataSaverBackend mDataSaverBackend;
     private boolean mDataSaverEnabled;
 
 
     private ConnectivityManager mCm;
-	private OnStartTetheringCallback mStartTetheringCallback;
-	private Handler mHandler = new Handler();
+    private OnStartTetheringCallback mStartTetheringCallback;
+    private Handler mHandler = new Handler();
 
-	private Button my_save_button;
-	private Button my_cancel_button;
-	private Preference mCreateNetwork;
-	private Spinner security;
+    private Button my_save_button;
+    private Button my_cancel_button;
+    private Preference mCreateNetwork;
+    private Spinner security;
 
     private EditText mSsid;
     private int mSecurityTypeIndex = OPEN_INDEX;
@@ -83,55 +83,55 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
     private Context mContext;
 
     private static final String TAG = "WifiApDialog";
-	private static final String WIFI_AP_SSID_AND_SECURITY = "wifi_ap_ssid_and_security";
+    private static final String WIFI_AP_SSID_AND_SECURITY = "wifi_ap_ssid_and_security";
 
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
+    @Override
+    public void init() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public int getContentLayoutRes() {
-		// TODO Auto-generated method stub
-		return R.layout.wifi_ap_dialog_my;
-	}
+    @Override
+    public int getContentLayoutRes() {
+        // TODO Auto-generated method stub
+        return R.layout.wifi_ap_dialog_my;
+    }
 
-	@Override
-	public String getInputTitle() {
-		// TODO Auto-generated method stub
-		return "Hotpot Setup";
-	}
+    @Override
+    public String getInputTitle() {
+        // TODO Auto-generated method stub
+        return "Hotpot Setup";
+    }
 
-	@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		security = (Spinner) findViewById(R.id.security);
+        security = (Spinner) findViewById(R.id.security);
 
-		mDataSaverBackend = new DataSaverBackend(this);
+        mDataSaverBackend = new DataSaverBackend(this);
         mDataSaverEnabled = mDataSaverBackend.isDataSaverEnabled();
 
-		Spinner mSecurity = ((Spinner) findViewById(R.id.security));
+        Spinner mSecurity = ((Spinner) findViewById(R.id.security));
         final Spinner mChannel = (Spinner) findViewById(R.id.choose_channel);
 
-		mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		mWifiConfig = mWifiManager.getWifiApConfiguration();
+        mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        mWifiConfig = mWifiManager.getWifiApConfiguration();
 
 
-		mStartTetheringCallback = new OnStartTetheringCallback(this);
+        mStartTetheringCallback = new OnStartTetheringCallback(this);
 
-		mSsid = (EditText)findViewById(R.id.ssid);
-		mSsid.requestFocus();
+        mSsid = (EditText)findViewById(R.id.ssid);
+        mSsid.requestFocus();
         mPassword = (EditText) findViewById(R.id.password);
-		my_save_button = (Button) findViewById(R.id.OK);
-		my_cancel_button = (Button) findViewById(R.id.NO);
+        my_save_button = (Button) findViewById(R.id.OK);
+        my_cancel_button = (Button) findViewById(R.id.NO);
 
-		my_save_button.setOnClickListener(new myListener());
-		my_cancel_button.setOnClickListener(new myListener());
+        my_save_button.setOnClickListener(new myListener());
+        my_cancel_button.setOnClickListener(new myListener());
 
-		if (mWifiConfig != null) {
+        if (mWifiConfig != null) {
             mSsid.setText(mWifiConfig.SSID);
             if (mWifiConfig.apBand == 0) {
                mBandIndex = 0;
@@ -170,19 +170,19 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
                 }
         );
 
-		mSsid.addTextChangedListener(this);
+        mSsid.addTextChangedListener(this);
         mPassword.addTextChangedListener(this);
         ((CheckBox) findViewById(R.id.show_password)).setOnClickListener(this);
         mSecurity.setOnItemSelectedListener(this);
 
-		mDataSaverBackend.addListener(this);
-		onDataSaverChanged(mDataSaverBackend.isDataSaverEnabled());
+        mDataSaverBackend.addListener(this);
+        onDataSaverChanged(mDataSaverBackend.isDataSaverEnabled());
 
         validate();
 
     }
 
-	@Override
+    @Override
     public void onDataSaverChanged(boolean isDataSaving) {
 
     }
@@ -195,32 +195,32 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
     public void onBlacklistStatusChanged(int uid, boolean isBlacklisted)  {
     }
 
-	class myListener implements OnClickListener{
-		@Override
-		public void onClick(View view) {
-			switch(view.getId()){
-				case R.id.OK:{
-					mWifiConfig = getConfig();
-					if(mWifiConfig != null){
-						if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
-							Log.d("TetheringSettings","Wifi AP config changed while enabled, stop and restart");
-							}
-						mWifiManager.setWifiApConfiguration(mWifiConfig);
-						HotPotFragment.mRestartWifiApAfterConfigChange = true;
-						Intent intent = new Intent();
-						intent.setAction(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
-						sendBroadcast(intent);
-						finish();
-					}
-				}	break;
-				case R.id.NO:
-					finish();
-					break;
-			}
-		}
-	}
+    class myListener implements OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()){
+                case R.id.OK:{
+                    mWifiConfig = getConfig();
+                    if(mWifiConfig != null){
+                        if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
+                            Log.d("TetheringSettings","Wifi AP config changed while enabled, stop and restart");
+                            }
+                        mWifiManager.setWifiApConfiguration(mWifiConfig);
+                        HotPotFragment.mRestartWifiApAfterConfigChange = true;
+                        Intent intent = new Intent();
+                        intent.setAction(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
+                        sendBroadcast(intent);
+                        finish();
+                    }
+                }   break;
+                case R.id.NO:
+                    finish();
+                    break;
+            }
+        }
+    }
 
-	private void validate() {
+    private void validate() {
         String mSsidString = mSsid.getText().toString();
         if ((mSsid != null && mSsid.length() == 0)
                 || ((mSecurityTypeIndex == WPA2_INDEX) && mPassword.length() < 8)
@@ -232,7 +232,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
         }
     }
 
-	public static int getSecurityTypeIndex(WifiConfiguration wifiConfig) {
+    public static int getSecurityTypeIndex(WifiConfiguration wifiConfig) {
         if (wifiConfig.allowedKeyManagement.get(KeyMgmt.WPA2_PSK)) {
             return WPA2_INDEX;
         }
@@ -282,7 +282,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
                 if (tempString.contains("AP6234") || tempString.contains("AP6330")
                     || tempString.contains("AP6335") || tempString.contains("AP6354")
                     || tempString.contains("AP6441") || tempString.contains("AP6356S")
-		    || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
+            || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
                     reader.close();
                     return true;
                 }
@@ -301,7 +301,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
         return false;
     }
 
-	 public void onRestoreInstanceState(Bundle savedInstanceState) {
+     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mPassword.setInputType(
                 InputType.TYPE_CLASS_TEXT |
@@ -331,7 +331,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSecurityTypeIndex = position;
         showSecurityFields();
-		validate();
+        validate();
     }
 
     @Override
@@ -346,7 +346,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
         findViewById(R.id.fields).setVisibility(View.VISIBLE);
     }
 
-	private static final class OnStartTetheringCallback extends
+    private static final class OnStartTetheringCallback extends
             ConnectivityManager.OnStartTetheringCallback {
         final WeakReference<HotpotDialogActivity> mTetherSettings;
 
@@ -368,4 +368,4 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
 
         }
     }
-		}
+        }

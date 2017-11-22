@@ -283,23 +283,23 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
     }
 
     private void updateVPNList(){
-    	getActivity().runOnUiThread(new Runnable(){
-    		public void run() {
-    			
-    	    	List<VpnProfile> vpnProfiles = loadVpnProfiles(mKeyStore);
-    	    	String lockdownVpnKey = VpnUtils.getLockdownVpn();
-    	    	final Set<Preference> updates = new ArraySet<>();
-    	    	Map<String, LegacyVpnInfo> connectedLegacyVpns = getConnectedLegacyVpns();
-    	        for (VpnProfile profile : vpnProfiles) {
-    	            LegacyVpnPreference p = findOrCreatePreference(profile);
-    	            if (connectedLegacyVpns.containsKey(profile.key)) {
-    	                p.setState(connectedLegacyVpns.get(profile.key).state);
-    	            } else {
-    	                p.setState(LegacyVpnPreference.STATE_NONE);
-    	            }
-    	            p.setAlwaysOn(lockdownVpnKey != null && lockdownVpnKey.equals(profile.key));
-    	            updates.add(p);
-    	        }
+        getActivity().runOnUiThread(new Runnable(){
+            public void run() {
+                
+                List<VpnProfile> vpnProfiles = loadVpnProfiles(mKeyStore);
+                String lockdownVpnKey = VpnUtils.getLockdownVpn();
+                final Set<Preference> updates = new ArraySet<>();
+                Map<String, LegacyVpnInfo> connectedLegacyVpns = getConnectedLegacyVpns();
+                for (VpnProfile profile : vpnProfiles) {
+                    LegacyVpnPreference p = findOrCreatePreference(profile);
+                    if (connectedLegacyVpns.containsKey(profile.key)) {
+                        p.setState(connectedLegacyVpns.get(profile.key).state);
+                    } else {
+                        p.setState(LegacyVpnPreference.STATE_NONE);
+                    }
+                    p.setAlwaysOn(lockdownVpnKey != null && lockdownVpnKey.equals(profile.key));
+                    updates.add(p);
+                }
                 mLegacyVpnPreferences.values().retainAll(updates);
                 for (int i = mVpnCategory.getPreferenceCount() - 1; i >= 0; i--) {
                     Preference p = mVpnCategory.getPreference(i);
@@ -313,18 +313,18 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
                  for (Preference pref : updates) {
                      mVpnCategory.addPreference(pref);
                  }
- /*    	        Preference vpnCreatePref = new Preference(getPreferenceManager().getContext());
-     	        vpnCreatePref.setTitle(R.string.create_vpn);
-     	        Intent createVpnIntent = new Intent();
-     	        createVpnIntent.setClassName(getActivity().getPackageName(), VpnCreateActivity.class.getName());
-     	        VpnProfile createProfile = new VpnProfile(Long.toHexString(System.currentTimeMillis()));
-     	        createVpnIntent.putExtra(ConstData.IntentKey.VPN_PROFILE, createProfile);
-     	        createVpnIntent.putExtra(ConstData.IntentKey.VPN_EXIST, false);
-     	        createVpnIntent.putExtra(ConstData.IntentKey.VPN_EDITING, true);
-     	        vpnCreatePref.setIntent(createVpnIntent);
-     	        mVpnCategory.addPreference(vpnCreatePref);*/
-    		};
-    	});
+ /*             Preference vpnCreatePref = new Preference(getPreferenceManager().getContext());
+                vpnCreatePref.setTitle(R.string.create_vpn);
+                Intent createVpnIntent = new Intent();
+                createVpnIntent.setClassName(getActivity().getPackageName(), VpnCreateActivity.class.getName());
+                VpnProfile createProfile = new VpnProfile(Long.toHexString(System.currentTimeMillis()));
+                createVpnIntent.putExtra(ConstData.IntentKey.VPN_PROFILE, createProfile);
+                createVpnIntent.putExtra(ConstData.IntentKey.VPN_EXIST, false);
+                createVpnIntent.putExtra(ConstData.IntentKey.VPN_EDITING, true);
+                vpnCreatePref.setIntent(createVpnIntent);
+                mVpnCategory.addPreference(vpnCreatePref);*/
+            };
+        });
 
     }
     

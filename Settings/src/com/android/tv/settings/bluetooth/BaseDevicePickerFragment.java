@@ -44,7 +44,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
             new WeakHashMap<CachedBluetoothDevice, BluetoothDevicePreference>();
     
     public BaseDevicePickerFragment(){
-    	mFilter = BluetoothDeviceFilter.ALL_FILTER;
+        mFilter = BluetoothDeviceFilter.ALL_FILTER;
     }
     final void setFilter(BluetoothDeviceFilter.Filter filter) {
         mFilter = filter;
@@ -53,19 +53,19 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
     final void setFilter(int filterType) {
         mFilter = BluetoothDeviceFilter.getFilter(filterType);
     }
-	@Override
-	public void onCreatePreferences(Bundle arg0, String arg1) {
-		mLocalManager = BluetoothUtils.getLocalBtManager(getActivity());
-		if (mLocalManager == null) {
-			Log.e(TAG, "Bluetooth is not supported on this device");
-			return;
-		}
-		mLocalAdapter = mLocalManager.getBluetoothAdapter();
+    @Override
+    public void onCreatePreferences(Bundle arg0, String arg1) {
+        mLocalManager = BluetoothUtils.getLocalBtManager(getActivity());
+        if (mLocalManager == null) {
+            Log.e(TAG, "Bluetooth is not supported on this device");
+            return;
+        }
+        mLocalAdapter = mLocalManager.getBluetoothAdapter();
 
-		addPreferencesForActivity();
+        addPreferencesForActivity();
 
-		mDeviceListGroup = (PreferenceCategory) findPreference(KEY_BT_DEVICE_LIST);
-	}
+        mDeviceListGroup = (PreferenceCategory) findPreference(KEY_BT_DEVICE_LIST);
+    }
     void setDeviceListGroup(PreferenceGroup preferenceGroup) {
         mDeviceListGroup = preferenceGroup;
     }
