@@ -44,6 +44,7 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity implement
     private double mOldHdrSaturationNum;
     private String mStrPlatform;
     private boolean mIsSupportDRM;
+    private boolean isFirstIn = true;
     /**
      * BCSH亮度
      */
@@ -398,6 +399,8 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity implement
     }
 
     private void updateBcshValue() {
+        if(isFirstIn)
+            return;
         if(mIsSupportDRM && mRkDisplayManager != null){
             Log.d(TAG, "b:" + mSeekBarBcshBrightness.getProgress() + " c:" + mSeekBarBcshContrast.getProgress() + " s:" + mSeekBarBcshSaturation.getProgress() + " h:" + mSeekBarBcshTone.getProgress());
             ReflectUtils.invokeMethod(mRkDisplayManager, "setBrightness", new Class[]{int.class, int.class}, new Object[]{mDisplayId, mSeekBarBcshBrightness.getProgress()});
@@ -628,7 +631,7 @@ public class AdvancedDisplaySettingsActivity extends BaseInputActivity implement
         super.onResume();
         initHDR();
         updateSdrContent();
-
+        isFirstIn=false;
     }
     @Override
     protected void onPause() {
