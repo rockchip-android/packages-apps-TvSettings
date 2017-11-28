@@ -138,7 +138,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-        	final String action = intent.getAction();
+            final String action = intent.getAction();
             final int state =
                 intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 
@@ -185,13 +185,13 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
 
     @Override
     public void onResume() {
-    	IntentFilter bluetoothChangeFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-    	IntentFilter bluetoothRenameFilter = new IntentFilter(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
-    	getActivity().registerReceiver(mReceiver, bluetoothRenameFilter);
-    	getActivity().registerReceiver(mRenameReceiver, bluetoothChangeFilter);
+        IntentFilter bluetoothChangeFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        IntentFilter bluetoothRenameFilter = new IntentFilter(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
+        getActivity().registerReceiver(mReceiver, bluetoothRenameFilter);
+        getActivity().registerReceiver(mRenameReceiver, bluetoothChangeFilter);
         super.onResume();
         if (mLocalManager == null /*|| isUiRestricted()*/) 
-        	return;
+            return;
         mLocalManager.setForegroundActivity(getActivity());
         mLocalManager.getEventManager().registerCallback(this);
         updateProgressUi(mLocalAdapter.isDiscovering());
@@ -201,10 +201,10 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
 
     @Override
     public void onPause() {
-    	getActivity().unregisterReceiver(mReceiver);
-    	getActivity().unregisterReceiver(mRenameReceiver);
-    	super.onPause();
-    	 if (mLocalManager == null /*|| isUiRestricted()*/) {
+        getActivity().unregisterReceiver(mReceiver);
+        getActivity().unregisterReceiver(mRenameReceiver);
+        super.onPause();
+         if (mLocalManager == null /*|| isUiRestricted()*/) {
              return;
          }
          removeAllDevices();
@@ -251,22 +251,22 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
             onDevicePreferenceClick(btPreference);
             return true;
         }
-		if (preference == mPreferenceBluetoothRename) {
-			// MetricsLogger.action(getActivity(),
-			// MetricsEvent.ACTION_BLUETOOTH_RENAME);
-			new BluetoothNameDialogFragment().show(getFragmentManager(),
-					"rename device");
-			return true;
-		}else if(preference == mPreferenceBluetoothEnable){
-			refreshSwitchView();
-			return true;
-		}else if(preference == mPreferenceBluetoothRefresh){
-			startScanning();
-			return true;
-		}else if(preference == mPreferenceBluetoothReceived){
-			 Intent intent = new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
+        if (preference == mPreferenceBluetoothRename) {
+            // MetricsLogger.action(getActivity(),
+            // MetricsEvent.ACTION_BLUETOOTH_RENAME);
+            new BluetoothNameDialogFragment().show(getFragmentManager(),
+                    "rename device");
+            return true;
+        }else if(preference == mPreferenceBluetoothEnable){
+            refreshSwitchView();
+            return true;
+        }else if(preference == mPreferenceBluetoothRefresh){
+            startScanning();
+            return true;
+        }else if(preference == mPreferenceBluetoothReceived){
+             Intent intent = new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
              getActivity().sendBroadcast(intent);
-		}
+        }
         return super.onPreferenceTreeClick(preference);
 
     }
@@ -279,16 +279,16 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     }
 
     private void updateBluetooth(){
-    	if(mLocalAdapter == null)
-    		return;
-    	handleStateChanged(mLocalAdapter.getBluetoothState());
-    	 if (mLocalAdapter != null) {
+        if(mLocalAdapter == null)
+            return;
+        handleStateChanged(mLocalAdapter.getBluetoothState());
+         if (mLocalAdapter != null) {
              updateContent(mLocalAdapter.getBluetoothState());
          }
     }
     
     private void refreshSwitchView(){
-    	boolean isChecked = mPreferenceBluetoothEnable.isChecked();
+        boolean isChecked = mPreferenceBluetoothEnable.isChecked();
         if (isChecked && !WirelessUtils.isRadioAllowed(getContext(), Settings.Global.RADIO_BLUETOOTH)) {
             Toast.makeText(getContext(), R.string.wifi_in_airplane_mode, Toast.LENGTH_SHORT).show();
             mPreferenceBluetoothEnable.setChecked(false);
@@ -310,24 +310,24 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     private void handleStateChanged(int state) {
         switch (state) {
             case BluetoothAdapter.STATE_TURNING_ON:
-            	mPreferenceBluetoothEnable.setEnabled(false);
+                mPreferenceBluetoothEnable.setEnabled(false);
                 break;
             case BluetoothAdapter.STATE_ON:
-            	mPreferenceBluetoothEnable.setEnabled(true);
-            	mPreferenceBluetoothEnable.setChecked(true);
+                mPreferenceBluetoothEnable.setEnabled(true);
+                mPreferenceBluetoothEnable.setChecked(true);
                 //updateSearchIndex(true);
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
                 mPreferenceBluetoothEnable.setEnabled(false);
                 break;
             case BluetoothAdapter.STATE_OFF:
-            	mPreferenceBluetoothEnable.setEnabled(true);
-            	mPreferenceBluetoothEnable.setChecked(false);
+                mPreferenceBluetoothEnable.setEnabled(true);
+                mPreferenceBluetoothEnable.setChecked(false);
                 //updateSearchIndex(false);
                 break;
             default:
-            	mPreferenceBluetoothEnable.setEnabled(true);
-            	mPreferenceBluetoothEnable.setChecked(false);
+                mPreferenceBluetoothEnable.setEnabled(true);
+                mPreferenceBluetoothEnable.setChecked(false);
                 //updateSearchIndex(false);
         }
     }
@@ -427,7 +427,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
 
     private void addDeviceCategory(PreferenceGroup preferenceGroup, int titleId,
             BluetoothDeviceFilter.Filter filter, boolean addCachedDevices) {
-    	cacheRemoveAllPrefs(preferenceGroup);
+        cacheRemoveAllPrefs(preferenceGroup);
         preferenceGroup.setTitle(titleId);
         setFilter(filter);
         setDeviceListGroup(preferenceGroup);
@@ -472,10 +472,10 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     private void removeAllDevices() {
         mLocalAdapter.stopScanning();
         if(mDeviceListGroup != mPreferenceScreen){
-        	mDevicePreferenceMap.clear();
+            mDevicePreferenceMap.clear();
             mDeviceListGroup.removeAll();
         }else{
-        	 mCategoryBluetoothPaired.removeAll();
+             mCategoryBluetoothPaired.removeAll();
              mCategoryBluetoothAvailable.removeAll();
              mPreferenceScreen.removePreference(mCategoryBluetoothPaired);
              mPreferenceScreen.removePreference(mCategoryBluetoothAvailable);
@@ -486,7 +486,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
        /* if (isUiRestricted()) {
             return;
         }*/
-    	Log.i(TAG, "startScanning");
+        Log.i(TAG, "startScanning");
         if (!mAvailableDevicesCategoryIsPresent) {
             getPreferenceScreen().addPreference(mCategoryBluetoothAvailable);
             mAvailableDevicesCategoryIsPresent = true;
@@ -505,12 +505,12 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     
     @Override
     public void onBluetoothStateChanged(int bluetoothState) {
-    	 if (bluetoothState == BluetoothAdapter.STATE_OFF) {
+         if (bluetoothState == BluetoothAdapter.STATE_OFF) {
              updateProgressUi(false);
          }
-    	Log.i(TAG, "onBluetoothStateChanged");
+        Log.i(TAG, "onBluetoothStateChanged");
         //super.onBluetoothStateChanged(bluetoothState);
-    	
+        
         // If BT is turned off/on staying in the same BT Settings screen
         // discoverability to be set again
         if (BluetoothAdapter.STATE_ON == bluetoothState)
@@ -520,9 +520,9 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     
     @Override
     public void onScanningStateChanged(boolean started) {
-    	Log.i(TAG, "onScanningStateChanged");
-    	updateProgressUi(started);
-    	updateOtherOpration();
+        Log.i(TAG, "onScanningStateChanged");
+        updateProgressUi(started);
+        updateOtherOpration();
         //super.onScanningStateChanged(started);
         // Update options' enabled state
         /*if (getActivity() != null) {
@@ -531,7 +531,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     }
 
     public void onDeviceAdded(CachedBluetoothDevice cachedDevice) {
-    	Log.i(TAG, "onDeviceAdded");
+        Log.i(TAG, "onDeviceAdded");
         if (mDevicePreferenceMap.get(cachedDevice) != null) {
             return;
         }
@@ -545,7 +545,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     }
 
     public void onDeviceDeleted(CachedBluetoothDevice cachedDevice) {
-    	Log.i(TAG, "onDeviceDeleted");
+        Log.i(TAG, "onDeviceDeleted");
         BluetoothDevicePreference preference = mDevicePreferenceMap.remove(cachedDevice);
         if (preference != null) {
             mDeviceListGroup.removePreference(preference);
@@ -554,14 +554,14 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     
     @Override
     public void onDeviceBondStateChanged(CachedBluetoothDevice cachedDevice, int bondState) {
-    	Log.i(TAG, "setDeviceListGroup");
-    	setDeviceListGroup(getPreferenceScreen());
+        Log.i(TAG, "setDeviceListGroup");
+        setDeviceListGroup(getPreferenceScreen());
         removeAllDevices();
         updateContent(mLocalAdapter.getBluetoothState());
     }
     
     public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
-    	Log.i(TAG, "onConnectionStateChanged");
+        Log.i(TAG, "onConnectionStateChanged");
     }
     
     void createDevicePreference(CachedBluetoothDevice cachedDevice) {
@@ -609,7 +609,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     private final View.OnClickListener mDeviceProfilesListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        	Log.i(TAG, "mDeviceProfilesListener->onClick");
+            Log.i(TAG, "mDeviceProfilesListener->onClick");
             // User clicked on advanced options icon for a device in the list
             if (!(v.getTag() instanceof CachedBluetoothDevice)) {
                 Log.w(TAG, "onClick() called for other View: " + v);
@@ -649,7 +649,7 @@ public class BluetoothFragment extends LeanbackPreferenceFragment implements Pre
     }
 
     private void updateOtherOpration(){
-    	 boolean bluetoothIsEnabled = mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON;
+         boolean bluetoothIsEnabled = mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON;
          boolean isDiscovering = mLocalAdapter.isDiscovering();
          mPreferenceBluetoothRefresh.setEnabled(bluetoothIsEnabled && !isDiscovering);
          mPreferenceBluetoothRename.setEnabled(bluetoothIsEnabled);

@@ -182,8 +182,8 @@ Preference.OnPreferenceClickListener{
     }
 
     protected void rebuildView(){
-    	if(mDisplayInfo == null)
-    		return;
+        if(mDisplayInfo == null)
+            return;
         mResolutionPreference.setEntries(mDisplayInfo.getModes());
         mResolutionPreference.setEntryValues(mDisplayInfo.getModes());
         mColorPreference.setEntries(mDisplayInfo.getColors());
@@ -203,8 +203,8 @@ Preference.OnPreferenceClickListener{
      * 还原分辨率值
      */
     public void updateResolutionValue(){
-    	if(mDisplayInfo == null)
-    		return;
+        if(mDisplayInfo == null)
+            return;
         String resolutionValue = null;
         if(!mIsUseDisplayd){
             resolutionValue = DrmDisplaySetting.getCurDisplayMode(mDisplayInfo);
@@ -287,8 +287,8 @@ Preference.OnPreferenceClickListener{
         } else if (preference == mResolutionPreference) {
             //updateResolutionValue();
         }else if(preference == mAdvancedSettingsPreference){
-        	Intent advancedIntent = new Intent(getActivity(), AdvancedDisplaySettingsActivity.class);
-			advancedIntent.putExtra(ConstData.IntentKey.DISPLAY_ID, mDisplayInfo.getDisplayId());
+            Intent advancedIntent = new Intent(getActivity(), AdvancedDisplaySettingsActivity.class);
+            advancedIntent.putExtra(ConstData.IntentKey.DISPLAY_ID, mDisplayInfo.getDisplayId());
             startActivity(advancedIntent);
         }
         return true;

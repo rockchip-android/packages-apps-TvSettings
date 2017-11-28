@@ -10,9 +10,9 @@ import com.android.tv.settings.TvSettingsActivity;
  */
 public class MainResolutionsActivity extends TvSettingsActivity{
 
-	@Override
-	protected Fragment createSettingsFragment() {
-		return new MainResolutionsFragment();
-	}
+    @Override
+    protected Fragment createSettingsFragment() {
+        return new MainResolutionsFragment();
+    }
 
 }

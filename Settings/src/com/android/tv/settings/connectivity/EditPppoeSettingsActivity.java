@@ -181,30 +181,30 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
     
     private void registerReceiver(){
         Log.d(TAG,"registerReceiver");
-	    if ( intentFilter == null ){
-		    intentFilter = new IntentFilter();
-		    intentFilter.addAction(EthernetManager.ETHERNET_STATE_CHANGED_ACTION);
-		    mContext.registerReceiver(mEthBroadRece, intentFilter);
-	    }
+        if ( intentFilter == null ){
+            intentFilter = new IntentFilter();
+            intentFilter.addAction(EthernetManager.ETHERNET_STATE_CHANGED_ACTION);
+            mContext.registerReceiver(mEthBroadRece, intentFilter);
+        }
     }
     
     private void unRegisterReceiver(){
         Log.d(TAG,"unRegisterReceiver");
-		if ( intentFilter != null ){
-			mContext.unregisterReceiver(mEthBroadRece);
-			intentFilter = null;
-		}
+        if ( intentFilter != null ){
+            mContext.unregisterReceiver(mEthBroadRece);
+            intentFilter = null;
+        }
 
-	}
+    }
     
     private BroadcastReceiver mEthBroadRece = new BroadcastReceiver(){
-	    public void onReceive( Context context, Intent intent ){
+        public void onReceive( Context context, Intent intent ){
             Log.d(TAG,"EthBroadRece");
-		    String action = intent.getAction();
-			if ( !action.equals("android.net.ethernet.ETHERNET_STATE_CHANGED") ){
-				return;
-			}
-			int status = intent.getIntExtra(EthernetManager.EXTRA_ETHERNET_STATE,
+            String action = intent.getAction();
+            if ( !action.equals("android.net.ethernet.ETHERNET_STATE_CHANGED") ){
+                return;
+            }
+            int status = intent.getIntExtra(EthernetManager.EXTRA_ETHERNET_STATE,
                                             EthernetManager.ETHER_STATE_CONNECTING);
             Log.d(TAG,"EthBroadRece :" + status);
                 mNetworkStatus = status;

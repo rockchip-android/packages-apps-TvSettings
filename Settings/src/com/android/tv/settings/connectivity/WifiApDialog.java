@@ -129,7 +129,7 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
                 if (tempString.contains("AP6234") || tempString.contains("AP6330")
                     || tempString.contains("AP6335") || tempString.contains("AP6354")
                     || tempString.contains("AP6441") || tempString.contains("AP6356S")
-		    || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
+            || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
                     reader.close();
                     return true;
                 }

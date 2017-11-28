@@ -371,13 +371,13 @@ public class AdvancedWifiOptionsFlow {
     
     private String getPppoeUserName(){
        String uname = Settings.Secure.getString(mContext.getContentResolver(),
-				Settings.Secure.PPPOE_USERNAME);
+                Settings.Secure.PPPOE_USERNAME);
         return uname;
     }
     
     private String getPppoePassword(){
         String pwd = Settings.Secure.getString(mContext.getContentResolver(),
-				Settings.Secure.PPPOE_PSWD);
+                Settings.Secure.PPPOE_PSWD);
         return pwd;       
     }
 
@@ -504,9 +504,9 @@ public class AdvancedWifiOptionsFlow {
         String mPppoepwd = mPppoepwdPage.getDataSummary();
         
         Settings.Secure.putString(mContext.getContentResolver(),
-				Settings.Secure.PPPOE_USERNAME, mPppoeuname);
-		Settings.Secure.putString(mContext.getContentResolver(),
-				Settings.Secure.PPPOE_PSWD, mPppoepwd);
+                Settings.Secure.PPPOE_USERNAME, mPppoeuname);
+        Settings.Secure.putString(mContext.getContentResolver(),
+                Settings.Secure.PPPOE_PSWD, mPppoepwd);
         
         mIpConfiguration.setIpAssignment(IpAssignment.PPPOE);
         mIpConfiguration.pppoeAccount = mPppoeuname;

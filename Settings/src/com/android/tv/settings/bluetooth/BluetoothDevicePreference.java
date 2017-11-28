@@ -162,7 +162,7 @@ public final class BluetoothDevicePreference extends Preference implements
             ImageView deviceDetails = (ImageView) view.findViewById(R.id.deviceDetails);
 
             if (deviceDetails != null) {
-            	deviceDetails.setVisibility(View.GONE);
+                deviceDetails.setVisibility(View.GONE);
                 //deviceDetails.setOnClickListener(this);
                 //deviceDetails.setTag(mCachedDevice);
             }
@@ -184,14 +184,14 @@ public final class BluetoothDevicePreference extends Preference implements
         }
     }
     
-	@Override
-	public boolean onLongClick(View v) {
-		Log.i(TAG, "onLongClick");
-		 if (mOnSettingsClickListener != null) {
-	            mOnSettingsClickListener.onClick(v);
-	        }
-		 return true;
-	}
+    @Override
+    public boolean onLongClick(View v) {
+        Log.i(TAG, "onLongClick");
+         if (mOnSettingsClickListener != null) {
+                mOnSettingsClickListener.onClick(v);
+            }
+         return true;
+    }
 
     @Override
     public boolean equals(Object o) {

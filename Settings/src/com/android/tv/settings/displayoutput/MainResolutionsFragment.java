@@ -36,126 +36,126 @@ import android.os.ServiceManager;
  */
 public class MainResolutionsFragment extends Fragment implements OnItemClickListener,DisplayListener{
 
-	private static final String TAG = "MainResolutionsFragment";
-	private ListView mDeviceListView;
-	private DisplayManager mDisplayManager;
-	private Display mSelectDisplay;
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		initData();
-		mDeviceListView = getRootView();
-		mDeviceListView.setPadding(0, 40, 0, 0);
-		return mDeviceListView;
-	}
+    private static final String TAG = "MainResolutionsFragment";
+    private ListView mDeviceListView;
+    private DisplayManager mDisplayManager;
+    private Display mSelectDisplay;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        initData();
+        mDeviceListView = getRootView();
+        mDeviceListView.setPadding(0, 40, 0, 0);
+        return mDeviceListView;
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		initEvent();
-	}
-
-
-	@Override
-	public void onDestroy() {
-	    super.onDestroy();
-	    mDisplayManager.unregisterDisplayListener(this);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		rebulidView();
-	}
-
-	private void rebulidView() {
-		//mDeviceListView.removeAllViews();
-		Display[] displays = mDisplayManager.getDisplays();
-		String[] names = new String[displays.length];
-		for (int i = 0; i != displays.length; ++i) {
-			Display itemDisplay = displays[i];
-			names[i] = itemDisplay.getName();
-		}
-
-		ArrayAdapter<String> deviceListAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, names);
-		mDeviceListView.setAdapter(deviceListAdapter);
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initEvent();
+    }
 
 
-	private void initData(){
-		mDisplayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDisplayManager.unregisterDisplayListener(this);
+    }
 
-	private void initEvent(){
-		mDeviceListView.setOnItemClickListener(this);
-		mDisplayManager.registerDisplayListener(this, null);
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        rebulidView();
+    }
 
-	public ListView getRootView(){
-		return new ListView(getContext());
-	}
+    private void rebulidView() {
+        //mDeviceListView.removeAllViews();
+        Display[] displays = mDisplayManager.getDisplays();
+        String[] names = new String[displays.length];
+        for (int i = 0; i != displays.length; ++i) {
+            Display itemDisplay = displays[i];
+            names[i] = itemDisplay.getName();
+        }
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Display[] displays = mDisplayManager.getDisplays();
-		for (int i = 0; i != displays.length; ++i) {
-			Display itemDisplay = displays[i];
-			if(itemDisplay.getName().equals(parent.getAdapter().getItem(position))){
-				mSelectDisplay = itemDisplay;
-				break;
-			}
-		}
+        ArrayAdapter<String> deviceListAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, names);
+        mDeviceListView.setAdapter(deviceListAdapter);
+    }
 
-		if(mSelectDisplay != null){
-			final Mode[] supportModes = mSelectDisplay.getSupportedModes();
-			int currentModeId = mSelectDisplay.getMode().getModeId();
-			Log.i(TAG, "currentModeId:" + currentModeId);
-			String[] strModes = new String[supportModes.length];
-			int selectIndex = -1;
-			for(int i = 0; i != supportModes.length; ++i){
-				Mode itemMode = supportModes[i];
-				if(itemMode.getModeId() == currentModeId)
-					selectIndex = i;
-				StringBuilder modeBuilder = new StringBuilder();
-				modeBuilder.append(itemMode.getPhysicalWidth())
-				.append("x").append(itemMode.getPhysicalHeight())
-				.append("-").append(itemMode.getRefreshRate());
-				strModes[i] = modeBuilder.toString();
-			}
 
-			new AlertDialog.Builder(getContext()).setTitle("Setting Resoultion")
-			.setSingleChoiceItems(strModes, selectIndex, new DialogInterface.OnClickListener() {
+    private void initData(){
+        mDisplayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);
+    }
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					try{
-						IDisplayManager manager = IDisplayManager.Stub.asInterface(ServiceManager.getService(Context.DISPLAY_SERVICE));
-						manager.requestMode(mSelectDisplay.getDisplayId(), supportModes[which].getModeId());
-					}catch (Exception e){
-						Log.i(TAG, "onclick exception:" + e);
-					}
+    private void initEvent(){
+        mDeviceListView.setOnItemClickListener(this);
+        mDisplayManager.registerDisplayListener(this, null);
+    }
 
-				}
-			}).show();
-		}
-	}
+    public ListView getRootView(){
+        return new ListView(getContext());
+    }
 
-	@Override
-	public void onDisplayAdded(int displayId) {
-		Log.i(TAG, "onDisplayAdded:" + displayId);
-		rebulidView();
-	}
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+            long id) {
+        Display[] displays = mDisplayManager.getDisplays();
+        for (int i = 0; i != displays.length; ++i) {
+            Display itemDisplay = displays[i];
+            if(itemDisplay.getName().equals(parent.getAdapter().getItem(position))){
+                mSelectDisplay = itemDisplay;
+                break;
+            }
+        }
 
-	@Override
-	public void onDisplayRemoved(int displayId) {
-		Log.i(TAG, "onDisplayRemoved:" + displayId);
-		rebulidView();
-	}
+        if(mSelectDisplay != null){
+            final Mode[] supportModes = mSelectDisplay.getSupportedModes();
+            int currentModeId = mSelectDisplay.getMode().getModeId();
+            Log.i(TAG, "currentModeId:" + currentModeId);
+            String[] strModes = new String[supportModes.length];
+            int selectIndex = -1;
+            for(int i = 0; i != supportModes.length; ++i){
+                Mode itemMode = supportModes[i];
+                if(itemMode.getModeId() == currentModeId)
+                    selectIndex = i;
+                StringBuilder modeBuilder = new StringBuilder();
+                modeBuilder.append(itemMode.getPhysicalWidth())
+                .append("x").append(itemMode.getPhysicalHeight())
+                .append("-").append(itemMode.getRefreshRate());
+                strModes[i] = modeBuilder.toString();
+            }
 
-	@Override
-	public void onDisplayChanged(int displayId) {
-		Log.i(TAG, "onDisplayChanged:" + displayId);
-		rebulidView();
-	}
+            new AlertDialog.Builder(getContext()).setTitle("Setting Resoultion")
+            .setSingleChoiceItems(strModes, selectIndex, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try{
+                        IDisplayManager manager = IDisplayManager.Stub.asInterface(ServiceManager.getService(Context.DISPLAY_SERVICE));
+                        manager.requestMode(mSelectDisplay.getDisplayId(), supportModes[which].getModeId());
+                    }catch (Exception e){
+                        Log.i(TAG, "onclick exception:" + e);
+                    }
+
+                }
+            }).show();
+        }
+    }
+
+    @Override
+    public void onDisplayAdded(int displayId) {
+        Log.i(TAG, "onDisplayAdded:" + displayId);
+        rebulidView();
+    }
+
+    @Override
+    public void onDisplayRemoved(int displayId) {
+        Log.i(TAG, "onDisplayRemoved:" + displayId);
+        rebulidView();
+    }
+
+    @Override
+    public void onDisplayChanged(int displayId) {
+        Log.i(TAG, "onDisplayChanged:" + displayId);
+        rebulidView();
+    }
 }
