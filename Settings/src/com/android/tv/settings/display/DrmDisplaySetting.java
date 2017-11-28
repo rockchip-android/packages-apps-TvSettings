@@ -137,6 +137,21 @@ public class DrmDisplaySetting {
         return getDpMode();
     }
 
+    public static void setColorMode(int displayid , int type,String format) {
+		Object rkDisplayOutputManager = null;
+               logd(" setColorMode 1");
+
+		try{
+			rkDisplayOutputManager = Class.forName("android.os.RkDisplayOutputManager").newInstance();
+			logd("getDisplayInfoList->rkDisplayOutputManager->name:" + rkDisplayOutputManager.getClass().getName());
+		}catch(Exception e){
+			// no handle
+		}
+		if(rkDisplayOutputManager != null)
+   		ReflectUtils.invokeMethod(rkDisplayOutputManager, "setColorMode", new Class[]{int.class, int.class, String.class}, new Object[]{displayid, type, format});
+
+    }
+
     public static void setDisplayModeTemp(DisplayInfo di, int index) {
         String mode = getDisplayModes(di).get(index);
         setDisplayModeTemp(di, mode);
@@ -208,6 +223,8 @@ public class DrmDisplaySetting {
 			orginModes = filterOrginModes(orginModes);
 			displayInfo.setOrginModes(orginModes);
 			displayInfo.setModes(getFilterModeList(orginModes));
+			String[] colors = (String[])ReflectUtils.invokeMethod(rkDisplayOutputManager, "getSupportCorlorList", new Class[]{int.class, int.class}, new Object[]{0, currMainType});
+                          displayInfo.setColors(colors);
        logd(" getHdmiDisplayInfo 5");
 			return displayInfo;
 		}
