@@ -1552,7 +1552,7 @@
 
     <!-- abc -->
     <string name="enable_abc">open android bug collector</string>
-    <string name="enable_abc_summary" >"Each whole log is saved to the /data/syslog directory, you can use ADB pull export it"</string>
+    <string name="enable_abc_summary" >"Each whole log is saved to the /data/logs directory, you can use ADB pull export it"</string>
 
     <string name="vpn" >VPN</string>
     <string name="create_vpn" >Create VPN</string>
