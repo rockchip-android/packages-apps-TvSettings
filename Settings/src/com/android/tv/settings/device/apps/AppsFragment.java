@@ -205,7 +205,7 @@ public class AppsFragment extends LeanbackPreferenceFragment {
     }
 
     private void updateAppList(PreferenceGroup group,
-            ArrayList<ApplicationsState.AppEntry> entries) {
+                               ArrayList<ApplicationsState.AppEntry> entries) {
         if (group == null) {
             Log.d(TAG, "Not updating list for null group");
             return;
@@ -230,7 +230,7 @@ public class AppsFragment extends LeanbackPreferenceFragment {
     }
 
     private void updateAppListInternal(PreferenceGroup group,
-            ArrayList<ApplicationsState.AppEntry> entries) {
+                                       ArrayList<ApplicationsState.AppEntry> entries) {
         if (entries != null) {
             final Set<String> touched = new ArraySet<>(entries.size());
             for (final ApplicationsState.AppEntry entry : entries) {
@@ -243,7 +243,7 @@ public class AppsFragment extends LeanbackPreferenceFragment {
                 group.addPreference(newPref);
                 touched.add(packageName);
             }
-            for (int i = 0; i < group.getPreferenceCount();) {
+            for (int i = 0; i < group.getPreferenceCount(); ) {
                 final Preference pref = group.getPreference(i);
                 if (touched.contains(pref.getKey())) {
                     i++;
@@ -256,12 +256,13 @@ public class AppsFragment extends LeanbackPreferenceFragment {
 
     /**
      * Creates or updates a preference according to an {@link ApplicationsState.AppEntry} object
+     *
      * @param preference If non-null, updates this preference object, otherwise creates a new one
-     * @param entry Info to populate preference
+     * @param entry      Info to populate preference
      * @return Updated preference entry
      */
     private Preference bindPreference(@NonNull Preference preference,
-            ApplicationsState.AppEntry entry) {
+                                      ApplicationsState.AppEntry entry) {
         preference.setKey(entry.info.packageName);
         entry.ensureLabel(getContext());
         preference.setTitle(entry.label);
@@ -316,7 +317,8 @@ public class AppsFragment extends LeanbackPreferenceFragment {
             new ApplicationsState.AppFilter() {
 
                 @Override
-                public void init() {}
+                public void init() {
+                }
 
                 @Override
                 public boolean filterApp(ApplicationsState.AppEntry info) {
@@ -328,7 +330,8 @@ public class AppsFragment extends LeanbackPreferenceFragment {
             new ApplicationsState.AppFilter() {
 
                 @Override
-                public void init() {}
+                public void init() {
+                }
 
                 @Override
                 public boolean filterApp(ApplicationsState.AppEntry info) {

@@ -156,7 +156,7 @@ public class AccessibilityFragment extends LeanbackPreferenceFragment {
         private CheckBoxPreference mEnablePref;
 
         public static void prepareArgs(@NonNull Bundle args, String packageName, String serviceName,
-                String activityName, String label) {
+                                       String activityName, String label) {
             args.putString(ARG_PACKAGE_NAME, packageName);
             args.putString(ARG_SERVICE_NAME, serviceName);
             args.putString(ARG_SETTINGS_ACTIVITY_NAME, activityName);
@@ -214,7 +214,7 @@ public class AccessibilityFragment extends LeanbackPreferenceFragment {
             private static final String ARG_ENABLING = "enabling";
 
             public static void prepareArgs(@NonNull Bundle args, ComponentName cn, String label,
-                    boolean enabling) {
+                                           boolean enabling) {
                 args.putParcelable(ARG_COMPONENT, cn);
                 args.putString(ARG_LABEL, label);
                 args.putBoolean(ARG_ENABLING, enabling);
@@ -247,7 +247,7 @@ public class AccessibilityFragment extends LeanbackPreferenceFragment {
 
             @Override
             public void onCreateActions(@NonNull List<GuidedAction> actions,
-                    Bundle savedInstanceState) {
+                                        Bundle savedInstanceState) {
                 final Context context = getActivity();
                 actions.add(new GuidedAction.Builder(context)
                         .clickAction(GuidedAction.ACTION_ID_OK).build());

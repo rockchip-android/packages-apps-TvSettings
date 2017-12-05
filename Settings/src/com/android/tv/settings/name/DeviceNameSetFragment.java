@@ -67,7 +67,7 @@ public class DeviceNameSetFragment extends GuidedStepFragment {
         if (id < 0 || id > options.length) {
             throw new IllegalStateException("Unknown action ID");
         } else if (id < options.length) {
-            DeviceManager.setDeviceName(getActivity(), options[(int)id]);
+            DeviceManager.setDeviceName(getActivity(), options[(int) id]);
             getActivity().finish();
         } else if (id == options.length) {
             GuidedStepFragment.add(getFragmentManager(), DeviceNameSetCustomFragment.newInstance());

@@ -81,7 +81,8 @@ public class MoveAppStepFragment extends GuidedStepFragment {
     }
 
     @Override
-    public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+    public @NonNull
+    GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         Drawable icon;
         try {
             icon = mPackageManager.getApplicationIcon(mPackageName);
@@ -100,7 +101,7 @@ public class MoveAppStepFragment extends GuidedStepFragment {
         final String packageName = getArguments().getString(ARG_PACKAGE_NAME);
         final ApplicationInfo info;
         try {
-             info = mPackageManager.getApplicationInfo(packageName, 0);
+            info = mPackageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             Log.d(TAG, "Package missing while resolving storage", e);
             return;

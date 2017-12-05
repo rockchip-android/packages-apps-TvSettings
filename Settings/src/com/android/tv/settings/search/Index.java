@@ -111,7 +111,7 @@ public class Index {
     public static final String ENTRIES_SEPARATOR = "|";
 
     // If you change the order of columns here, you SHOULD change the COLUMN_INDEX_XXX values
-    private static final String[] SELECT_COLUMNS = new String[] {
+    private static final String[] SELECT_COLUMNS = new String[]{
             IndexColumns.DATA_RANK,               // 0
             IndexColumns.DATA_TITLE,              // 1
             IndexColumns.DATA_SUMMARY_ON,         // 2
@@ -288,14 +288,14 @@ public class Index {
         return sb.toString();
     }
 
-    public long addSavedQuery(String query){
+    public long addSavedQuery(String query) {
         final SaveSearchQueryTask task = new SaveSearchQueryTask();
         task.execute(query);
         try {
             return task.get();
         } catch (InterruptedException e) {
             Log.e(LOG_TAG, "Cannot insert saved query: " + query, e);
-            return -1 ;
+            return -1;
         } catch (ExecutionException e) {
             Log.e(LOG_TAG, "Cannot insert saved query: " + query, e);
             return -1;
@@ -428,7 +428,7 @@ public class Index {
 
     /**
      * Only allow a "well known" SearchIndexablesProvider. The provider should:
-     *
+     * <p>
      * - have read/write {@link android.Manifest.permission#READ_SEARCH_INDEXABLES}
      * - be from a privileged package
      */
@@ -448,7 +448,7 @@ public class Index {
         }
 
         if (!android.Manifest.permission.READ_SEARCH_INDEXABLES.equals(readPermission) ||
-            !android.Manifest.permission.READ_SEARCH_INDEXABLES.equals(writePermission)) {
+                !android.Manifest.permission.READ_SEARCH_INDEXABLES.equals(writePermission)) {
             return false;
         }
 
@@ -460,7 +460,7 @@ public class Index {
         try {
             PackageInfo packInfo = pm.getPackageInfo(packageName, 0);
             return ((packInfo.applicationInfo.privateFlags
-                & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED) != 0);
+                    & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED) != 0);
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
@@ -475,18 +475,18 @@ public class Index {
     /**
      * Update the Index for a specific class name resources
      *
-     * @param className the class name (typically a fragment name).
-     * @param rebuild true means that you want to delete the data from the Index first.
+     * @param className              the class name (typically a fragment name).
+     * @param rebuild                true means that you want to delete the data from the Index first.
      * @param includeInSearchResults true means that you want the bit "enabled" set so that the
      *                               data will be seen included into the search results
      */
     public void updateFromClassNameResource(String className, final boolean rebuild,
-            boolean includeInSearchResults) {
+                                            boolean includeInSearchResults) {
         if (className == null) {
             throw new IllegalArgumentException("class name cannot be null!");
         }
         final SearchIndexableResource res = SearchIndexableResources.getResourceByName(className);
-        if (res == null ) {
+        if (res == null) {
             Log.e(LOG_TAG, "Cannot find SearchIndexableResources for class name: " + className);
             return;
         }
@@ -555,7 +555,7 @@ public class Index {
     }
 
     private void addIndexablesForXmlResourceUri(Context packageContext, String packageName,
-            Uri uri, String[] projection, int baseRank) {
+                                                Uri uri, String[] projection, int baseRank) {
 
         final ContentResolver resolver = packageContext.getContentResolver();
         final Cursor cursor = resolver.query(uri, projection, null, null, null);
@@ -602,7 +602,7 @@ public class Index {
     }
 
     private void addIndexablesForRawDataUri(Context packageContext, String packageName,
-            Uri uri, String[] projection, int baseRank) {
+                                            Uri uri, String[] projection, int baseRank) {
 
         final ContentResolver resolver = packageContext.getContentResolver();
         final Cursor cursor = resolver.query(uri, projection, null, null, null);
@@ -722,7 +722,7 @@ public class Index {
     }
 
     private void indexOneSearchIndexableData(SQLiteDatabase database, String localeStr,
-            SearchIndexableData data, Map<String, List<String>> nonIndexableKeys) {
+                                             SearchIndexableData data, Map<String, List<String>> nonIndexableKeys) {
         if (data instanceof SearchIndexableResource) {
             indexOneResource(database, localeStr, (SearchIndexableResource) data, nonIndexableKeys);
         } else if (data instanceof SearchIndexableRaw) {
@@ -771,7 +771,7 @@ public class Index {
     }
 
     private void indexOneResource(SQLiteDatabase database, String localeStr,
-            SearchIndexableResource sir, Map<String, List<String>> nonIndexableKeysFromResource) {
+                                  SearchIndexableResource sir, Map<String, List<String>> nonIndexableKeysFromResource) {
 
         if (sir == null) {
             Log.e(LOG_TAG, "Cannot index a null resource!");
@@ -839,9 +839,9 @@ public class Index {
     }
 
     private void indexFromResource(Context context, SQLiteDatabase database, String localeStr,
-           int xmlResId, String fragmentName, int iconResId, int rank,
-           String intentAction, String intentTargetPackage, String intentTargetClass,
-           List<String> nonIndexableKeys) {
+                                   int xmlResId, String fragmentName, int iconResId, int rank,
+                                   String intentAction, String intentTargetPackage, String intentTargetClass,
+                                   List<String> nonIndexableKeys) {
 
         XmlResourceParser parser = null;
         try {
@@ -939,8 +939,8 @@ public class Index {
     }
 
     private void indexFromProvider(Context context, SQLiteDatabase database, String localeStr,
-            Indexable.SearchIndexProvider provider, String className, int iconResId, int rank,
-            boolean enabled, List<String> nonIndexableKeys) {
+                                   Indexable.SearchIndexProvider provider, String className, int iconResId, int rank,
+                                   boolean enabled, List<String> nonIndexableKeys) {
 
         if (provider == null) {
             Log.w(LOG_TAG, "Cannot find provider: " + className);
@@ -1008,11 +1008,11 @@ public class Index {
     }
 
     private void updateOneRowWithFilteredData(SQLiteDatabase database, String locale,
-            String title, String summaryOn, String summaryOff, String entries,
-            String className,
-            String screenTitle, int iconResId, int rank, String keywords,
-            String intentAction, String intentTargetPackage, String intentTargetClass,
-            boolean enabled, String key, int userId) {
+                                              String title, String summaryOn, String summaryOff, String entries,
+                                              String className,
+                                              String screenTitle, int iconResId, int rank, String keywords,
+                                              String intentAction, String intentTargetPackage, String intentTargetClass,
+                                              boolean enabled, String key, int userId) {
 
         final String updatedTitle = normalizeHyphen(title);
         final String updatedSummaryOn = normalizeHyphen(summaryOn);
@@ -1047,11 +1047,11 @@ public class Index {
     }
 
     private void updateOneRow(SQLiteDatabase database, String locale, String updatedTitle,
-            String normalizedTitle, String updatedSummaryOn, String normalizedSummaryOn,
-            String updatedSummaryOff, String normalizedSummaryOff, String entries, String className,
-            String screenTitle, int iconResId, int rank, String spaceDelimitedKeywords,
-            String intentAction, String intentTargetPackage, String intentTargetClass,
-            boolean enabled, String key, int userId) {
+                              String normalizedTitle, String updatedSummaryOn, String normalizedSummaryOn,
+                              String updatedSummaryOff, String normalizedSummaryOff, String entries, String className,
+                              String screenTitle, int iconResId, int rank, String spaceDelimitedKeywords,
+                              String intentAction, String intentTargetPackage, String intentTargetClass,
+                              boolean enabled, String key, int userId) {
 
         if (TextUtils.isEmpty(updatedTitle)) {
             return;
@@ -1153,7 +1153,7 @@ public class Index {
                 data = context.getResources().getStringArray(tv.resourceId);
             }
         }
-        final int count = (data == null ) ? 0 : data.length;
+        final int count = (data == null) ? 0 : data.length;
         if (count == 0) {
             return null;
         }
@@ -1223,8 +1223,8 @@ public class Index {
         }
 
         private boolean processDataToUpdate(SQLiteDatabase database, String localeStr,
-                List<SearchIndexableData> dataToUpdate, Map<String, List<String>> nonIndexableKeys,
-                boolean forceUpdate) {
+                                            List<SearchIndexableData> dataToUpdate, Map<String, List<String>> nonIndexableKeys,
+                                            boolean forceUpdate) {
 
             if (!forceUpdate && IndexDatabaseHelper.isLocaleAlreadyIndexed(mContext, localeStr)) {
                 Log.d(LOG_TAG, "Locale '" + localeStr + "' is already indexed");
@@ -1241,7 +1241,7 @@ public class Index {
                     indexOneSearchIndexableData(database, localeStr, data, nonIndexableKeys);
                 } catch (Exception e) {
                     Log.e(LOG_TAG, "Cannot index: " + (data != null ? data.className : data)
-                                    + " for locale: " + localeStr, e);
+                            + " for locale: " + localeStr, e);
                 }
             }
 
@@ -1252,7 +1252,7 @@ public class Index {
         }
 
         private boolean processDataToDelete(SQLiteDatabase database, String localeStr,
-                List<SearchIndexableData> dataToDelete) {
+                                            List<SearchIndexableData> dataToDelete) {
 
             boolean result = false;
             final long current = System.currentTimeMillis();
@@ -1265,7 +1265,7 @@ public class Index {
                 }
                 if (!TextUtils.isEmpty(data.className)) {
                     delete(database, IndexColumns.CLASS_NAME, data.className);
-                } else  {
+                } else {
                     if (data instanceof SearchIndexableRaw) {
                         final SearchIndexableRaw raw = (SearchIndexableRaw) data;
                         if (!TextUtils.isEmpty(raw.title)) {
@@ -1283,7 +1283,7 @@ public class Index {
 
         private int delete(SQLiteDatabase database, String columName, String value) {
             final String whereClause = columName + "=?";
-            final String[] whereArgs = new String[] { value };
+            final String[] whereArgs = new String[]{value};
 
             return database.delete(Tables.TABLE_PREFS_INDEX, whereClause, whereArgs);
         }
@@ -1313,7 +1313,7 @@ public class Index {
                 // First, delete all saved queries that are the same
                 database.delete(Tables.TABLE_SAVED_QUERIES,
                         IndexDatabaseHelper.SavedQueriesColums.QUERY + " = ?",
-                        new String[] { params[0] });
+                        new String[]{params[0]});
 
                 // Second, insert the saved query
                 lastInsertedRowId =
@@ -1323,7 +1323,7 @@ public class Index {
                 final long delta = lastInsertedRowId - MAX_SAVED_SEARCH_QUERY;
                 if (delta > 0) {
                     int count = database.delete(Tables.TABLE_SAVED_QUERIES, "rowId <= ?",
-                            new String[] { Long.toString(delta) });
+                            new String[]{Long.toString(delta)});
                     Log.d(LOG_TAG, "Deleted '" + count + "' saved Search query(ies)");
                 }
             } catch (Exception e) {

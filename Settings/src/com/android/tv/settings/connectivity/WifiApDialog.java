@@ -35,6 +35,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.io.*;
 
 import com.android.tv.settings.R;
@@ -68,7 +69,7 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
     private static final String TAG = "WifiApDialog";
 
     public WifiApDialog(Context context, DialogInterface.OnClickListener listener,
-            WifiConfiguration wifiConfig) {
+                        WifiConfiguration wifiConfig) {
         super(context);
         mListener = listener;
         mWifiConfig = wifiConfig;
@@ -76,7 +77,7 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
             mSecurityTypeIndex = getSecurityTypeIndex(wifiConfig);
         }
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        mContext =  context;
+        mContext = context;
     }
 
     public static int getSecurityTypeIndex(WifiConfiguration wifiConfig) {
@@ -127,9 +128,9 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
             while ((tempString = reader.readLine()) != null) {
                 Log.d(TAG, "Get wifi chip name: " + tempString);
                 if (tempString.contains("AP6234") || tempString.contains("AP6330")
-                    || tempString.contains("AP6335") || tempString.contains("AP6354")
-                    || tempString.contains("AP6441") || tempString.contains("AP6356S")
-            || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
+                        || tempString.contains("AP6335") || tempString.contains("AP6354")
+                        || tempString.contains("AP6441") || tempString.contains("AP6356S")
+                        || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
                     reader.close();
                     return true;
                 }
@@ -141,12 +142,14 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException e1) {}
+                } catch (IOException e1) {
+                }
             }
         }
 
         return false;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         boolean mInit = true;
@@ -164,12 +167,12 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
         mSsid = (TextView) mView.findViewById(R.id.ssid);
         mPassword = (EditText) mView.findViewById(R.id.password);
 
-        ArrayAdapter <CharSequence> channelAdapter;
+        ArrayAdapter<CharSequence> channelAdapter;
         String countryCode = mWifiManager.getCountryCode();
         if (!checkIfSupportDualBand()) {
             //If no country code, 5GHz AP is forbidden
-           // Log.i(TAG,(!mWifiManager.isDualBandSupported() ? "Device do not support 5GHz " :"") 
-           //         + (countryCode == null ? " NO country code" :"") +  " forbid 5GHz");
+            // Log.i(TAG,(!mWifiManager.isDualBandSupported() ? "Device do not support 5GHz " :"")
+            //         + (countryCode == null ? " NO country code" :"") +  " forbid 5GHz");
             channelAdapter = ArrayAdapter.createFromResource(mContext,
                     R.array.wifi_ap_band_config_2G_only, android.R.layout.simple_spinner_item);
             mWifiConfig.apBand = 0;
@@ -182,14 +185,14 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
 
         setButton(BUTTON_SUBMIT, context.getString(R.string.wifi_save), mListener);
         setButton(DialogInterface.BUTTON_NEGATIVE,
-        context.getString(R.string.wifi_cancel), mListener);
+                context.getString(R.string.wifi_cancel), mListener);
 
         if (mWifiConfig != null) {
             mSsid.setText(mWifiConfig.SSID);
             if (mWifiConfig.apBand == 0) {
-               mBandIndex = 0;
+                mBandIndex = 0;
             } else {
-               mBandIndex = 1;
+                mBandIndex = 1;
             }
 
             mSecurity.setSelection(mSecurityTypeIndex);
@@ -202,6 +205,7 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
         mChannel.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     boolean mInit = true;
+
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                                long id) {
@@ -239,9 +243,9 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
         super.onRestoreInstanceState(savedInstanceState);
         mPassword.setInputType(
                 InputType.TYPE_CLASS_TEXT |
-                (((CheckBox) mView.findViewById(R.id.show_password)).isChecked() ?
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
-                InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        (((CheckBox) mView.findViewById(R.id.show_password)).isChecked() ?
+                                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                                InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
 
     private void validate() {
@@ -259,8 +263,8 @@ public class WifiApDialog extends AlertDialog implements View.OnClickListener,
     public void onClick(View view) {
         mPassword.setInputType(
                 InputType.TYPE_CLASS_TEXT | (((CheckBox) view).isChecked() ?
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
-                InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
 
     public void onTextChanged(CharSequence s, int start, int before, int count) {

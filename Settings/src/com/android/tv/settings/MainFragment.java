@@ -53,6 +53,7 @@ import com.android.tv.settings.connectivity.ConnectivityListener;
 import com.android.tv.settings.device.sound.SoundFragment;
 import com.android.tv.settings.system.SecurityFragment;
 import com.android.tv.settings.displayoutput.MainResolutionsActivity;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -268,7 +269,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
             }
         }
 
-        for (int i = 0; i < mAccountsGroup.getPreferenceCount();) {
+        for (int i = 0; i < mAccountsGroup.getPreferenceCount(); ) {
             final Preference preference = mAccountsGroup.getPreference(i);
             final String key = preference.getKey();
             if (touchedAccounts.contains(key) || TextUtils.equals(KEY_ADD_ACCOUNT, key)) {
@@ -355,7 +356,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
             mAccessoriesGroup.addPreference(preference);
         }
 
-        for (int i = 0; i < mAccessoriesGroup.getPreferenceCount();) {
+        for (int i = 0; i < mAccessoriesGroup.getPreferenceCount(); ) {
             final Preference preference = mAccessoriesGroup.getPreference(i);
             if (touchedKeys.contains(preference.getKey())) {
                 i++;

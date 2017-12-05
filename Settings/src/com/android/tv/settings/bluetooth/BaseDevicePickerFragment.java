@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.android.tv.settings.bluetooth;
 
@@ -18,13 +18,14 @@ import com.android.settingslib.bluetooth.BluetoothDeviceFilter;
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.settingslib.bluetooth.LocalBluetoothAdapter;
 import com.android.settingslib.bluetooth.LocalBluetoothManager;
+
 import java.util.Collection;
 import java.util.WeakHashMap;
+
 /**
  * @author GaoFei
- *
  */
-public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragment implements BluetoothCallback{
+public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragment implements BluetoothCallback {
 
     private static final String TAG = "BaseDevicePickerFragment";
 
@@ -42,10 +43,11 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
     private ArrayMap<String, Preference> mPreferenceCache;
     final WeakHashMap<CachedBluetoothDevice, BluetoothDevicePreference> mDevicePreferenceMap =
             new WeakHashMap<CachedBluetoothDevice, BluetoothDevicePreference>();
-    
-    public BaseDevicePickerFragment(){
+
+    public BaseDevicePickerFragment() {
         mFilter = BluetoothDeviceFilter.ALL_FILTER;
     }
+
     final void setFilter(BluetoothDeviceFilter.Filter filter) {
         mFilter = filter;
     }
@@ -53,6 +55,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
     final void setFilter(int filterType) {
         mFilter = BluetoothDeviceFilter.getFilter(filterType);
     }
+
     @Override
     public void onCreatePreferences(Bundle arg0, String arg1) {
         mLocalManager = BluetoothUtils.getLocalBtManager(getActivity());
@@ -66,11 +69,16 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
 
         mDeviceListGroup = (PreferenceCategory) findPreference(KEY_BT_DEVICE_LIST);
     }
+
     void setDeviceListGroup(PreferenceGroup preferenceGroup) {
         mDeviceListGroup = preferenceGroup;
     }
-    /** Add preferences from the subclass. */
+
+    /**
+     * Add preferences from the subclass.
+     */
     abstract void addPreferencesForActivity();
+
     @Override
     public void onResume() {
         super.onResume();
@@ -93,6 +101,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
         mLocalManager.setForegroundActivity(null);
         mLocalManager.getEventManager().unregisterCallback(this);
     }
+
     void removeAllDevices() {
         mLocalAdapter.stopScanning();
         mDevicePreferenceMap.clear();
@@ -106,6 +115,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
             onDeviceAdded(cachedDevice);
         }
     }
+
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         if (KEY_BT_SCAN.equals(preference.getKey())) {
@@ -123,6 +133,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
 
         return super.onPreferenceTreeClick(preference);
     }
+
     void onDevicePreferenceClick(BluetoothDevicePreference btPreference) {
         btPreference.onClicked();
     }
@@ -166,6 +177,7 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
 
     /**
      * Overridden in {@link BluetoothSettings} to add a listener.
+     *
      * @param preference the newly added preference
      */
     void initDevicePreference(BluetoothDevicePreference preference) {
@@ -195,7 +207,8 @@ public abstract class BaseDevicePickerFragment extends LeanbackPreferenceFragmen
         }
     }
 
-    public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) { }
+    public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
+    }
 
     protected Preference getCachedPreference(String key) {
         return mPreferenceCache != null ? mPreferenceCache.remove(key) : null;

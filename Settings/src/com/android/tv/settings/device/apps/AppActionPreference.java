@@ -41,7 +41,7 @@ public abstract class AppActionPreference extends Preference {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder()
                     .title(getString(android.R.string.ok))
                     .id(ID_OK)

@@ -93,10 +93,14 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
 
     private static final String DELIMITER = ";";
 
-    /** Key for extra passed in from calling fragment for the userId of the user being edited */
+    /**
+     * Key for extra passed in from calling fragment for the userId of the user being edited
+     */
     public static final String EXTRA_USER_ID = "user_id";
 
-    /** Key for extra passed in from calling fragment to indicate if this is a newly created user */
+    /**
+     * Key for extra passed in from calling fragment to indicate if this is a newly created user
+     */
     public static final String EXTRA_NEW_USER = "new_user";
 
     private boolean mFirstTime = true;
@@ -371,8 +375,8 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
         final int flags = pi.applicationInfo.flags;
         final int privateFlags = pi.applicationInfo.privateFlags;
         // Return true if it is installed and not hidden
-        return ((flags& ApplicationInfo.FLAG_INSTALLED) != 0
-                && (privateFlags&ApplicationInfo.PRIVATE_FLAG_HIDDEN) == 0);
+        return ((flags & ApplicationInfo.FLAG_INSTALLED) != 0
+                && (privateFlags & ApplicationInfo.PRIVATE_FLAG_HIDDEN) == 0);
     }
 
     private void populateApps() {
@@ -608,7 +612,7 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
                                 break;
                             case RestrictionEntry.TYPE_MULTI_SELECT:
                                 Set<String> set = (Set<String>) newValue;
-                                String [] selectedValues = new String[set.size()];
+                                String[] selectedValues = new String[set.size()];
                                 set.toArray(selectedValues);
                                 entry.setAllSelectedStrings(selectedValues);
                                 break;
@@ -628,11 +632,12 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
 
     /**
      * Send a broadcast to the app to query its restrictions
+     *
      * @param packageName package name of the app with restrictions
-     * @param preference the preference item for the app toggle
+     * @param preference  the preference item for the app toggle
      */
     private void requestRestrictionsForApp(String packageName,
-            AppRestrictionsPreference preference) {
+                                           AppRestrictionsPreference preference) {
         Bundle oldEntries =
                 mUserManager.getApplicationRestrictions(packageName, mUser);
         Intent intent = new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
@@ -682,7 +687,7 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
     }
 
     private void onRestrictionsReceived(AppRestrictionsPreference preference,
-            ArrayList<RestrictionEntry> restrictions) {
+                                        ArrayList<RestrictionEntry> restrictions) {
         // Remove any earlier restrictions
         preference.removeAll();
         // Non-custom-activity case - expand the restrictions in-place
@@ -695,7 +700,7 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
                     p = new SwitchPreference(themedContext);
                     p.setTitle(entry.getTitle());
                     p.setSummary(entry.getDescription());
-                    ((SwitchPreference)p).setChecked(entry.getSelectedState());
+                    ((SwitchPreference) p).setChecked(entry.getSelectedState());
                     break;
                 case RestrictionEntry.TYPE_CHOICE:
                 case RestrictionEntry.TYPE_CHOICE_LEVEL:
@@ -707,20 +712,20 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
                     }
                     p.setSummary(findInArray(entry.getChoiceEntries(), entry.getChoiceValues(),
                             value));
-                    ((ListPreference)p).setEntryValues(entry.getChoiceValues());
-                    ((ListPreference)p).setEntries(entry.getChoiceEntries());
-                    ((ListPreference)p).setValue(value);
-                    ((ListPreference)p).setDialogTitle(entry.getTitle());
+                    ((ListPreference) p).setEntryValues(entry.getChoiceValues());
+                    ((ListPreference) p).setEntries(entry.getChoiceEntries());
+                    ((ListPreference) p).setValue(value);
+                    ((ListPreference) p).setDialogTitle(entry.getTitle());
                     break;
                 case RestrictionEntry.TYPE_MULTI_SELECT:
                     p = new MultiSelectListPreference(themedContext);
                     p.setTitle(entry.getTitle());
-                    ((MultiSelectListPreference)p).setEntryValues(entry.getChoiceValues());
-                    ((MultiSelectListPreference)p).setEntries(entry.getChoiceEntries());
+                    ((MultiSelectListPreference) p).setEntryValues(entry.getChoiceValues());
+                    ((MultiSelectListPreference) p).setEntries(entry.getChoiceEntries());
                     HashSet<String> set = new HashSet<>();
                     Collections.addAll(set, entry.getAllSelectedStrings());
-                    ((MultiSelectListPreference)p).setValues(set);
-                    ((MultiSelectListPreference)p).setDialogTitle(entry.getTitle());
+                    ((MultiSelectListPreference) p).setValues(set);
+                    ((MultiSelectListPreference) p).setDialogTitle(entry.getTitle());
                     break;
                 case RestrictionEntry.TYPE_NULL:
                 default:
@@ -787,7 +792,7 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
     }
 
     private String findInArray(String[] choiceEntries, String[] choiceValues,
-            String selectedString) {
+                               String selectedString) {
         for (int i = 0; i < choiceValues.length; i++) {
             if (choiceValues[i].equals(selectedString)) {
                 return choiceEntries[i];
@@ -798,8 +803,9 @@ public class AppRestrictionsFragment extends LeanbackPreferenceFragment implemen
 
     /**
      * Queries for the UserInfo of a user. Returns null if the user doesn't exist (was removed).
+     *
      * @param userManager Instance of UserManager
-     * @param checkUser The user to check the existence of.
+     * @param checkUser   The user to check the existence of.
      * @return UserInfo of the user or null for non-existent user.
      */
     public static UserInfo getExistingUser(UserManager userManager, UserHandle checkUser) {

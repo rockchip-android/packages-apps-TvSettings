@@ -30,13 +30,14 @@ import android.widget.RelativeLayout;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
 import com.android.tv.settings.R;
 import com.android.tv.settings.data.ConstData;
 import com.android.tv.settings.util.ReflectUtils;
 
 import android.os.SystemProperties;
-public class ScreenScaleActivity extends Activity
-{
+
+public class ScreenScaleActivity extends Activity {
     private static final String TAG = "ScreenScaleActivity";
     private final int RightButtonPressed = 0;
     private final int LeftButttonPressed = 1;
@@ -87,105 +88,103 @@ public class ScreenScaleActivity extends Activity
      * 底部缩放
      */
     private int mBottomScale = 100;
-    private void getScreenSize()
-    {
+
+    private void getScreenSize() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
         mScreenWidth = displayMetrics.widthPixels;
         mScreenHeight = displayMetrics.heightPixels;
         mDensityDpi = displayMetrics.densityDpi;
-        mDpiRatio = ((float)mDefaultDpi)/(float)displayMetrics.densityDpi;
-        Log.d("ScreenSettingActivity","displayMetrics.densityDpi is: " + mDensityDpi);
-        Log.d("ScreenSettingActivity","displayMetrics.widthPixels is: " + mScreenWidth);
-        Log.d("ScreenSettingActivity","displayMetrics.heightPixels is: " + mScreenHeight);
+        mDpiRatio = ((float) mDefaultDpi) / (float) displayMetrics.densityDpi;
+        Log.d("ScreenSettingActivity", "displayMetrics.densityDpi is: " + mDensityDpi);
+        Log.d("ScreenSettingActivity", "displayMetrics.widthPixels is: " + mScreenWidth);
+        Log.d("ScreenSettingActivity", "displayMetrics.heightPixels is: " + mScreenHeight);
     }
 
-    private Bitmap bitMapScale(int id)
-    {
-        Bitmap map = BitmapFactory.decodeResource(this.getResources(),id);
-        float scale = mScreenWidth/1280f*mDpiRatio;
-        int width = (int)((float)map.getWidth()*scale);
-        int height = (int)((float)map.getHeight()*scale);
+    private Bitmap bitMapScale(int id) {
+        Bitmap map = BitmapFactory.decodeResource(this.getResources(), id);
+        float scale = mScreenWidth / 1280f * mDpiRatio;
+        int width = (int) ((float) map.getWidth() * scale);
+        int height = (int) ((float) map.getHeight() * scale);
 
         Bitmap resize = Bitmap.createScaledBitmap(map, width, height, true);
         return resize;
     }
 
-    private void createView()
-    {
-        int centerX = mScreenWidth/2;
-        int y = mScreenHeight/5;
+    private void createView() {
+        int centerX = mScreenWidth / 2;
+        int y = mScreenHeight / 5;
 
-        ImageView touch_up = (ImageView)findViewById(R.id.screen_touch_up);
+        ImageView touch_up = (ImageView) findViewById(R.id.screen_touch_up);
         Bitmap map = bitMapScale(R.drawable.screen_vertical_reduce);
-        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        param.setMargins(centerX-map.getWidth()/2, y, 0, 0);
+        param.setMargins(centerX - map.getWidth() / 2, y, 0, 0);
 
-        y += map.getHeight()+10;
+        y += map.getHeight() + 10;
         touch_up.setLayoutParams(param);
 
-        mUpButton = (ImageView)findViewById(R.id.button_up);
+        mUpButton = (ImageView) findViewById(R.id.button_up);
         map = bitMapScale(R.drawable.button_vertical_up);
-        y += map.getHeight()+10;
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        y += map.getHeight() + 10;
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.BELOW, R.id.screen_touch_up);
-        param.setMargins(centerX-map.getWidth()/2, 10, 0, 0);
+        param.setMargins(centerX - map.getWidth() / 2, 10, 0, 0);
         mUpButton.setLayoutParams(param);
 
-        ImageView ok = (ImageView)findViewById(R.id.button_ok);
+        ImageView ok = (ImageView) findViewById(R.id.button_ok);
         Bitmap okmap = bitMapScale(R.drawable.ok);
-        y += okmap.getHeight()/2;
-        param = new RelativeLayout.LayoutParams(okmap.getWidth(),okmap.getHeight());
+        y += okmap.getHeight() / 2;
+        param = new RelativeLayout.LayoutParams(okmap.getWidth(), okmap.getHeight());
         param.addRule(RelativeLayout.BELOW, R.id.button_up);
-        param.setMargins(centerX-okmap.getWidth()/2, 10, 0, 0);
+        param.setMargins(centerX - okmap.getWidth() / 2, 10, 0, 0);
         ok.setLayoutParams(param);
 
-        mDownButton = (ImageView)findViewById(R.id.button_down);
+        mDownButton = (ImageView) findViewById(R.id.button_down);
         map = bitMapScale(R.drawable.button_vertical_down);
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.BELOW, R.id.button_ok);
-        param.setMargins(centerX-map.getWidth()/2, 10, 0, 0);
+        param.setMargins(centerX - map.getWidth() / 2, 10, 0, 0);
         mDownButton.setLayoutParams(param);
 
-        ImageView touch_down = (ImageView)findViewById(R.id.screen_touch_down);
+        ImageView touch_down = (ImageView) findViewById(R.id.screen_touch_down);
         map = bitMapScale(R.drawable.screen_vertical_add);
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.BELOW, R.id.button_down);
-        param.setMargins(centerX-map.getWidth()/2, 10, 0, 0);
+        param.setMargins(centerX - map.getWidth() / 2, 10, 0, 0);
         touch_down.setLayoutParams(param);
 
 
-        mLeftButton = (ImageView)findViewById(R.id.button_left);
+        mLeftButton = (ImageView) findViewById(R.id.button_left);
         map = bitMapScale(R.drawable.button_left);
-        int x = -okmap.getWidth()/2-10-map.getWidth()/2;
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        int x = -okmap.getWidth() / 2 - 10 - map.getWidth() / 2;
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.ALIGN_LEFT, R.id.button_ok);
-        param.setMargins(x, y-map.getHeight()/2, 0, 0);
+        param.setMargins(x, y - map.getHeight() / 2, 0, 0);
         mLeftButton.setLayoutParams(param);
 
-        ImageView left = (ImageView)findViewById(R.id.screen_button_left);
+        ImageView left = (ImageView) findViewById(R.id.screen_button_left);
         map = bitMapScale(R.drawable.screen_horizontal_reduce);
-        x += -map.getWidth()/2-10;
-        RelativeLayout.LayoutParams param0 = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        x += -map.getWidth() / 2 - 10;
+        RelativeLayout.LayoutParams param0 = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param0.addRule(RelativeLayout.ALIGN_LEFT, R.id.button_left);
-        param0.setMargins(x, y-map.getHeight()/2, 0, 0);
+        param0.setMargins(x, y - map.getHeight() / 2, 0, 0);
         left.setLayoutParams(param0);
 
-        mRightButton = (ImageView)findViewById(R.id.button_right);
+        mRightButton = (ImageView) findViewById(R.id.button_right);
         map = bitMapScale(R.drawable.button_right);
-        x = okmap.getWidth()/2+10+map.getWidth()/2;
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        x = okmap.getWidth() / 2 + 10 + map.getWidth() / 2;
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.ALIGN_RIGHT, R.id.button_ok);
-        param.setMargins(0, y-map.getHeight()/2,-x, 0);
+        param.setMargins(0, y - map.getHeight() / 2, -x, 0);
         mRightButton.setLayoutParams(param);
 
-        ImageView right = (ImageView)findViewById(R.id.screen_button_right);
+        ImageView right = (ImageView) findViewById(R.id.screen_button_right);
         map = bitMapScale(R.drawable.screen_horizontal_add);
-        x += 10+map.getWidth()/2;
-        param = new RelativeLayout.LayoutParams(map.getWidth(),map.getHeight());
+        x += 10 + map.getWidth() / 2;
+        param = new RelativeLayout.LayoutParams(map.getWidth(), map.getHeight());
         param.addRule(RelativeLayout.ALIGN_RIGHT, R.id.button_right);
-        param.setMargins(0, y-map.getHeight()/2,-x, 0);
+        param.setMargins(0, y - map.getHeight() / 2, -x, 0);
         right.setLayoutParams(param);
 
         mRightButton.setOnClickListener(mOnClick);
@@ -200,23 +199,22 @@ public class ScreenScaleActivity extends Activity
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content
         // doesn't resize when the system bars hide and show.
-        if (Build.VERSION.SDK_INT >= 19){
+        if (Build.VERSION.SDK_INT >= 19) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
         //full screen
@@ -241,19 +239,16 @@ public class ScreenScaleActivity extends Activity
 
         try {
             mDisplayOutputManager = new DisplayOutputManager();
-        }catch (RemoteException doe) {
+        } catch (RemoteException doe) {
 
         }
     }
 
-    private View.OnClickListener mOnClick = new View.OnClickListener()
-    {
-        public void onClick(View v)
-        {
+    private View.OnClickListener mOnClick = new View.OnClickListener() {
+        public void onClick(View v) {
             int id = v.getId();
             int scalevalue;
-            switch(id)
-            {
+            switch (id) {
                 case R.id.button_right:
                     LOGD("button_right");
                     rightClick(true);
@@ -281,18 +276,18 @@ public class ScreenScaleActivity extends Activity
         if (mkeylast != keyCode) {
             mkeylast = keyCode;
             switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                rightClick(false);
-                break;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                leftClick(false);
-                break;
-            case KeyEvent.KEYCODE_DPAD_UP:
-                upClick(false);
-                break;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                downClick(false);
-                break;
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    rightClick(false);
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    leftClick(false);
+                    break;
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    upClick(false);
+                    break;
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    downClick(false);
+                    break;
             }
         } else {
             mkeylast = -1;
@@ -301,12 +296,9 @@ public class ScreenScaleActivity extends Activity
         return super.dispatchKeyEvent(event);
     }
 
-    private Handler mHandler = new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case RightButtonResume:
                     mRightButton.setImageResource(R.drawable.button_vertical_right);
                     break;
@@ -323,137 +315,141 @@ public class ScreenScaleActivity extends Activity
         }
     };
 
-    private void LOGD(String msg)
-    {
-        if(true)
-            Log.d("ScreenSettingActivity",msg);
+    private void LOGD(String msg) {
+        if (true)
+            Log.d("ScreenSettingActivity", msg);
     }
-    private void rightClick(boolean isClick){
-        if(mIsUseDisplayd && mDisplayOutputManager != null) {
+
+    private void rightClick(boolean isClick) {
+        if (mIsUseDisplayd && mDisplayOutputManager != null) {
             int scalevalue = mDisplayOutputManager.getOverScan(mDisplayOutputManager.MAIN_DISPLAY).right + 1;
-            if (scalevalue > MAX_SCALE){
+            if (scalevalue > MAX_SCALE) {
                 scalevalue = MAX_SCALE;
             }
-            if(scalevalue >=0 ){
-                if(mDisplayInfo.getDisplayId() == 0){
+            if (scalevalue >= 0) {
+                if (mDisplayInfo.getDisplayId() == 0) {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.MAIN_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_X, scalevalue);
-                }else{
+                } else {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.AUX_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_X, scalevalue);
                 }
             }
-        }else if(!mIsUseDisplayd){
+        } else if (!mIsUseDisplayd) {
             mLeftScale += 1;
-            if(mLeftScale > MAX_SCALE)
+            if (mLeftScale > MAX_SCALE)
                 mLeftScale = MAX_SCALE;
             setOverScanProperty(ConstData.ScaleDirection.RIGHT);
         }
-        if(!isClick){
+        if (!isClick) {
             mRightButton.setImageResource(R.drawable.button_right_pressed);
             mHandler.removeMessages(RightButtonResume);
-            mHandler.sendEmptyMessageDelayed(RightButtonResume,100);
+            mHandler.sendEmptyMessageDelayed(RightButtonResume, 100);
         }
     }
-    private void leftClick(boolean isClick){
-        if(mIsUseDisplayd && mDisplayOutputManager != null) {
+
+    private void leftClick(boolean isClick) {
+        if (mIsUseDisplayd && mDisplayOutputManager != null) {
             int scalevalue = mDisplayOutputManager.getOverScan(mDisplayOutputManager.MAIN_DISPLAY).left - 1;
-            if (scalevalue < MIN_SCALE){
+            if (scalevalue < MIN_SCALE) {
                 scalevalue = MIN_SCALE;
             }
-            if(scalevalue >=0){
-                if(mDisplayInfo.getDisplayId() == 0){
+            if (scalevalue >= 0) {
+                if (mDisplayInfo.getDisplayId() == 0) {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.MAIN_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_X, scalevalue);
-                }else{
+                } else {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.AUX_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_X, scalevalue);
                 }
             }
-        }else if(!mIsUseDisplayd){
+        } else if (!mIsUseDisplayd) {
             mLeftScale -= 1;
-            if(mLeftScale < MIN_SCALE)
+            if (mLeftScale < MIN_SCALE)
                 mLeftScale = MIN_SCALE;
             setOverScanProperty(ConstData.ScaleDirection.LEFT);
         }
-        if(!isClick){
+        if (!isClick) {
             mLeftButton.setImageResource(R.drawable.button_left_pressed);
             mHandler.removeMessages(LeftButtonResume);
-            mHandler.sendEmptyMessageDelayed(LeftButtonResume,100);
+            mHandler.sendEmptyMessageDelayed(LeftButtonResume, 100);
         }
     }
-    private void upClick(boolean isClick){
+
+    private void upClick(boolean isClick) {
         // add code here
-        if(mIsUseDisplayd && mDisplayOutputManager != null) {
+        if (mIsUseDisplayd && mDisplayOutputManager != null) {
             int scalevalue = mDisplayOutputManager.getOverScan(mDisplayOutputManager.MAIN_DISPLAY).top - 1;
-            if (scalevalue < MIN_SCALE){
+            if (scalevalue < MIN_SCALE) {
                 scalevalue = MIN_SCALE;
             }
-            if(scalevalue >=0){
-                if(mDisplayInfo.getDisplayId() == 0){
+            if (scalevalue >= 0) {
+                if (mDisplayInfo.getDisplayId() == 0) {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.MAIN_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_Y, scalevalue);
-                }else{
+                } else {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.AUX_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_Y, scalevalue);
                 }
             }
-        }else if(!mIsUseDisplayd){
+        } else if (!mIsUseDisplayd) {
             mBottomScale -= 1;
-            if(mBottomScale < MIN_SCALE)
+            if (mBottomScale < MIN_SCALE)
                 mBottomScale = MIN_SCALE;
             setOverScanProperty(ConstData.ScaleDirection.TOP);
         }
-        if(!isClick){
+        if (!isClick) {
             mUpButton.setImageResource(R.drawable.button_vertical_up_pressed);
             mHandler.removeMessages(UpButtonResume);
-            mHandler.sendEmptyMessageDelayed(UpButtonResume,100);
+            mHandler.sendEmptyMessageDelayed(UpButtonResume, 100);
         }
     }
-    private void downClick(boolean isClick){
-        if(mIsUseDisplayd && mDisplayOutputManager != null) {
+
+    private void downClick(boolean isClick) {
+        if (mIsUseDisplayd && mDisplayOutputManager != null) {
             int scalevalue = mDisplayOutputManager.getOverScan(mDisplayOutputManager.MAIN_DISPLAY).bottom + 1;
-            if (scalevalue > MAX_SCALE){
+            if (scalevalue > MAX_SCALE) {
                 scalevalue = MAX_SCALE;
             }
-            if(scalevalue >=0 ){
-                if(mDisplayInfo.getDisplayId() == 0){
+            if (scalevalue >= 0) {
+                if (mDisplayInfo.getDisplayId() == 0) {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.MAIN_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_Y, scalevalue);
-                }else{
+                } else {
                     mDisplayOutputManager.setOverScan(mDisplayOutputManager.AUX_DISPLAY, mDisplayOutputManager.DISPLAY_OVERSCAN_Y, scalevalue);
                 }
             }
-        }else if(!mIsUseDisplayd){
+        } else if (!mIsUseDisplayd) {
             mBottomScale += 1;
-            if(mBottomScale > MAX_SCALE)
+            if (mBottomScale > MAX_SCALE)
                 mBottomScale = MAX_SCALE;
             setOverScanProperty(ConstData.ScaleDirection.BOTTOM);
         }
-        if(!isClick){
+        if (!isClick) {
             mDownButton.setImageResource(R.drawable.button_vertical_down_pressed);
             mHandler.removeMessages(DownButtonResume);
-            mHandler.sendEmptyMessageDelayed(DownButtonResume,100);
+            mHandler.sendEmptyMessageDelayed(DownButtonResume, 100);
         }
     }
+
     /**
      * 初始化数据
      */
-    public void initData(){
-       mPlatform = getIntent().getStringExtra(ConstData.IntentKey.PLATFORM);
-       mIsUseDisplayd = SystemProperties.getBoolean("ro.rk.displayd.enable", true);
-       mDisplayInfo = (DisplayInfo)getIntent().getSerializableExtra(ConstData.IntentKey.DISPLAY_INFO);
-       String overScan;
-       if(!mIsUseDisplayd){
-          if(mDisplayInfo.getDisplayId() == 0){
-              overScan = SystemProperties.get(PROPERTY_OVERSCAN_MAIN);
-          }else{
-              overScan = SystemProperties.get(PROPERTY_OVERSCAN_AUX);
-          }
-          if(TextUtils.isEmpty(overScan))
-                  return;
-          try{
-              mLeftScale = Integer.parseInt(overScan.split(",")[0].split("\\s+")[1]);
-          }catch (Exception e){
-          }
-          try{
-              mBottomScale = Integer.parseInt(overScan.split(",")[3]);
-          }catch (Exception e){
-          }
-       }
+    public void initData() {
+        mPlatform = getIntent().getStringExtra(ConstData.IntentKey.PLATFORM);
+        mIsUseDisplayd = SystemProperties.getBoolean("ro.rk.displayd.enable", true);
+        mDisplayInfo = (DisplayInfo) getIntent().getSerializableExtra(ConstData.IntentKey.DISPLAY_INFO);
+        String overScan;
+        if (!mIsUseDisplayd) {
+            if (mDisplayInfo.getDisplayId() == 0) {
+                overScan = SystemProperties.get(PROPERTY_OVERSCAN_MAIN);
+            } else {
+                overScan = SystemProperties.get(PROPERTY_OVERSCAN_AUX);
+            }
+            if (TextUtils.isEmpty(overScan))
+                return;
+            try {
+                mLeftScale = Integer.parseInt(overScan.split(",")[0].split("\\s+")[1]);
+            } catch (Exception e) {
+            }
+            try {
+                mBottomScale = Integer.parseInt(overScan.split(",")[3]);
+            } catch (Exception e) {
+            }
+        }
     }
 
     private void setOverScanProperty(int direction) {
@@ -466,21 +462,21 @@ public class ScreenScaleActivity extends Activity
         if (rkDisplayOutputManager == null)
             return;
         switch (direction) {
-        case ConstData.ScaleDirection.LEFT:
-        case ConstData.ScaleDirection.RIGHT:
-            Log.i(TAG, "setOverScanProperty->time1:" + System.currentTimeMillis());
-            ReflectUtils.invokeMethod(rkDisplayOutputManager, "setOverScan", new Class[] { int.class, int.class, int.class }, new Object[] { mDisplayInfo.getDisplayId(), 0, mLeftScale });
-            Log.i(TAG, "setOverScanProperty->time2:" + System.currentTimeMillis());
-            break;
-        case ConstData.ScaleDirection.TOP:
-        case ConstData.ScaleDirection.BOTTOM:
-            ReflectUtils.invokeMethod(rkDisplayOutputManager, "setOverScan", new Class[] { int.class, int.class, int.class }, new Object[] { mDisplayInfo.getDisplayId(), 1, mBottomScale });
-            break;
-        default:
-            break;
+            case ConstData.ScaleDirection.LEFT:
+            case ConstData.ScaleDirection.RIGHT:
+                Log.i(TAG, "setOverScanProperty->time1:" + System.currentTimeMillis());
+                ReflectUtils.invokeMethod(rkDisplayOutputManager, "setOverScan", new Class[]{int.class, int.class, int.class}, new Object[]{mDisplayInfo.getDisplayId(), 0, mLeftScale});
+                Log.i(TAG, "setOverScanProperty->time2:" + System.currentTimeMillis());
+                break;
+            case ConstData.ScaleDirection.TOP:
+            case ConstData.ScaleDirection.BOTTOM:
+                ReflectUtils.invokeMethod(rkDisplayOutputManager, "setOverScan", new Class[]{int.class, int.class, int.class}, new Object[]{mDisplayInfo.getDisplayId(), 1, mBottomScale});
+                break;
+            default:
+                break;
         }
 
         // save config
-        ReflectUtils.invokeMethod(rkDisplayOutputManager, "saveConfig", new Class[] { }, new Object[] { });
+        ReflectUtils.invokeMethod(rkDisplayOutputManager, "saveConfig", new Class[]{}, new Object[]{});
     }
 }

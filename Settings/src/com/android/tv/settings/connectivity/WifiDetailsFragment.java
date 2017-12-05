@@ -208,7 +208,7 @@ public class WifiDetailsFragment extends LeanbackPreferenceFragment
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             final Context context = getContext();
             actions.add(new GuidedAction.Builder(context)
                     .clickAction(GuidedAction.ACTION_ID_OK)

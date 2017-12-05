@@ -46,7 +46,7 @@ public class TtsEnginePreference extends Preference {
     private RadioButton mRadioButton;
 
     public TtsEnginePreference(Context context, TextToSpeech.EngineInfo info,
-            RadioButtonGroupState state) {
+                               RadioButtonGroupState state) {
         super(context);
         setWidgetLayoutResource(R.layout.radio_preference_widget);
 
@@ -102,7 +102,7 @@ public class TtsEnginePreference extends Preference {
     }
 
     private void onRadioButtonClicked(final Checkable buttonView,
-            boolean isChecked) {
+                                      boolean isChecked) {
         if (mSharedState.getCurrentChecked() == buttonView) {
             return;
         }
@@ -148,9 +148,11 @@ public class TtsEnginePreference extends Preference {
      */
     public interface RadioButtonGroupState {
         String getCurrentKey();
+
         Checkable getCurrentChecked();
 
         void setCurrentKey(String key);
+
         void setCurrentChecked(Checkable current);
     }
 

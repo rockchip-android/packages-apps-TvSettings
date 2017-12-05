@@ -85,7 +85,7 @@ public class EditProxySettingsActivity extends WifiMultiPagedFormActivity
     @Override
     protected boolean onPageComplete(WifiFormPageType formPageType, FormPage formPage) {
 
-        switch(formPageType) {
+        switch (formPageType) {
             case SAVE:
                 switch (Integer.valueOf(formPage.getDataSummary())) {
                     case SaveWifiConfigurationFragment.RESULT_FAILURE:
@@ -121,7 +121,7 @@ public class EditProxySettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         WifiFormPageType formPageType = getFormPageType(formPage);
         if (formPageType == WifiFormPageType.SAVE) {
             mSavePage = formPage;

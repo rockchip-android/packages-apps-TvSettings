@@ -109,7 +109,7 @@ public class DateTimeFragment extends LeanbackPreferenceFragment implements
     public void onResume() {
         super.onResume();
 
-        ((SwitchPreference)mTime24Pref).setChecked(is24Hour());
+        ((SwitchPreference) mTime24Pref).setChecked(is24Hour());
 
         // Register for time ticks and other reasons for time change
         IntentFilter filter = new IntentFilter();
@@ -179,7 +179,7 @@ public class DateTimeFragment extends LeanbackPreferenceFragment implements
     private void set24Hour(boolean is24Hour) {
         Settings.System.putString(getActivity().getContentResolver(),
                 Settings.System.TIME_12_24,
-                is24Hour? HOURS_24 : HOURS_12);
+                is24Hour ? HOURS_24 : HOURS_12);
     }
 
     private void setAutoDateTime(boolean on) {
@@ -194,7 +194,7 @@ public class DateTimeFragment extends LeanbackPreferenceFragment implements
 
         int value = Settings.Global.getInt(getActivity().getContentResolver(),
                 Settings.Global.AUTO_TIME, 0);
-        if(value > 0) {
+        if (value > 0) {
             return AUTO_DATE_TIME_NTP;
         }
 

@@ -24,7 +24,9 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+
 import java.io.IOException;
+
 import android.util.Log;
 
 
@@ -55,7 +57,7 @@ public class AddAccountWithTypeActivity extends Activity {
                 } else {
                     startActivityForResult(addAccountIntent, REQUEST_ADD_ACCOUNT);
                 }
-            } catch (IOException|AuthenticatorException|OperationCanceledException e) {
+            } catch (IOException | AuthenticatorException | OperationCanceledException e) {
                 Log.e(TAG, "Failed to get add account intent: ", e);
                 setResultAndFinish(Activity.RESULT_CANCELED);
             }
@@ -88,9 +90,9 @@ public class AddAccountWithTypeActivity extends Activity {
 
     private void startAccountTypePicker(String[] allowedTypes) {
         Intent i = new Intent(CHOOSE_ACCOUNT_TYPE_ACTION);
-        if(null == i.resolveActivity(getPackageManager())){
+        if (null == i.resolveActivity(getPackageManager())) {
             i = new Intent(NORMAL_CHOOSE_ACCOUNT_TYPE_ACTION);
-        } 
+        }
         i.putExtra(EXTRA_ALLOWABLE_ACCOUNT_TYPES_STRING_ARRAY, allowedTypes);
         startActivityForResult(i, REQUEST_CHOOSE_ACCOUNT_TYPE);
     }

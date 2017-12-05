@@ -73,7 +73,7 @@ public class WifiApEnabler {
     };
 
     public WifiApEnabler(Context context, DataSaverBackend dataSaverBackend,
-            SwitchPreference switchPreference) {
+                         SwitchPreference switchPreference) {
         mContext = context;
         mDataSaverBackend = dataSaverBackend;
         mSwitch = switchPreference;
@@ -102,7 +102,7 @@ public class WifiApEnabler {
     private void enableWifiSwitch() {
         boolean isAirplaneMode = Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
-        if(!isAirplaneMode) {
+        if (!isAirplaneMode) {
             mSwitch.setEnabled(!mDataSaverBackend.isDataSaverEnabled());
         } else {
             mSwitch.setSummary(mOriginalSummary);
@@ -114,8 +114,8 @@ public class WifiApEnabler {
         String s = mContext.getString(
                 com.android.internal.R.string.wifi_tether_configure_ssid_default);
         mSwitch.setSummary(String.format(
-                    mContext.getString(R.string.wifi_tether_enabled_subtext),
-                    (wifiConfig == null) ? s : wifiConfig.SSID));
+                mContext.getString(R.string.wifi_tether_enabled_subtext),
+                (wifiConfig == null) ? s : wifiConfig.SSID));
     }
 
     private void updateTetherState(Object[] available, Object[] tethered, Object[] errored) {
@@ -123,13 +123,13 @@ public class WifiApEnabler {
         boolean wifiErrored = false;
 
         for (Object o : tethered) {
-            String s = (String)o;
+            String s = (String) o;
             for (String regex : mWifiRegexs) {
                 if (s.matches(regex)) wifiTethered = true;
             }
         }
-        for (Object o: errored) {
-            String s = (String)o;
+        for (Object o : errored) {
+            String s = (String) o;
             for (String regex : mWifiRegexs) {
                 if (s.matches(regex)) wifiErrored = true;
             }

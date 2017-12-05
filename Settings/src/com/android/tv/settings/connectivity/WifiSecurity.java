@@ -57,10 +57,14 @@ public enum WifiSecurity {
 
     public static WifiSecurity getSecurity(AccessPoint accessPoint) {
         switch (accessPoint.getSecurity()) {
-            case AccessPoint.SECURITY_WEP: return WEP;
-            case AccessPoint.SECURITY_PSK: return PSK;
-            case AccessPoint.SECURITY_EAP: return EAP;
-            case AccessPoint.SECURITY_NONE: return NONE;
+            case AccessPoint.SECURITY_WEP:
+                return WEP;
+            case AccessPoint.SECURITY_PSK:
+                return PSK;
+            case AccessPoint.SECURITY_EAP:
+                return EAP;
+            case AccessPoint.SECURITY_NONE:
+                return NONE;
         }
 
         throw new IllegalArgumentException("Unknown security type");

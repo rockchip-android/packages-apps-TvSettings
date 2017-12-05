@@ -51,8 +51,8 @@ public class AdvancedWifiOptionsFlow {
         boolean choiceChosen(FormPage formPage, int choiceResourceId);
     }
 
-    private static final String TAG = "AdvancedWifiOptionsFlow"; 
-    
+    private static final String TAG = "AdvancedWifiOptionsFlow";
+
     public static final int RESULT_UNKNOWN_PAGE = 0;
     public static final int RESULT_PAGE_HANDLED = 1;
     public static final int RESULT_ALL_PAGES_COMPLETE = 2;
@@ -79,7 +79,7 @@ public class AdvancedWifiOptionsFlow {
     private final boolean mSettingsFlow;
 
     public AdvancedWifiOptionsFlow(Context context, PageHandler pageHandler,
-            NetworkConfiguration initialConfiguration) {
+                                   NetworkConfiguration initialConfiguration) {
         mContext = context;
         mPageHandler = pageHandler;
         mAskFirst = false;
@@ -92,7 +92,7 @@ public class AdvancedWifiOptionsFlow {
     }
 
     public AdvancedWifiOptionsFlow(Context context, PageHandler pageHandler, boolean askFirst,
-            NetworkConfiguration initialConfiguration) {
+                                   NetworkConfiguration initialConfiguration) {
         mContext = context;
         mPageHandler = pageHandler;
         mAskFirst = askFirst;
@@ -115,17 +115,17 @@ public class AdvancedWifiOptionsFlow {
     public WifiFormPageType getInitialIpSettingsPage() {
         return WifiFormPageType.IP_SETTINGS;
     }
-    
+
     public WifiFormPageType getInitialPppoeSettingsPage() {
         return WifiFormPageType.PPPOE_USERNAME;
     }
 
     /**
      * @param formPageType the type of page that completed.
-     * @param formPage the page that complete.
+     * @param formPage     the page that complete.
      * @return RESULT_PAGE_HANDLED if the page has been handled.
-     *         RESULT_UNKNOWN_PAGE if the page is unrecognized and was ignored.
-     *         RESULT_ALL_PAGES_COMPLETE if all pages have been completed.
+     * RESULT_UNKNOWN_PAGE if the page is unrecognized and was ignored.
+     * RESULT_ALL_PAGES_COMPLETE if all pages have been completed.
      */
     public int handlePageComplete(WifiFormPageType formPageType, FormPage formPage) {
 
@@ -186,7 +186,7 @@ public class AdvancedWifiOptionsFlow {
                 if (mPageHandler.choiceChosen(formPage, R.string.wifi_action_dhcp)) {
                     processIpSettings();
                     return RESULT_ALL_PAGES_COMPLETE;
-                }else{
+                } else {
                     mPageHandler.addPage(WifiFormPageType.IP_ADDRESS);
                 }
                 break;
@@ -232,16 +232,16 @@ public class AdvancedWifiOptionsFlow {
                 int pppoeSettingsResult = processPppoeSettings();
                 if (pppoeSettingsResult == 0) {
                     return RESULT_ALL_PAGES_COMPLETE;
-                }                    
+                }
                 break;
             case PPPOE_CONNECT_FAILED:
                 mPageHandler.removePage(mPppoeunamePage);
                 mPageHandler.removePage(mPppoepwdPage);
-                if (mPageHandler.choiceChosen(formPage, R.string.wifi_action_try_again)){
+                if (mPageHandler.choiceChosen(formPage, R.string.wifi_action_try_again)) {
                     mPageHandler.addPage(WifiFormPageType.PPPOE_USERNAME);
-                     break; 
+                    break;
                 }
-                              
+
             default:
                 return RESULT_UNKNOWN_PAGE;
         }
@@ -304,12 +304,12 @@ public class AdvancedWifiOptionsFlow {
                 }
                 return mDns2Page;
             case PPPOE_USERNAME:
-                if (mPppoeunamePage == null && getPppoeUserName() != null){
+                if (mPppoeunamePage == null && getPppoeUserName() != null) {
                     return createFormPage(getPppoeUserName());
                 }
                 return mPppoeunamePage;
             case PPPOE_PASSWORD:
-                if (mPppoepwdPage == null && getPppoePassword() != null){
+                if (mPppoepwdPage == null && getPppoePassword() != null) {
                     return createFormPage(getPppoePassword());
                 }
                 return mPppoepwdPage;
@@ -348,7 +348,7 @@ public class AdvancedWifiOptionsFlow {
         try {
             return mInitialConfiguration.getIpConfiguration().getStaticIpConfiguration()
                     .dnsServers.get(index);
-        } catch (IndexOutOfBoundsException|NullPointerException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             return null;
         }
     }
@@ -368,17 +368,17 @@ public class AdvancedWifiOptionsFlow {
             return null;
         }
     }
-    
-    private String getPppoeUserName(){
-       String uname = Settings.Secure.getString(mContext.getContentResolver(),
+
+    private String getPppoeUserName() {
+        String uname = Settings.Secure.getString(mContext.getContentResolver(),
                 Settings.Secure.PPPOE_USERNAME);
         return uname;
     }
-    
-    private String getPppoePassword(){
+
+    private String getPppoePassword() {
         String pwd = Settings.Secure.getString(mContext.getContentResolver(),
                 Settings.Secure.PPPOE_PSWD);
-        return pwd;       
+        return pwd;
     }
 
     private ProxyInfo getInitialProxyInfo() {
@@ -406,7 +406,7 @@ public class AdvancedWifiOptionsFlow {
                 mAdvancedOptionsPage, R.string.wifi_action_advanced_no))
                 && !mPageHandler.choiceChosen(mProxySettingsPage, R.string.wifi_action_proxy_none);
         mIpConfiguration.setProxySettings(hasProxySettings ?
-                                          ProxySettings.STATIC : ProxySettings.NONE);
+                ProxySettings.STATIC : ProxySettings.NONE);
         if (hasProxySettings) {
             String host = mProxyHostnamePage.getDataSummary();
             String portStr = mProxyPortPage.getDataSummary();
@@ -448,7 +448,7 @@ public class AdvancedWifiOptionsFlow {
             Inet4Address inetAddr = null;
             try {
                 inetAddr = (Inet4Address) NetworkUtils.numericToInetAddress(ipAddr);
-            } catch (IllegalArgumentException|ClassCastException e) {
+            } catch (IllegalArgumentException | ClassCastException e) {
                 return R.string.wifi_ip_settings_invalid_ip_address;
             }
 
@@ -468,7 +468,7 @@ public class AdvancedWifiOptionsFlow {
                 try {
                     staticConfig.gateway =
                             (Inet4Address) NetworkUtils.numericToInetAddress(gateway);
-                } catch (IllegalArgumentException|ClassCastException e) {
+                } catch (IllegalArgumentException | ClassCastException e) {
                     return R.string.wifi_ip_settings_invalid_gateway;
                 }
             }
@@ -478,7 +478,7 @@ public class AdvancedWifiOptionsFlow {
                 try {
                     staticConfig.dnsServers.add(
                             (Inet4Address) NetworkUtils.numericToInetAddress(dns1));
-                } catch (IllegalArgumentException|ClassCastException e) {
+                } catch (IllegalArgumentException | ClassCastException e) {
                     return R.string.wifi_ip_settings_invalid_dns;
                 }
             }
@@ -488,7 +488,7 @@ public class AdvancedWifiOptionsFlow {
                 try {
                     staticConfig.dnsServers.add(
                             (Inet4Address) NetworkUtils.numericToInetAddress(dns2));
-                } catch (IllegalArgumentException|ClassCastException e) {
+                } catch (IllegalArgumentException | ClassCastException e) {
                     return R.string.wifi_ip_settings_invalid_dns;
                 }
             }
@@ -497,21 +497,21 @@ public class AdvancedWifiOptionsFlow {
         }
         return 0;
     }
-    
+
     private int processPppoeSettings() {
-        Log.d(TAG,"processPppoeSettings");
+        Log.d(TAG, "processPppoeSettings");
         String mPppoeuname = mPppoeunamePage.getDataSummary();
         String mPppoepwd = mPppoepwdPage.getDataSummary();
-        
+
         Settings.Secure.putString(mContext.getContentResolver(),
                 Settings.Secure.PPPOE_USERNAME, mPppoeuname);
         Settings.Secure.putString(mContext.getContentResolver(),
                 Settings.Secure.PPPOE_PSWD, mPppoepwd);
-        
+
         mIpConfiguration.setIpAssignment(IpAssignment.PPPOE);
         mIpConfiguration.pppoeAccount = mPppoeuname;
         mIpConfiguration.pppoePassword = mPppoepwd;
-        
+
         mEthManager.disconnect("eth0");
         return 0;
     }

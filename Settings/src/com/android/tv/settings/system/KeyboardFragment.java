@@ -121,7 +121,6 @@ public class KeyboardFragment extends LeanbackPreferenceFragment {
     }
 
 
-
     private void setInputMethod(String imid) {
         if (imid == null) {
             throw new IllegalArgumentException("Null ID");
@@ -148,7 +147,7 @@ public class KeyboardFragment extends LeanbackPreferenceFragment {
         List<InputMethodInfo> enabledInputMethodInfos =
                 new ArrayList<>(mInputMethodManager.getEnabledInputMethodList());
         // Filter auxiliary keyboards out
-        for (Iterator<InputMethodInfo> it = enabledInputMethodInfos.iterator(); it.hasNext();) {
+        for (Iterator<InputMethodInfo> it = enabledInputMethodInfos.iterator(); it.hasNext(); ) {
             if (it.next().isAuxiliaryIme()) {
                 it.remove();
             }

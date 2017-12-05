@@ -26,24 +26,33 @@ import android.support.v17.preference.LeanbackPreferenceFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.TwoStatePreference;
+
 import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.AccessPointPreference;
+
 import java.util.List;
+
 import com.android.internal.net.VpnProfile;
 import com.android.tv.settings.R;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import android.util.Log;
 import android.security.Credentials;
 import android.security.KeyStore;
 import android.net.IConnectivityManager;
 import android.os.ServiceManager;
 import android.util.ArraySet;
+
 import java.util.Map;
+
 import android.os.Handler;
+
 import com.android.tv.settings.data.ConstData;
 import com.android.tv.settings.vpn.*;
+
 import android.annotation.UiThread;
 import android.annotation.WorkerThread;
 import android.app.AppOpsManager;
@@ -76,6 +85,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
@@ -83,17 +93,20 @@ import com.android.internal.net.VpnProfile;
 import com.android.internal.util.ArrayUtils;
 import com.android.settingslib.RestrictedLockUtils;
 import com.google.android.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.Collections;
+
 import static android.app.AppOpsManager.OP_ACTIVATE_VPN;
+
 import android.os.SystemProperties;
 
 public class NetworkFragment extends LeanbackPreferenceFragment implements
         ConnectivityListener.Listener, ConnectivityListener.WifiNetworkListener,
-        AccessPoint.AccessPointListener, Preference.OnPreferenceClickListener, Handler.Callback{
+        AccessPoint.AccessPointListener, Preference.OnPreferenceClickListener, Handler.Callback {
     private static final String TAG = "NetworkFragment";
     private final IConnectivityManager mConnectivityService = IConnectivityManager.Stub
-            .asInterface(ServiceManager.getService(Context.CONNECTIVITY_SERVICE));        
+            .asInterface(ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
     private static final String KEY_WIFI_ENABLE = "wifi_enable";
     private static final String KEY_WIFI_LIST = "wifi_list";
     private static final String KEY_WIFI_COLLAPSE = "wifi_collapse";
@@ -174,7 +187,7 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
         mUpdater.sendEmptyMessage(RESCAN_MESSAGE);
     }
 
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         if (mUpdater != null) {
             mUpdater.removeCallbacksAndMessages(null);
@@ -209,7 +222,7 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
         mEthernetPppoePref = findPreference(KEY_ETHERNET_PPPOE);
         mEthernetPppoePref.setIntent(EditPppoeSettingsActivity.createIntent(getContext(),
                 WifiConfiguration.INVALID_NETWORK_ID));
-        mVpnCategory = (PreferenceCategory)findPreference(KEY_VPN);
+        mVpnCategory = (PreferenceCategory) findPreference(KEY_VPN);
     }
 
     @Override
@@ -269,23 +282,23 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
         mEthernetStatusPref.setVisible(ethernetAvailable);
         mEthernetProxyPref.setVisible(ethernetAvailable);
         mEthernetDhcpPref.setVisible(ethernetAvailable);
-        mEthernetPppoePref.setVisible(ethernetAvailable);     
-        
+        mEthernetPppoePref.setVisible(ethernetAvailable);
+
         if (ethernetAvailable) {
             final boolean ethernetConnected = mConnectivityListener.getConnectStatus();
-            Log.d(TAG,"ethernetConnected:" + ethernetConnected);
+            Log.d(TAG, "ethernetConnected:" + ethernetConnected);
             mEthernetStatusPref.setTitle(ethernetConnected
                     ? R.string.connected : R.string.not_connected);
             mEthernetStatusPref.setSummary(mConnectivityListener.getEthernetIpAddress());
         }
-        
-        
+
+
     }
 
-    private void updateVPNList(){
-        getActivity().runOnUiThread(new Runnable(){
+    private void updateVPNList() {
+        getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                
+
                 List<VpnProfile> vpnProfiles = loadVpnProfiles(mKeyStore);
                 String lockdownVpnKey = VpnUtils.getLockdownVpn();
                 final Set<Preference> updates = new ArraySet<>();
@@ -303,16 +316,16 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
                 mLegacyVpnPreferences.values().retainAll(updates);
                 for (int i = mVpnCategory.getPreferenceCount() - 1; i >= 0; i--) {
                     Preference p = mVpnCategory.getPreference(i);
-                     if (updates.contains(p)) {
-                         updates.remove(p);
-                     } /*else if(!"vpn_create".equals(p.getKey())){
+                    if (updates.contains(p)) {
+                        updates.remove(p);
+                    } /*else if(!"vpn_create".equals(p.getKey())){
                          mVpnCategory.removePreference(p);
                      }*/
-                 }
-                 // Show any new preferences on the screen
-                 for (Preference pref : updates) {
-                     mVpnCategory.addPreference(pref);
-                 }
+                }
+                // Show any new preferences on the screen
+                for (Preference pref : updates) {
+                    mVpnCategory.addPreference(pref);
+                }
  /*             Preference vpnCreatePref = new Preference(getPreferenceManager().getContext());
                 vpnCreatePref.setTitle(R.string.create_vpn);
                 Intent createVpnIntent = new Intent();
@@ -323,11 +336,13 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
                 createVpnIntent.putExtra(ConstData.IntentKey.VPN_EDITING, true);
                 vpnCreatePref.setIntent(createVpnIntent);
                 mVpnCategory.addPreference(vpnCreatePref);*/
-            };
+            }
+
+            ;
         });
 
     }
-    
+
     private void updateWifiList() {
         if (!isAdded()) {
             return;
@@ -444,7 +459,7 @@ public class NetworkFragment extends LeanbackPreferenceFragment implements
         pref.setProfile(profile);
         return pref;
     }
-    
+
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference instanceof LegacyVpnPreference) {

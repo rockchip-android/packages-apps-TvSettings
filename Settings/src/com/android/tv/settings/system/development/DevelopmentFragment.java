@@ -104,7 +104,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
     private static final String WAIT_FOR_DEBUGGER_KEY = "wait_for_debugger";
     private static final String MOCK_LOCATION_APP_KEY = "mock_location_app";
     private static final String VERIFY_APPS_OVER_USB_KEY = "verify_apps_over_usb";
-    private static final String DEBUG_VIEW_ATTRIBUTES =  "debug_view_attributes";
+    private static final String DEBUG_VIEW_ATTRIBUTES = "debug_view_attributes";
     private static final String FORCE_ALLOW_ON_EXTERNAL_KEY = "force_allow_on_external";
     private static final String STRICT_MODE_KEY = "strict_mode";
     private static final String POINTER_LOCATION_KEY = "pointer_location";
@@ -165,7 +165,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
 
     private static String DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES = "262144"; // 256K
 
-    private static final int[] MOCK_LOCATION_APP_OPS = new int[] {AppOpsManager.OP_MOCK_LOCATION};
+    private static final int[] MOCK_LOCATION_APP_OPS = new int[]{AppOpsManager.OP_MOCK_LOCATION};
 
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
@@ -274,15 +274,15 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
         super.onCreate(icicle);
         mUsbModeSetting = new UsbModeSettings(getPreferenceManager().getContext());
         mEnableUsb.setChecked(mUsbModeSetting.getDefaultValue());
-        if (mEnableUsb.isChecked()){
+        if (mEnableUsb.isChecked()) {
             mEnableUsb.setSummary(R.string.usb_connect_to_computer);
         } else {
             mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
         }
         String internetADB = SystemProperties.get("persist.internet.adb.enable", "0");
-        if(internetADB.equals("1")){
+        if (internetADB.equals("1")) {
             mEnableInternetAdb.setChecked(true);
-        }else{
+        } else {
             mEnableInternetAdb.setChecked(false);
         }
     }
@@ -570,7 +570,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_STATE);
         if (getActivity().registerReceiver(mUsbReceiver, filter) == null) {
@@ -616,7 +616,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
                 Settings.Global.DEBUG_VIEW_ATTRIBUTES, 0) != 0);
         updateSwitchPreference(mForceAllowOnExternal, Settings.Global.getInt(cr,
                 Settings.Global.FORCE_ALLOW_ON_EXTERNAL, 0) != 0);
-        updateSwitchPreference(mEnableAbc,(SystemProperties.getInt(PERSIST_RK_ABC_SWITCH,0)) != 0);
+        updateSwitchPreference(mEnableAbc, (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0)) != 0);
         updateHdcpValues();
         updatePasswordSummary();
         updateDebuggerOptions();
@@ -832,7 +832,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
     private void updateVerifyAppsOverUsbOptions() {
         updateSwitchPreference(mVerifyAppsOverUsb,
                 Settings.Global.getInt(mContentResolver,
-                Settings.Global.PACKAGE_VERIFIER_INCLUDE_ADB, 1) != 0);
+                        Settings.Global.PACKAGE_VERIFIER_INCLUDE_ADB, 1) != 0);
         mVerifyAppsOverUsb.setEnabled(enableVerifierSetting());
     }
 
@@ -1153,7 +1153,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
 
     /**
      * @return <code>true</code> if the color space preference is currently
-     *         controlled by development settings
+     * controlled by development settings
      */
     private boolean usingDevelopmentColorSpace() {
         final boolean enabled = Settings.Secure.getInt(
@@ -1198,7 +1198,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
     private void updateForceResizableOptions() {
         updateSwitchPreference(mForceResizable,
                 Settings.Global.getInt(mContentResolver,
-                Settings.Global.DEVELOPMENT_FORCE_RESIZABLE_ACTIVITIES, 0) != 0);
+                        Settings.Global.DEVELOPMENT_FORCE_RESIZABLE_ACTIVITIES, 0) != 0);
     }
 
     private void writeForceResizableOptions() {
@@ -1339,7 +1339,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
     }
 
     private void writeUsbConfigurationOption(Object newValue) {
-        UsbManager manager = (UsbManager)getActivity().getSystemService(Context.USB_SERVICE);
+        UsbManager manager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
         String function = newValue.toString();
         if (function.equals("none")) {
             manager.setCurrentFunction(function, false);
@@ -1369,7 +1369,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
                 mHaveDebugSettings = true;
             }
             CharSequence[] values = pref.getEntryValues();
-            for (int i=0; i<values.length; i++) {
+            for (int i = 0; i < values.length; i++) {
                 float val = Float.parseFloat(values[i].toString());
                 if (scale <= val) {
                     pref.setValueIndex(i);
@@ -1377,7 +1377,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
                     return;
                 }
             }
-            pref.setValueIndex(values.length-1);
+            pref.setValueIndex(values.length - 1);
             pref.setSummary(pref.getEntries()[0]);
         } catch (RemoteException e) {
             // ignore
@@ -1421,7 +1421,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
 
     private void writeOverlayDisplayDevicesOptions(Object newValue) {
         Settings.Global.putString(mContentResolver, Settings.Global.OVERLAY_DISPLAY_DEVICES,
-                (String)newValue);
+                (String) newValue);
         updateOverlayDisplayDevicesOptions();
     }
 
@@ -1453,7 +1453,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
         try {
             int limit = ActivityManagerNative.getDefault().getProcessLimit();
             CharSequence[] values = mAppProcessLimit.getEntryValues();
-            for (int i=0; i<values.length; i++) {
+            for (int i = 0; i < values.length; i++) {
                 int val = Integer.parseInt(values[i].toString());
                 if (val >= limit) {
                     if (i != 0) {
@@ -1565,7 +1565,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
                 updateBugreportOptions();
             }
         } else if (preference == mEnableUsb) {
-            if (mEnableUsb.isChecked()){
+            if (mEnableUsb.isChecked()) {
                 mUsbModeSetting.onUsbModeClick(UsbModeSettings.SLAVE_MODE);
                 mEnableUsb.setSummary(R.string.usb_connect_to_computer);
             } else {
@@ -1573,18 +1573,18 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
                 mEnableUsb.setSummary(R.string.usb_disconnect_to_computer);
             }
         } else if (preference == mEnableInternetAdb) {
-            if (mEnableInternetAdb.isChecked()){
+            if (mEnableInternetAdb.isChecked()) {
                 SystemProperties.set("persist.internet.adb.enable", "1");
             } else {
                 SystemProperties.set("persist.internet.adb.enable", "0");
             }
         } else if (preference == mEnableAbc) {
-            if(SystemProperties.getInt(PERSIST_RK_ABC_SWITCH,0) == 1){
+            if (SystemProperties.getInt(PERSIST_RK_ABC_SWITCH, 0) == 1) {
                 Log.d(TAG, "set modify abc property to persist 0");
-                SystemProperties.set(PERSIST_RK_ABC_SWITCH,"0");
-            }else{
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "0");
+            } else {
                 Log.d(TAG, "set modify abc property to persist 1");
-                SystemProperties.set(PERSIST_RK_ABC_SWITCH,"1");
+                SystemProperties.set(PERSIST_RK_ABC_SWITCH, "1");
             }
         } else if (preference == mEnableTerminal) {
             final PackageManager pm = getActivity().getPackageManager();
@@ -1773,7 +1773,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
      * Returns whether or not this device is able to be OEM unlocked.
      */
     static boolean isOemUnlockEnabled(Context context) {
-        PersistentDataBlockManager manager =(PersistentDataBlockManager)
+        PersistentDataBlockManager manager = (PersistentDataBlockManager)
                 context.getSystemService(Context.PERSISTENT_DATA_BLOCK_SERVICE);
         return manager.getOemUnlockEnabled();
     }

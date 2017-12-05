@@ -207,7 +207,7 @@ public class AccountSyncFragment extends LeanbackPreferenceFragment implements
         int count = mSyncCategory.getPreferenceCount();
         for (int i = 0; i < count; i++) {
             Preference pref = mSyncCategory.getPreference(i);
-            if (! (pref instanceof SyncStateSwitchPreference)) {
+            if (!(pref instanceof SyncStateSwitchPreference)) {
                 continue;
             }
             SyncStateSwitchPreference syncPref = (SyncStateSwitchPreference) pref;
@@ -284,7 +284,7 @@ public class AccountSyncFragment extends LeanbackPreferenceFragment implements
 
         for (int i = 0, count = mSyncCategory.getPreferenceCount(); i < count; i++) {
             Preference pref = mSyncCategory.getPreference(i);
-            if (! (pref instanceof SyncStateSwitchPreference)) {
+            if (!(pref instanceof SyncStateSwitchPreference)) {
                 continue;
             }
             SyncStateSwitchPreference syncPref = (SyncStateSwitchPreference) pref;
@@ -309,7 +309,7 @@ public class AccountSyncFragment extends LeanbackPreferenceFragment implements
 //            }
             if (Log.isLoggable(TAG, Log.VERBOSE)) {
                 Log.v(TAG, "Update sync status: " + account + " " + authority +
-                        " active = " + activelySyncing + " pend =" +  authorityIsPending);
+                        " active = " + activelySyncing + " pend =" + authorityIsPending);
             }
 
             final long successEndTime = (status == null) ? 0 : status.lastSuccessTime;

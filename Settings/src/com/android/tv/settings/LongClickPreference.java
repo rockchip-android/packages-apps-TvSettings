@@ -31,12 +31,12 @@ public class LongClickPreference extends Preference implements View.OnLongClickL
     private OnLongClickListener mLongClickListener;
 
     public LongClickPreference(Context context, AttributeSet attrs,
-            int defStyleAttr, int defStyleRes) {
+                               int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public LongClickPreference(Context context, AttributeSet attrs,
-            int defStyleAttr) {
+                               int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

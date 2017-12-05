@@ -1,4 +1,5 @@
 package com.android.tv.settings.bluetooth;
+
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.Service;
@@ -38,6 +39,7 @@ import com.android.settingslib.bluetooth.LocalBluetoothProfileManager.ServiceLis
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
 public class DockService {
     public static class DockBluetoothCallback implements BluetoothCallback {
         private final Context mContext;
@@ -46,10 +48,17 @@ public class DockService {
             mContext = context;
         }
 
-        public void onBluetoothStateChanged(int bluetoothState) { }
-        public void onDeviceAdded(CachedBluetoothDevice cachedDevice) { }
-        public void onDeviceDeleted(CachedBluetoothDevice cachedDevice) { }
-        public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) { }
+        public void onBluetoothStateChanged(int bluetoothState) {
+        }
+
+        public void onDeviceAdded(CachedBluetoothDevice cachedDevice) {
+        }
+
+        public void onDeviceDeleted(CachedBluetoothDevice cachedDevice) {
+        }
+
+        public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
+        }
 
         @Override
         public void onScanningStateChanged(boolean started) {

@@ -129,7 +129,7 @@ public class DaydreamFragment extends LeanbackPreferenceFragment
     }
 
     private void refreshDreamInfoMap(List<DreamBackend.DreamInfo> infos,
-            CharSequence[] listEntries, CharSequence[] listEntryValues) {
+                                     CharSequence[] listEntries, CharSequence[] listEntryValues) {
         mDreamInfos.clear();
         listEntries[0] = getString(R.string.device_daydreams_none);
         listEntryValues[0] = DREAM_COMPONENT_NONE;

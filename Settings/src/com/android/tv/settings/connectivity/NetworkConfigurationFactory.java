@@ -27,7 +27,7 @@ public class NetworkConfigurationFactory {
     /**
      * Create a NetworkConfiguration with the networkType
      *
-     * @param context context to pass the constructors
+     * @param context     context to pass the constructors
      * @param networkType networkType to create
      * @return new NetworkConfiguration instance
      */

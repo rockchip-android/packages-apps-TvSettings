@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.android.tv.settings.bluetooth;
 
@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
+
 import com.android.tv.settings.R;
 import com.android.tv.settings.bluetooth.DockService.DockBluetoothCallback;
 import com.android.tv.settings.search.Index;
@@ -15,42 +16,41 @@ import com.android.tv.settings.search.SearchIndexableRaw;
 import com.android.settingslib.bluetooth.LocalBluetoothManager;
 import com.android.settingslib.bluetooth.LocalBluetoothManager.BluetoothManagerCallback;
 import com.android.settingslib.bluetooth.Utils.ErrorListener;
+
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.content.pm.UserInfo;
 
 /**
- * 
  * @author GaoFei
- * 
  */
 public final class BluetoothUtils {
     static final boolean V = com.android.settingslib.bluetooth.Utils.V; // verbose logging
-    static final boolean D =  com.android.settingslib.bluetooth.Utils.D;  // regular logging
+    static final boolean D = com.android.settingslib.bluetooth.Utils.D;  // regular logging
 
     private BluetoothUtils() {
     }
 
     public static int getConnectionStateSummary(int connectionState) {
         switch (connectionState) {
-        case BluetoothProfile.STATE_CONNECTED:
-            return R.string.bluetooth_connected;
-        case BluetoothProfile.STATE_CONNECTING:
-            return R.string.bluetooth_connecting;
-        case BluetoothProfile.STATE_DISCONNECTED:
-            return R.string.bluetooth_disconnected;
-        case BluetoothProfile.STATE_DISCONNECTING:
-            return R.string.bluetooth_disconnecting;
-        default:
-            return 0;
+            case BluetoothProfile.STATE_CONNECTED:
+                return R.string.bluetooth_connected;
+            case BluetoothProfile.STATE_CONNECTING:
+                return R.string.bluetooth_connecting;
+            case BluetoothProfile.STATE_DISCONNECTED:
+                return R.string.bluetooth_disconnected;
+            case BluetoothProfile.STATE_DISCONNECTING:
+                return R.string.bluetooth_disconnecting;
+            default:
+                return 0;
         }
     }
 
     // Create (or recycle existing) and show disconnect dialog.
     static AlertDialog showDisconnectDialog(Context context,
-            AlertDialog dialog,
-            DialogInterface.OnClickListener disconnectListener,
-            CharSequence title, CharSequence message) {
+                                            AlertDialog dialog,
+                                            DialogInterface.OnClickListener disconnectListener,
+                                            CharSequence title, CharSequence message) {
         if (dialog == null) {
             dialog = new AlertDialog.Builder(context)
                     .setPositiveButton(android.R.string.ok, disconnectListener)
@@ -85,12 +85,12 @@ public final class BluetoothUtils {
         String message = context.getString(messageResId, name);
         LocalBluetoothManager manager = getLocalBtManager(context);
         Context activity = manager.getForegroundActivity();
-        if(manager.isForegroundActivity()) {
+        if (manager.isForegroundActivity()) {
             new AlertDialog.Builder(activity)
-                .setTitle(R.string.bluetooth_error_title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+                    .setTitle(R.string.bluetooth_error_title)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         } else {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
@@ -100,7 +100,7 @@ public final class BluetoothUtils {
      * Update the search Index for a specific class name and resources.
      */
     public static void updateSearchIndex(Context context, String className, String title,
-            String screenTitle, int iconResId, boolean enabled) {
+                                         String screenTitle, int iconResId, boolean enabled) {
         SearchIndexableRaw data = new SearchIndexableRaw(context);
         data.className = className;
         data.title = title;
@@ -125,7 +125,7 @@ public final class BluetoothUtils {
     private static final BluetoothManagerCallback mOnInitCallback = new BluetoothManagerCallback() {
         @Override
         public void onBluetoothManagerInitialized(Context appContext,
-                LocalBluetoothManager bluetoothManager) {
+                                                  LocalBluetoothManager bluetoothManager) {
             bluetoothManager.getEventManager().registerCallback(
                     new DockBluetoothCallback(appContext));
             com.android.settingslib.bluetooth.Utils.setErrorListener(mErrorListener);

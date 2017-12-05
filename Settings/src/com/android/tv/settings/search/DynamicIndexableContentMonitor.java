@@ -72,12 +72,14 @@ public final class DynamicIndexableContentMonitor extends PackageMonitor impleme
                 case MSG_PACKAGE_AVAILABLE: {
                     String packageName = (String) msg.obj;
                     handlePackageAvailable(packageName);
-                } break;
+                }
+                break;
 
                 case MSG_PACKAGE_UNAVAILABLE: {
                     String packageName = (String) msg.obj;
                     handlePackageUnavailable(packageName);
-                } break;
+                }
+                break;
             }
         }
     };
@@ -285,7 +287,7 @@ public final class DynamicIndexableContentMonitor extends PackageMonitor impleme
 
     @Override
     public void onLoadFinished(Loader<List<PrintServiceInfo>> loader,
-            List<PrintServiceInfo> services) {
+                               List<PrintServiceInfo> services) {
       /*  Index.getInstance(mContext).updateFromClassNameResource(
                 PrintSettingsFragment.class.getName(), false, true);*/
     }
@@ -307,6 +309,8 @@ public final class DynamicIndexableContentMonitor extends PackageMonitor impleme
             /*    Index.getInstance(mContext).updateFromClassNameResource(
                         InputMethodAndLanguageSettings.class.getName(), true, true);*/
             }
-        };
+        }
+
+        ;
     }
 }

@@ -111,11 +111,11 @@ public final class BluetoothNameDialogFragment extends DialogFragment implements
     }
 
     private View createDialogView(String deviceName) {
-        final LayoutInflater layoutInflater = (LayoutInflater)getActivity()
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater layoutInflater = (LayoutInflater) getActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.dialog_edittext, null);
         mDeviceNameView = (EditText) view.findViewById(R.id.edittext);
-        mDeviceNameView.setFilters(new InputFilter[] {
+        mDeviceNameView.setFilters(new InputFilter[]{
                 new Utf8ByteLengthFilter(BLUETOOTH_NAME_MAX_LENGTH_BYTES)
         });
         mDeviceNameView.setText(deviceName);    // set initial value before adding listener
@@ -197,5 +197,5 @@ public final class BluetoothNameDialogFragment extends DialogFragment implements
     /* Not used */
     public void onTextChanged(CharSequence s, int start, int before, int count) {
     }
-    
+
 }

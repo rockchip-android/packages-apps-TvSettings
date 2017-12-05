@@ -63,7 +63,7 @@ final class LocalBluetoothPreferences {
     }
 
     static boolean shouldShowDialogInForeground(Context context,
-            String deviceAddress, String deviceName) {
+                                                String deviceAddress, String deviceName) {
         LocalBluetoothManager manager = BluetoothUtils.getLocalBtManager(context);
         if (manager == null) {
             if (DEBUG) Log.v(TAG, "manager == null - do not show dialog.");
@@ -151,14 +151,14 @@ final class LocalBluetoothPreferences {
         // Load the shared preferences and edit it on a background
         // thread (but serialized!).
         QueuedWork.singleThreadExecutor().submit(new Runnable() {
-                public void run() {
-                    SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-                    editor.putLong(
-                            KEY_DISCOVERING_TIMESTAMP,
+            public void run() {
+                SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+                editor.putLong(
+                        KEY_DISCOVERING_TIMESTAMP,
                         System.currentTimeMillis());
-                    editor.apply();
-                }
-            });
+                editor.apply();
+            }
+        });
     }
 
     static boolean hasDockAutoConnectSetting(Context context, String addr) {

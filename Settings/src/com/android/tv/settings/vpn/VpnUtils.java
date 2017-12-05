@@ -22,7 +22,7 @@ import android.security.KeyStore;
 
 /**
  * Utility functions for vpn.
- *
+ * <p>
  * Keystore methods should only be called in system user
  */
 public class VpnUtils {

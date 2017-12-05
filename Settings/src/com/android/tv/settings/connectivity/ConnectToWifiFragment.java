@@ -49,7 +49,7 @@ public class ConnectToWifiFragment extends MessageWizardFragment
     private static final boolean DEBUG = true;
 
     public static final int RESULT_SUCCESS = 0;
-    public static final int RESULT_UNKNOWN_ERROR= 1;
+    public static final int RESULT_UNKNOWN_ERROR = 1;
     public static final int RESULT_TIMEOUT = 2;
     public static final int RESULT_BAD_AUTHENTICATION = 3;
     public static final int RESULT_REJECTED_BY_AP = 4;
@@ -61,7 +61,7 @@ public class ConnectToWifiFragment extends MessageWizardFragment
     private static final int POLLING_INTERVAL = 1000;
 
     public static ConnectToWifiFragment newInstance(String title, boolean showProgressIndicator,
-            WifiConfiguration configuration) {
+                                                    WifiConfiguration configuration) {
         ConnectToWifiFragment fragment = new ConnectToWifiFragment();
         Bundle args = new Bundle();
         args.putParcelable(EXTRA_CONFIGURATION, configuration);

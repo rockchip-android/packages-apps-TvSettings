@@ -142,7 +142,9 @@ public class AddAccessoryActivity extends Activity implements BluetoothDevicePai
             Log.d(TAG, "Gamepad Service Disconnected");
             mGamepadService = null;
         }
-    };
+    }
+
+    ;
 
     // Internal message handler
     private final MessageHandler mMsgHandler = new MessageHandler();
@@ -492,7 +494,7 @@ public class AddAccessoryActivity extends Activity implements BluetoothDevicePai
                     // More than one device found, cancel auto pair
                     cancelPairingCountdown();
                 }
-           }
+            }
         }
 
         TransitionManager.beginDelayedTransition((ViewGroup) findViewById(R.id.content_frame));

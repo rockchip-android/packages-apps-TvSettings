@@ -189,7 +189,7 @@ public class CaptionFragment extends LeanbackPreferenceFragment implements
 
     private boolean getCaptionsEnabled() {
         return Settings.Secure.getInt(getContext().getContentResolver(),
-            Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED, 0) != 0;
+                Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED, 0) != 0;
     }
 
     private void setCaptionsEnabled(boolean enabled) {

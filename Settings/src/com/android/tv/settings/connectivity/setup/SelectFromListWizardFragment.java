@@ -152,7 +152,8 @@ public class SelectFromListWizardFragment extends Fragment {
         /**
          * Returns whether this item is pinned to the front/back of a sorted list.  Returns
          * PinnedListItem.UNPINNED if the item is not pinned.
-         * @return  the pinned/unpinned setting for this item.
+         *
+         * @return the pinned/unpinned setting for this item.
          */
         public int getPinnedPosition() {
             return PinnedListItem.UNPINNED;
@@ -204,7 +205,7 @@ public class SelectFromListWizardFragment extends Fragment {
                 }
                 return (mScanResult != null && li.mScanResult != null && mName.equals(li.mName) &&
                         WifiSecurity.getSecurity(mScanResult)
-                        == WifiSecurity.getSecurity(li.mScanResult));
+                                == WifiSecurity.getSecurity(li.mScanResult));
             }
             return false;
         }
@@ -234,7 +235,8 @@ public class SelectFromListWizardFragment extends Fragment {
          * Returns the priority for this item, which is used for ordering the item between pinned
          * items in a sorted list.  For example, if two items are pinned to the front of the list
          * (FIRST), the priority value is used to determine their ordering.
-         * @return  the sorting priority for this item
+         *
+         * @return the sorting priority for this item
          */
         public int getPinnedPriority() {
             return mPinnedPriority;
@@ -243,11 +245,13 @@ public class SelectFromListWizardFragment extends Fragment {
 
     public interface Listener {
         void onListSelectionComplete(ListItem listItem);
+
         void onListFocusChanged(ListItem listItem);
     }
 
     private static interface ActionListener {
         public void onClick(ListItem item);
+
         public void onFocus(ListItem item);
     }
 
@@ -257,7 +261,7 @@ public class SelectFromListWizardFragment extends Fragment {
         }
 
         public void init(ListItem item, View.OnClickListener onClick,
-                View.OnFocusChangeListener onFocusChange) {
+                         View.OnFocusChangeListener onFocusChange) {
             TextView title = (TextView) itemView.findViewById(R.id.list_item_text);
             title.setText(item.getName());
             itemView.setOnClickListener(onClick);
@@ -288,21 +292,21 @@ public class SelectFromListWizardFragment extends Fragment {
             ListItemComparator comparator = new ListItemComparator();
             mItems = new SortedList<ListItem>(
                     ListItem.class, new SortedListAdapterCallback<ListItem>(this) {
-                        @Override
-                        public int compare(ListItem t0, ListItem t1) {
-                            return comparator.compare(t0, t1);
-                        }
+                @Override
+                public int compare(ListItem t0, ListItem t1) {
+                    return comparator.compare(t0, t1);
+                }
 
-                        @Override
-                        public boolean areContentsTheSame(ListItem oldItem, ListItem newItem) {
-                            return comparator.compare(oldItem, newItem) == 0;
-                        }
+                @Override
+                public boolean areContentsTheSame(ListItem oldItem, ListItem newItem) {
+                    return comparator.compare(oldItem, newItem) == 0;
+                }
 
-                        @Override
-                        public boolean areItemsTheSame(ListItem item1, ListItem item2) {
-                            return item1.equals(item2);
-                        }
-                    });
+                @Override
+                public boolean areItemsTheSame(ListItem item1, ListItem item2) {
+                    return item1.equals(item2);
+                }
+            });
             mItems.addAll(choices.toArray(new ListItem[0]), false);
         }
 
@@ -361,17 +365,17 @@ public class SelectFromListWizardFragment extends Fragment {
 
         public void updateItems(List<ListItem> inputItems) {
             TreeSet<ListItem> newItemSet = new TreeSet<ListItem>(new ListItemComparator());
-            for (ListItem item: inputItems) {
+            for (ListItem item : inputItems) {
                 newItemSet.add(item);
             }
             ArrayList<ListItem> toRemove = new ArrayList<ListItem>();
-            for (int j = 0 ; j < mItems.size(); j++) {
+            for (int j = 0; j < mItems.size(); j++) {
                 ListItem oldItem = (ListItem) mItems.get(j);
                 if (!newItemSet.contains(oldItem)) {
                     toRemove.add(oldItem);
                 }
             }
-            for (ListItem item: toRemove) {
+            for (ListItem item : toRemove) {
                 mItems.remove(item);
             }
             mItems.addAll(inputItems.toArray(new ListItem[0]), true);
@@ -385,7 +389,7 @@ public class SelectFromListWizardFragment extends Fragment {
     private static final int SELECT_ITEM_DELAY = 100;
 
     public static SelectFromListWizardFragment newInstance(String title, String description,
-            ArrayList<ListItem> listElements, ListItem lastSelection) {
+                                                           ArrayList<ListItem> listElements, ListItem lastSelection) {
         SelectFromListWizardFragment fragment = new SelectFromListWizardFragment();
         Bundle args = new Bundle();
         args.putString(EXTRA_TITLE, title);

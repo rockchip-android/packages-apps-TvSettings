@@ -39,7 +39,7 @@ import java.util.ArrayList;
  */
 public class FormPageDisplayer
         implements TextInputWizardFragment.Listener, SelectFromListWizardFragment.Listener,
-            PasswordInputWizardFragment.Listener {
+        PasswordInputWizardFragment.Listener {
 
     public static final int DISPLAY_TYPE_TEXT_INPUT = 1;
     public static final int DISPLAY_TYPE_LIST_CHOICE = 2;
@@ -79,7 +79,7 @@ public class FormPageDisplayer
          * @return the set of choices for this form page.
          */
         ArrayList<SelectFromListWizardFragment.ListItem> getChoices(Context context,
-                ArrayList<SelectFromListWizardFragment.ListItem> extraChoices);
+                                                                    ArrayList<SelectFromListWizardFragment.ListItem> extraChoices);
     }
 
     public interface UserActivityListener {
@@ -134,11 +134,11 @@ public class FormPageDisplayer
     }
 
     public Fragment displayPage(FormPageInfo formPageInfo, String titleArgument,
-            String descriptionArgument,
-            ArrayList<SelectFromListWizardFragment.ListItem> extraChoices,
-            FormPage previousFormPage, UserActivityListener userActivityListener,
-            boolean showProgress, FormPage currentFormPage,
-            FormPageResultListener formPageResultListener, boolean forward, boolean emptyAllowed) {
+                                String descriptionArgument,
+                                ArrayList<SelectFromListWizardFragment.ListItem> extraChoices,
+                                FormPage previousFormPage, UserActivityListener userActivityListener,
+                                boolean showProgress, FormPage currentFormPage,
+                                FormPageResultListener formPageResultListener, boolean forward, boolean emptyAllowed) {
         if (DEBUG) {
             Log.d(TAG, "Displaying: " + currentFormPage.getTitle());
         }
@@ -180,10 +180,10 @@ public class FormPageDisplayer
     }
 
     private Fragment displayList(final FormPageInfo formPageInfo, String titleArgument,
-            String descriptionArgument,
-            ArrayList<SelectFromListWizardFragment.ListItem> extraChoices, final FormPage formPage,
-            final FormPageResultListener formPageResultListener, FormPage lastPage,
-            final UserActivityListener userActivityListener, boolean forward) {
+                                 String descriptionArgument,
+                                 ArrayList<SelectFromListWizardFragment.ListItem> extraChoices, final FormPage formPage,
+                                 final FormPageResultListener formPageResultListener, FormPage lastPage,
+                                 final UserActivityListener userActivityListener, boolean forward) {
         Fragment fragment = SelectFromListWizardFragment.newInstance(
                 getTitle(formPageInfo, titleArgument),
                 getDescription(formPageInfo, descriptionArgument),
@@ -210,9 +210,9 @@ public class FormPageDisplayer
     }
 
     private Fragment displayTextInput(FormPageInfo formPageInfo, String titleArgument,
-            String descriptionArgument, final FormPage formPage,
-            final FormPageResultListener listener, FormPage lastPage, boolean forward,
-            final boolean emptyAllowed) {
+                                      String descriptionArgument, final FormPage formPage,
+                                      final FormPageResultListener listener, FormPage lastPage, boolean forward,
+                                      final boolean emptyAllowed) {
         final String prefill = lastPage != null && !TextUtils.isEmpty(lastPage.getDataSummary())
                 ? lastPage.getDataSummary() : getDefaultPrefill(formPageInfo);
         Fragment fragment = TextInputWizardFragment.newInstance(
@@ -238,11 +238,11 @@ public class FormPageDisplayer
     }
 
     private Fragment displayPskInput(FormPageInfo formPageInfo, String titleArgument,
-            String descriptionArgument, final FormPage formPage,
-            final FormPageResultListener listener, FormPage lastPage, boolean forward) {
+                                     String descriptionArgument, final FormPage formPage,
+                                     final FormPageResultListener listener, FormPage lastPage, boolean forward) {
         boolean obfuscate = lastPage != null
                 ? TextUtils.equals(
-                          lastPage.getDataSecondary(), PasswordInputWizardFragment.OPTION_OBFUSCATE)
+                lastPage.getDataSecondary(), PasswordInputWizardFragment.OPTION_OBFUSCATE)
                 : false;
         Fragment fragment =
                 PasswordInputWizardFragment.newInstance(getTitle(formPageInfo, titleArgument),
@@ -270,7 +270,7 @@ public class FormPageDisplayer
     }
 
     private Fragment displayLoading(FormPageInfo formPageInfo, String argument,
-            boolean showProgress, boolean forward) {
+                                    boolean showProgress, boolean forward) {
         Fragment fragment = MessageWizardFragment.newInstance(
                 getTitle(formPageInfo, argument), showProgress);
         displayFragment(fragment, forward);

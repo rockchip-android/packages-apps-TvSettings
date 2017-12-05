@@ -34,7 +34,7 @@ import com.android.tv.settings.form.FormPageResultListener;
  * Allows the modification of advanced Wi-Fi settings
  */
 public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
-        implements SaveWifiConfigurationFragment.Listener, TimedMessageWizardFragment.Listener{
+        implements SaveWifiConfigurationFragment.Listener, TimedMessageWizardFragment.Listener {
 
     private static final String TAG = "EditPppoeSettingsActivity";
 
@@ -42,14 +42,14 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
     private static final String EXTRA_NETWORK_ID = "network_id";
     private static EthernetManager mEthernetManager;
     private static Context mContext;
-    
+
     public static Intent createIntent(Context context, int networkId) {
         mContext = context;
         mEthernetManager = (EthernetManager) context.getSystemService(Context.ETHERNET_SERVICE);
         return new Intent(context, EditPppoeSettingsActivity.class)
                 .putExtra(EXTRA_NETWORK_ID, networkId);
     }
-    
+
     private NetworkConfiguration mConfiguration;
     private AdvancedWifiOptionsFlow mAdvancedWifiOptionsFlow;
     private FormPage mSavePage;
@@ -59,7 +59,7 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
+
         int networkId = getIntent().getIntExtra(EXTRA_NETWORK_ID, NETWORK_ID_ETHERNET);
         if (networkId == NETWORK_ID_ETHERNET) {
             mConfiguration = NetworkConfigurationFactory.createNetworkConfiguration(this,
@@ -108,7 +108,7 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected boolean onPageComplete(WifiFormPageType formPageType, FormPage formPage) {
-        switch(formPageType) {
+        switch (formPageType) {
             case SAVE:
                 registerReceiver();
                 addResultWifiFormPage(Integer.valueOf(formPage.getDataSummary()));
@@ -119,18 +119,18 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
                 addPage(WifiFormPageType.PPPOE_CONNECTING);
                 break;
             case PPPOE_CONNECTING:
-                Log.d(TAG,"get network status"); 
-                if (mNetworkStatus == mEthernetManager.ETHER_STATE_CONNECTED){
+                Log.d(TAG, "get network status");
+                if (mNetworkStatus == mEthernetManager.ETHER_STATE_CONNECTED) {
                     unRegisterReceiver();
                     break;
-                }else if (mNetworkStatus == mEthernetManager.ETHER_STATE_DISCONNECTED){
+                } else if (mNetworkStatus == mEthernetManager.ETHER_STATE_DISCONNECTED) {
                     unRegisterReceiver();
                     addPage(WifiFormPageType.PPPOE_CONNECT_FAILED);
                     break;
-                }else{
+                } else {
                     removePage(formPage);
                     addPage(WifiFormPageType.PPPOE_CONNECTING);
-                }                    
+                }
                 break;
             default:
                 if (mAdvancedWifiOptionsFlow.handlePageComplete(formPageType, formPage) ==
@@ -144,7 +144,7 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         WifiFormPageType formPageType = getFormPageType(formPage);
         if (formPageType == WifiFormPageType.SAVE) {
             mSavePage = formPage;
@@ -157,7 +157,7 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
             Fragment fragment = TimedMessageWizardFragment.newInstance(
                     getString(formPageType.getTitleResourceId()));
             displayFragment(fragment, forward);
-        }else if (formPageType == WifiFormPageType.PPPOE_CONNECTING) {
+        } else if (formPageType == WifiFormPageType.PPPOE_CONNECTING) {
             mSuccessPage = formPage;
             Fragment fragment = TimedMessageWizardFragment.newInstance(
                     getString(formPageType.getTitleResourceId()));
@@ -175,40 +175,40 @@ public class EditPppoeSettingsActivity extends WifiMultiPagedFormActivity
     }
 
     private void save() {
-        mAdvancedWifiOptionsFlow.updateConfiguration(mConfiguration);    
+        mAdvancedWifiOptionsFlow.updateConfiguration(mConfiguration);
         addPage(WifiFormPageType.SAVE);
     }
-    
-    private void registerReceiver(){
-        Log.d(TAG,"registerReceiver");
-        if ( intentFilter == null ){
+
+    private void registerReceiver() {
+        Log.d(TAG, "registerReceiver");
+        if (intentFilter == null) {
             intentFilter = new IntentFilter();
             intentFilter.addAction(EthernetManager.ETHERNET_STATE_CHANGED_ACTION);
             mContext.registerReceiver(mEthBroadRece, intentFilter);
         }
     }
-    
-    private void unRegisterReceiver(){
-        Log.d(TAG,"unRegisterReceiver");
-        if ( intentFilter != null ){
+
+    private void unRegisterReceiver() {
+        Log.d(TAG, "unRegisterReceiver");
+        if (intentFilter != null) {
             mContext.unregisterReceiver(mEthBroadRece);
             intentFilter = null;
         }
 
     }
-    
-    private BroadcastReceiver mEthBroadRece = new BroadcastReceiver(){
-        public void onReceive( Context context, Intent intent ){
-            Log.d(TAG,"EthBroadRece");
+
+    private BroadcastReceiver mEthBroadRece = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "EthBroadRece");
             String action = intent.getAction();
-            if ( !action.equals("android.net.ethernet.ETHERNET_STATE_CHANGED") ){
+            if (!action.equals("android.net.ethernet.ETHERNET_STATE_CHANGED")) {
                 return;
             }
             int status = intent.getIntExtra(EthernetManager.EXTRA_ETHERNET_STATE,
-                                            EthernetManager.ETHER_STATE_CONNECTING);
-            Log.d(TAG,"EthBroadRece :" + status);
-                mNetworkStatus = status;
+                    EthernetManager.ETHER_STATE_CONNECTING);
+            Log.d(TAG, "EthBroadRece :" + status);
+            mNetworkStatus = status;
         }
     };
-        
+
 }

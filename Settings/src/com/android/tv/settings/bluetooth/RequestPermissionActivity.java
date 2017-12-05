@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.android.tv.settings.R;
 import com.android.settingslib.bluetooth.BluetoothDiscoverableTimeoutReceiver;
 import com.android.settingslib.bluetooth.LocalBluetoothAdapter;
@@ -232,7 +233,7 @@ public class RequestPermissionActivity extends Activity implements
             LocalBluetoothPreferences.persistDiscoverableEndTimestamp(
                     this, endTime);
             if (0 < mTimeout) {
-               BluetoothDiscoverableTimeoutReceiver.setDiscoverableAlarm(this, endTime);
+                BluetoothDiscoverableTimeoutReceiver.setDiscoverableAlarm(this, endTime);
             }
             returnCode = mTimeout;
             // Activity.RESULT_FIRST_USER should be 1
@@ -253,6 +254,7 @@ public class RequestPermissionActivity extends Activity implements
 
     /**
      * Parse the received Intent and initialize mLocalBluetoothAdapter.
+     *
      * @return true if an error occurred; false otherwise
      */
     private boolean parseIntent() {

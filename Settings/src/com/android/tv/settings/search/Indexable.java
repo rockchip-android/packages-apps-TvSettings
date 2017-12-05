@@ -23,28 +23,26 @@ import java.util.List;
 
 /**
  * Interface for classes whose instances can provide data for indexing.
- *
+ * <p>
  * Classes implementing the Indexable interface must have a static field called
  * <code>SEARCH_INDEX_DATA_PROVIDER</code>, which is an object implementing the
  * {@link Indexable.SearchIndexProvider} interface.
- *
+ * <p>
  * See {@link android.provider.SearchIndexableResource} and {@link SearchIndexableRaw}.
- *
  */
 public interface Indexable {
 
     public interface SearchIndexProvider {
         /**
          * Return a list of references for indexing.
-         *
+         * <p>
          * See {@link android.provider.SearchIndexableResource}
-         *
          *
          * @param context the context.
          * @param enabled hint telling if the data needs to be considered into the search results
          *                or not.
          * @return a list of {@link android.provider.SearchIndexableResource} references.
-         *         Can be null.
+         * Can be null.
          */
         List<SearchIndexableResource> getXmlResourcesToIndex(Context context, boolean enabled);
 

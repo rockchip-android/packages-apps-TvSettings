@@ -84,7 +84,8 @@ public class BackupAppsStepFragment extends GuidedStepFragment implements
             }
             mAppFilter = new ApplicationsState.AppFilter() {
                 @Override
-                public void init() {}
+                public void init() {
+                }
 
                 @Override
                 public boolean filterApp(ApplicationsState.AppEntry info) {
@@ -113,7 +114,8 @@ public class BackupAppsStepFragment extends GuidedStepFragment implements
     }
 
     @Override
-    public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+    public @NonNull
+    GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         final String title;
         final VolumeInfo volumeInfo = mStorageManager.findVolumeById(mVolumeId);
         final String volumeDesc = mStorageManager.getBestVolumeDescription(volumeInfo);
@@ -141,7 +143,7 @@ public class BackupAppsStepFragment extends GuidedStepFragment implements
     }
 
     private List<GuidedAction> getAppActions(boolean refreshIcons,
-            List<ApplicationsState.AppEntry> entries) {
+                                             List<ApplicationsState.AppEntry> entries) {
 
         final List<GuidedAction> actions = new ArrayList<>(entries.size() + 1);
 

@@ -351,7 +351,7 @@ public class AboutFragment extends LeanbackPreferenceFragment implements
     }
 
     public static boolean isWifiOnly(Context context) {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         return (!cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE));
     }

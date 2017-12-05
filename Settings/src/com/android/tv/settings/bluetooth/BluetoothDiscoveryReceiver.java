@@ -29,7 +29,7 @@ import com.android.settingslib.bluetooth.BluetoothEventManager;
  * Bluetooth adapter starts or finishes discovery mode. This
  * is used to decide whether to open an alert dialog or
  * create a notification when we receive a pairing request.
- *
+ * <p>
  * <p>Note that the discovery start/finish intents are also handled
  * by {@link BluetoothEventManager} to update the UI, if visible.
  */

@@ -138,7 +138,7 @@ public class RemoveAccountDialog extends Activity implements AccountManagerCallb
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder()
                     .id(ID_CANCEL)
                     .title(getString(android.R.string.cancel))

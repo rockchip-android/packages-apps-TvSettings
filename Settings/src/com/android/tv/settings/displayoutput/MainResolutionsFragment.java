@@ -29,20 +29,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.hardware.display.*;
 import android.hardware.display.DisplayManager.DisplayListener;
+
 import com.android.tv.settings.R;
+
 import android.os.ServiceManager;
+
 /**
  * @author GaoFei 分辨率设置
  */
-public class MainResolutionsFragment extends Fragment implements OnItemClickListener,DisplayListener{
+public class MainResolutionsFragment extends Fragment implements OnItemClickListener, DisplayListener {
 
     private static final String TAG = "MainResolutionsFragment";
     private ListView mDeviceListView;
     private DisplayManager mDisplayManager;
     private Display mSelectDisplay;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         initData();
         mDeviceListView = getRootView();
         mDeviceListView.setPadding(0, 40, 0, 0);
@@ -82,62 +86,62 @@ public class MainResolutionsFragment extends Fragment implements OnItemClickList
     }
 
 
-    private void initData(){
-        mDisplayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);
+    private void initData() {
+        mDisplayManager = (DisplayManager) getContext().getSystemService(Context.DISPLAY_SERVICE);
     }
 
-    private void initEvent(){
+    private void initEvent() {
         mDeviceListView.setOnItemClickListener(this);
         mDisplayManager.registerDisplayListener(this, null);
     }
 
-    public ListView getRootView(){
+    public ListView getRootView() {
         return new ListView(getContext());
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
-            long id) {
+                            long id) {
         Display[] displays = mDisplayManager.getDisplays();
         for (int i = 0; i != displays.length; ++i) {
             Display itemDisplay = displays[i];
-            if(itemDisplay.getName().equals(parent.getAdapter().getItem(position))){
+            if (itemDisplay.getName().equals(parent.getAdapter().getItem(position))) {
                 mSelectDisplay = itemDisplay;
                 break;
             }
         }
 
-        if(mSelectDisplay != null){
+        if (mSelectDisplay != null) {
             final Mode[] supportModes = mSelectDisplay.getSupportedModes();
             int currentModeId = mSelectDisplay.getMode().getModeId();
             Log.i(TAG, "currentModeId:" + currentModeId);
             String[] strModes = new String[supportModes.length];
             int selectIndex = -1;
-            for(int i = 0; i != supportModes.length; ++i){
+            for (int i = 0; i != supportModes.length; ++i) {
                 Mode itemMode = supportModes[i];
-                if(itemMode.getModeId() == currentModeId)
+                if (itemMode.getModeId() == currentModeId)
                     selectIndex = i;
                 StringBuilder modeBuilder = new StringBuilder();
                 modeBuilder.append(itemMode.getPhysicalWidth())
-                .append("x").append(itemMode.getPhysicalHeight())
-                .append("-").append(itemMode.getRefreshRate());
+                        .append("x").append(itemMode.getPhysicalHeight())
+                        .append("-").append(itemMode.getRefreshRate());
                 strModes[i] = modeBuilder.toString();
             }
 
             new AlertDialog.Builder(getContext()).setTitle("Setting Resoultion")
-            .setSingleChoiceItems(strModes, selectIndex, new DialogInterface.OnClickListener() {
+                    .setSingleChoiceItems(strModes, selectIndex, new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    try{
-                        IDisplayManager manager = IDisplayManager.Stub.asInterface(ServiceManager.getService(Context.DISPLAY_SERVICE));
-                        manager.requestMode(mSelectDisplay.getDisplayId(), supportModes[which].getModeId());
-                    }catch (Exception e){
-                        Log.i(TAG, "onclick exception:" + e);
-                    }
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                IDisplayManager manager = IDisplayManager.Stub.asInterface(ServiceManager.getService(Context.DISPLAY_SERVICE));
+                                manager.requestMode(mSelectDisplay.getDisplayId(), supportModes[which].getModeId());
+                            } catch (Exception e) {
+                                Log.i(TAG, "onclick exception:" + e);
+                            }
 
-                }
-            }).show();
+                        }
+                    }).show();
         }
     }
 

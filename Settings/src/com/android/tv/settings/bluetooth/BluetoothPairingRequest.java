@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.android.tv.settings.bluetooth;
 
@@ -50,11 +50,11 @@ public final class BluetoothPairingRequest extends BroadcastReceiver {
             pairingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             PowerManager powerManager =
-                    (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+                    (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             String deviceAddress = device != null ? device.getAddress() : null;
             String deviceName = device != null ? device.getName() : null;
-            boolean shouldShowDialog= LocalBluetoothPreferences.shouldShowDialogInForeground(
-                        context, deviceAddress, deviceName);
+            boolean shouldShowDialog = LocalBluetoothPreferences.shouldShowDialogInForeground(
+                    context, deviceAddress, deviceName);
             if (powerManager.isInteractive() && shouldShowDialog) {
                 // Since the screen is on and the BT-related activity is in the foreground,
                 // just open the dialog
@@ -100,11 +100,11 @@ public final class BluetoothPairingRequest extends BroadcastReceiver {
                     BluetoothDevice.ERROR);
             int oldState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE,
                     BluetoothDevice.ERROR);
-            if((oldState == BluetoothDevice.BOND_BONDING) &&
+            if ((oldState == BluetoothDevice.BOND_BONDING) &&
                     (bondState == BluetoothDevice.BOND_NONE)) {
                 // Remove the notification
                 NotificationManager manager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.cancel(NOTIFICATION_ID);
             }
         }
