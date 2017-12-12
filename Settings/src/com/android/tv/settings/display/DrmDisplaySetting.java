@@ -365,8 +365,8 @@ public class DrmDisplaySetting {
             orginModes = filterOrginModes(orginModes);
             displayInfo.setOrginModes(orginModes);
             displayInfo.setModes(getFilterModeList(orginModes));
-            //String[] colors = (String[]) ReflectUtils.invokeMethod(rkDisplayOutputManager, "getSupportCorlorList", new Class[]{int.class, int.class}, new Object[]{1, currMainType});
-            //displayInfo.setColors(colors);
+            String[] colors = (String[]) ReflectUtils.invokeMethod(rkDisplayOutputManager, "getSupportCorlorList", new Class[]{int.class, int.class}, new Object[]{1, currMainType});
+            displayInfo.setColors(colors);
 
             logd(" getDpDisplayInfo 5");
             return displayInfo;
