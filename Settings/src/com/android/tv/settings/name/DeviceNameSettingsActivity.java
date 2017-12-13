@@ -24,7 +24,7 @@ import android.support.v17.leanback.app.GuidedStepFragment;
 /**
  * Activity that displays Device Name settings
  */
-public class DeviceNameSettingsActivity extends Activity  {
+public class DeviceNameSettingsActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

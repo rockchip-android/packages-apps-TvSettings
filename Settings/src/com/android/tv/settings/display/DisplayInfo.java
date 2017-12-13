@@ -7,7 +7,6 @@ import java.util.Arrays;
  * 显示信息
  *
  * @author GaoFei
- *
  */
 class DisplayInfo implements Serializable {
     private int displayId;
@@ -48,6 +47,7 @@ class DisplayInfo implements Serializable {
     public String[] getColors() {
         return colors;
     }
+
     public void setModes(String[] modes) {
         this.modes = modes;
     }

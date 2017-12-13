@@ -64,6 +64,7 @@ public class StorageResetFragment extends LeanbackPreferenceFragment {
     public static StorageResetFragment newInstance() {
         return new StorageResetFragment();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mStorageManager = getContext().getSystemService(StorageManager.class);
@@ -173,7 +174,7 @@ public class StorageResetFragment extends LeanbackPreferenceFragment {
             deviceCategory.addPreference(missingPreference);
         }
 
-        for (int i = 0; i < deviceCategory.getPreferenceCount();) {
+        for (int i = 0; i < deviceCategory.getPreferenceCount(); ) {
             final Preference pref = deviceCategory.getPreference(i);
             if (touchedDeviceKeys.contains(pref.getKey())) {
                 i++;
@@ -210,7 +211,7 @@ public class StorageResetFragment extends LeanbackPreferenceFragment {
             removableCategory.addPreference(unsupportedDiskPreference);
         }
 
-        for (int i = 0; i < removableCategory.getPreferenceCount();) {
+        for (int i = 0; i < removableCategory.getPreferenceCount(); ) {
             final Preference pref = removableCategory.getPreference(i);
             if (touchedRemovableKeys.contains(pref.getKey())) {
                 i++;
@@ -228,7 +229,7 @@ public class StorageResetFragment extends LeanbackPreferenceFragment {
         }
 
         private void refresh(Context context, StorageManager storageManager,
-                VolumeInfo volumeInfo) {
+                             VolumeInfo volumeInfo) {
             final String description = storageManager
                     .getBestVolumeDescription(volumeInfo);
             setTitle(description);

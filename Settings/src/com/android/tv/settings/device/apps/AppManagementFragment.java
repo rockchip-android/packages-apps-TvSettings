@@ -126,14 +126,14 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
         switch (requestCode) {
             case REQUEST_UNINSTALL:
                 if (resultCode == Activity.RESULT_OK) {
-                    final int userId =  UserHandle.getUserId(mEntry.info.uid);
+                    final int userId = UserHandle.getUserId(mEntry.info.uid);
                     mApplicationsState.removePackage(mPackageName, userId);
                     navigateBack();
                 }
                 break;
             case REQUEST_MANAGE_SPACE:
                 mClearDataPreference.setClearingData(false);
-                if(resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     final int userId = UserHandle.getUserId(mEntry.info.uid);
                     mApplicationsState.requestSize(mPackageName, userId);
                 } else {
@@ -298,7 +298,7 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
 
     private void dataCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear data!");
@@ -311,7 +311,7 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
         mPackageManager.deleteApplicationCacheFiles(mEntry.info.packageName,
                 new IPackageDataObserver.Stub() {
                     public void onRemoveCompleted(final String packageName,
-                            final boolean succeeded) {
+                                                  final boolean succeeded) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -326,7 +326,7 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
 
     private void cacheCleared(boolean succeeded) {
         if (succeeded) {
-            final int userId =  UserHandle.getUserId(mEntry.info.uid);
+            final int userId = UserHandle.getUserId(mEntry.info.uid);
             mApplicationsState.requestSize(mPackageName, userId);
         } else {
             Log.w(TAG, "Failed to clear cache!");
@@ -366,10 +366,12 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
         }
 
         @Override
-        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {}
+        public void onRebuildComplete(ArrayList<ApplicationsState.AppEntry> apps) {
+        }
 
         @Override
-        public void onPackageIconChanged() {}
+        public void onPackageIconChanged() {
+        }
 
         @Override
         public void onPackageSizeChanged(String packageName) {
@@ -394,7 +396,8 @@ public class AppManagementFragment extends LeanbackPreferenceFragment {
         }
 
         @Override
-        public void onLauncherInfoChanged() {}
+        public void onLauncherInfoChanged() {
+        }
 
         @Override
         public void onLoadEntriesCompleted() {

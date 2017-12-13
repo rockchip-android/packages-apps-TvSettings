@@ -35,7 +35,7 @@ public final class DockEventReceiver extends BroadcastReceiver {
     private static final String TAG = "DockEventReceiver";
 
     public static final String ACTION_DOCK_SHOW_UI =
-        "com.android.settings.bluetooth.action.DOCK_SHOW_UI";
+            "com.android.settings.bluetooth.action.DOCK_SHOW_UI";
 
     private static final int EXTRA_INVALID = -1234;
 
@@ -61,9 +61,9 @@ public final class DockEventReceiver extends BroadcastReceiver {
                 || ACTION_DOCK_SHOW_UI.endsWith(intent.getAction())) {
             if ((device == null) && (ACTION_DOCK_SHOW_UI.endsWith(intent.getAction()) ||
                     ((state != Intent.EXTRA_DOCK_STATE_UNDOCKED) &&
-                     (state != Intent.EXTRA_DOCK_STATE_LE_DESK)))) {
+                            (state != Intent.EXTRA_DOCK_STATE_LE_DESK)))) {
                 if (DEBUG) Log.d(TAG,
-                        "Wrong state: "+state+" or intent: "+intent.toString()+" with null device");
+                        "Wrong state: " + state + " or intent: " + intent.toString() + " with null device");
                 return;
             }
 
@@ -82,7 +82,7 @@ public final class DockEventReceiver extends BroadcastReceiver {
                     break;
             }
         } else if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction()) ||
-                   BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
+                BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
             int newState = intent.getIntExtra(BluetoothProfile.EXTRA_STATE,
                     BluetoothProfile.STATE_CONNECTED);
             int oldState = intent.getIntExtra(BluetoothProfile.EXTRA_PREVIOUS_STATE, 0);

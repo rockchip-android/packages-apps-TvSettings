@@ -73,7 +73,7 @@ public class RebootConfirmFragment extends GuidedStepFragment {
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions,
-            Bundle savedInstanceState) {
+                                Bundle savedInstanceState) {
         final Context context = getActivity();
         if (getArguments().getBoolean(ARG_SAFE_MODE, false)) {
             actions.add(new GuidedAction.Builder(context)

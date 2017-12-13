@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.tv.settings.R;
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.settingslib.bluetooth.CachedBluetoothDeviceManager;
@@ -197,7 +198,7 @@ public final class DeviceProfilesSettings extends DialogFragment implements
      *
      * @param profile The profile for which the preference controls.
      * @return A preference that allows the user to choose whether this profile
-     *         will be connected to.
+     * will be connected to.
      */
     private CheckBox createProfilePreference(LocalBluetoothProfile profile) {
         CheckBox pref = new CheckBox(getActivity());
@@ -223,8 +224,8 @@ public final class DeviceProfilesSettings extends DialogFragment implements
 
         if (KEY_PBAP_SERVER.equals(profilePref.getTag())) {
             final int newPermission = mCachedDevice.getPhonebookPermissionChoice()
-                == CachedBluetoothDevice.ACCESS_ALLOWED ? CachedBluetoothDevice.ACCESS_REJECTED
-                : CachedBluetoothDevice.ACCESS_ALLOWED;
+                    == CachedBluetoothDevice.ACCESS_ALLOWED ? CachedBluetoothDevice.ACCESS_REJECTED
+                    : CachedBluetoothDevice.ACCESS_ALLOWED;
             mCachedDevice.setPhonebookPermissionChoice(newPermission);
             profilePref.setChecked(newPermission == CachedBluetoothDevice.ACCESS_ALLOWED);
             return;
@@ -254,7 +255,7 @@ public final class DeviceProfilesSettings extends DialogFragment implements
     }
 
     private void askDisconnect(Context context,
-            final LocalBluetoothProfile profile) {
+                               final LocalBluetoothProfile profile) {
         // local reference for callback
         final CachedBluetoothDevice device = mCachedDevice;
         String name = device.getName();
@@ -270,15 +271,15 @@ public final class DeviceProfilesSettings extends DialogFragment implements
 
         DialogInterface.OnClickListener disconnectListener =
                 new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                device.disconnect(profile);
-                profile.setPreferred(device.getDevice(), false);
-                if (profile instanceof MapProfile) {
-                    device.setMessagePermissionChoice(BluetoothDevice.ACCESS_REJECTED);
-                }
-                refreshProfilePreference(findProfile(profile.toString()), profile);
-            }
-        };
+                    public void onClick(DialogInterface dialog, int which) {
+                        device.disconnect(profile);
+                        profile.setPreferred(device.getDevice(), false);
+                        if (profile instanceof MapProfile) {
+                            device.setMessagePermissionChoice(BluetoothDevice.ACCESS_REJECTED);
+                        }
+                        refreshProfilePreference(findProfile(profile.toString()), profile);
+                    }
+                };
 
         mDisconnectDialog = BluetoothUtils.showDisconnectDialog(context,
                 mDisconnectDialog, disconnectListener, title, Html.fromHtml(message));
@@ -324,7 +325,7 @@ public final class DeviceProfilesSettings extends DialogFragment implements
     }
 
     private void refreshProfilePreference(CheckBox profilePref,
-            LocalBluetoothProfile profile) {
+                                          LocalBluetoothProfile profile) {
         BluetoothDevice device = mCachedDevice.getDevice();
 
         // Gray out checkbox while connecting and disconnecting.

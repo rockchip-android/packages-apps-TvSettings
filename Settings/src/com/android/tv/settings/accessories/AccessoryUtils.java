@@ -27,7 +27,8 @@ import com.android.tv.settings.R;
  * Provide utilities for Remote & Accessories.
  */
 public class AccessoryUtils {
-    public static @DrawableRes int getImageIdForDevice(@NonNull BluetoothDevice dev) {
+    public static @DrawableRes
+    int getImageIdForDevice(@NonNull BluetoothDevice dev) {
         final BluetoothClass bluetoothClass = dev.getBluetoothClass();
         if (bluetoothClass == null) {
             return R.drawable.ic_bluetooth;

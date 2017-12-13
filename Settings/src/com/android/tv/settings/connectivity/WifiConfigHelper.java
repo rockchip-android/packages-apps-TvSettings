@@ -56,6 +56,7 @@ public final class WifiConfigHelper {
     private static final String EXCLUSION_REGEXP =
             "$|^(\\*)?\\.?[" + HC + "]+(\\-[" + HC + "]+)*(\\.[" + HC + "]+(\\-[" + HC + "]+)*)*$";
     private static final Pattern EXCLUSION_PATTERN;
+
     static {
         HOSTNAME_PATTERN = Pattern.compile(HOSTNAME_REGEXP);
         EXCLUSION_PATTERN = Pattern.compile(EXCLUSION_REGEXP);
@@ -95,6 +96,7 @@ public final class WifiConfigHelper {
 
     /**
      * validate syntax of hostname and port entries
+     *
      * @return 0 on success, string resource ID on failure
      */
     public static int validate(String hostname, String port, String exclList) {
@@ -152,7 +154,7 @@ public final class WifiConfigHelper {
      * Return the configured network that matches the ssid/security pair, or create one.
      */
     public static WifiConfiguration getConfiguration(Context context, String ssid,
-            WifiSecurity security) {
+                                                     WifiSecurity security) {
         WifiConfiguration config = getFromConfiguredNetworks(context, ssid, security);
 
         if (config == null) {
@@ -175,18 +177,18 @@ public final class WifiConfigHelper {
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         int networkId = wifiMan.addNetwork(config);
         if (networkId == -1) {
-          if (DEBUG) Log.e(TAG, "failed to add network: " + config.toString());
-          return false;
+            if (DEBUG) Log.e(TAG, "failed to add network: " + config.toString());
+            return false;
         }
 
         if (!wifiMan.enableNetwork(networkId, false)) {
-          if (DEBUG) Log.e(TAG, "enable network failed: " + networkId + "; " + config.toString());
-          return false;
+            if (DEBUG) Log.e(TAG, "enable network failed: " + networkId + "; " + config.toString());
+            return false;
         }
 
         if (!wifiMan.saveConfiguration()) {
-          if (DEBUG) Log.e(TAG, "failed to save: " + config.toString());
-          return false;
+            if (DEBUG) Log.e(TAG, "failed to save: " + config.toString());
+            return false;
         }
 
         if (DEBUG) Log.d(TAG, "saved network: " + config.toString());
@@ -236,7 +238,7 @@ public final class WifiConfigHelper {
      * networks, or null if no matching network is found.
      */
     private static WifiConfiguration getFromConfiguredNetworks(Context context, String ssid,
-            WifiSecurity security) {
+                                                               WifiSecurity security) {
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         List<WifiConfiguration> configuredNetworks = wifiMan.getConfiguredNetworks();
         if (configuredNetworks != null) {

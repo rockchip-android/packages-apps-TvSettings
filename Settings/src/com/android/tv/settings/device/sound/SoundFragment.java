@@ -48,6 +48,7 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
     private Preference mVolumeSettingPreference;
     private Preference mAudioDevicePreference;
     private Preference mDoblyPreference;
+
     public static SoundFragment newInstance() {
         return new SoundFragment();
     }
@@ -79,10 +80,10 @@ public class SoundFragment extends LeanbackPreferenceFragment implements
         if (TextUtils.equals(preference.getKey(), KEY_SOUND_EFFECTS)) {
             final TwoStatePreference soundPref = (TwoStatePreference) preference;
             setSoundEffectsEnabled(soundPref.isChecked());
-        }else if(TextUtils.equals(preference.getKey(), KEY_VOLUME_SETTINGS)){
+        } else if (TextUtils.equals(preference.getKey(), KEY_VOLUME_SETTINGS)) {
             Intent volumeSettingIntent = new Intent(getActivity(), VolumeSettingsActivity.class);
             startActivity(volumeSettingIntent);
-        }else if(TextUtils.equals(preference.getKey(), KEY_AUDIO_DEVICE)){
+        } else if (TextUtils.equals(preference.getKey(), KEY_AUDIO_DEVICE)) {
             Intent audioDevcieIntent = new Intent(getActivity(), SoundDevicesManager.class);
             startActivity(audioDevcieIntent);
         }

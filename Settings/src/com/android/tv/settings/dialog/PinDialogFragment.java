@@ -57,7 +57,9 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
             PIN_DIALOG_TYPE_ENTER_PIN,
             PIN_DIALOG_TYPE_NEW_PIN,
             PIN_DIALOG_TYPE_OLD_PIN})
-    public @interface PinDialogType {}
+    public @interface PinDialogType {
+    }
+
     /**
      * PIN code dialog for unlock channel
      */
@@ -95,7 +97,7 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
     public static final String DIALOG_TAG = PinDialogFragment.class.getName();
 
     private static final int NUMBER_PICKERS_RES_ID[] = {
-            R.id.first, R.id.second, R.id.third, R.id.fourth };
+            R.id.first, R.id.second, R.id.third, R.id.fourth};
 
     private int mType;
     private int mRetCode;
@@ -110,9 +112,13 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
     private final Handler mHandler = new Handler();
 
     public abstract long getPinDisabledUntil();
+
     public abstract void setPinDisabledUntil(long retryDisableTimeout);
+
     public abstract void setPin(String pin);
+
     public abstract boolean isPinCorrect(String pin);
+
     public abstract boolean isPinSet();
 
     public PinDialogFragment() {
@@ -141,7 +147,7 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.pin_dialog, container, false);
 
         mWrongPinView = (TextView) v.findViewById(R.id.wrong_pin);
@@ -319,11 +325,11 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
 
     public static final class PinNumberPicker extends FrameLayout {
         private static final int NUMBER_VIEWS_RES_ID[] = {
-            R.id.previous2_number,
-            R.id.previous_number,
-            R.id.current_number,
-            R.id.next_number,
-            R.id.next2_number };
+                R.id.previous2_number,
+                R.id.previous_number,
+                R.id.current_number,
+                R.id.next_number,
+                R.id.next2_number};
         private static final int CURRENT_NUMBER_VIEW_INDEX = 2;
 
         private static Animator sFocusedNumberEnterAnimator;
@@ -361,7 +367,7 @@ public abstract class PinDialogFragment extends SafeDismissDialogFragment {
         }
 
         public PinNumberPicker(Context context, AttributeSet attrs, int defStyleAttr,
-                int defStyleRes) {
+                               int defStyleRes) {
             super(context, attrs, defStyleAttr, defStyleRes);
             View view = inflate(context, R.layout.pin_number_picker, this);
             mNumberViewHolder = view.findViewById(R.id.number_view_holder);

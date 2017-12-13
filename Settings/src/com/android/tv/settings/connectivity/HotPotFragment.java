@@ -30,9 +30,6 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 
 
-
-
-
 import com.android.tv.settings.R;
 import com.android.tv.settings.datausage.DataSaverBackend;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
@@ -49,9 +46,9 @@ import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
 import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 
-public class HotPotFragment extends LeanbackPreferenceFragment 
-    implements Preference.OnPreferenceChangeListener,
-        DataSaverBackend.Listener,DialogInterface.OnClickListener,DialogCreatable{
+public class HotPotFragment extends LeanbackPreferenceFragment
+        implements Preference.OnPreferenceChangeListener,
+        DataSaverBackend.Listener, DialogInterface.OnClickListener, DialogCreatable {
 
     private static final String USB_TETHER_SETTINGS = "usb_tether_settings";
     private static final String ENABLE_WIFI_AP = "enable_wifi_ap";
@@ -182,13 +179,13 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 //        setPreferencesFromResource(R.xml.hotpot, null);
     }
 
-        @Override
+    @Override
     public void onDataSaverChanged(boolean isDataSaving) {
         mDataSaverEnabled = isDataSaving;
         mEnableWifiAp.setEnabled(!mDataSaverEnabled);
         mUsbTether.setEnabled(!mDataSaverEnabled);
         mBluetoothTether.setEnabled(!mDataSaverEnabled);
-   //     mDataSaverFooter.setVisible(mDataSaverEnabled);
+        //     mDataSaverFooter.setVisible(mDataSaverEnabled);
     }
 
     @Override
@@ -196,14 +193,14 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     }
 
     @Override
-    public void onBlacklistStatusChanged(int uid, boolean isBlacklisted)  {
+    public void onBlacklistStatusChanged(int uid, boolean isBlacklisted) {
     }
 
     @Override
     public Dialog onCreateDialog(int id) {
         if (id == DIALOG_AP_SETTINGS) {
             final Activity activity = getActivity();
- //           mDialog = new WifiApDialog(activity, this, mWifiConfig);
+            //           mDialog = new WifiApDialog(activity, this, mWifiConfig);
             return mDialog;
         }
 
@@ -211,22 +208,22 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     }
 
     public static boolean isProvisioningNeededButUnavailable(Context context) {
-          return (TetherUtil.isProvisioningNeeded(context)
-                  && !isIntentAvailable(context));
-      }
+        return (TetherUtil.isProvisioningNeeded(context)
+                && !isIntentAvailable(context));
+    }
 
-      private static boolean isIntentAvailable(Context context) {
-          String[] provisionApp = context.getResources().getStringArray(
-                  com.android.internal.R.array.config_mobile_hotspot_provision_app);
-          if (provisionApp.length < 2) {
-              return false;
-          }
-          final PackageManager packageManager = context.getPackageManager();
-          Intent intent = new Intent(Intent.ACTION_MAIN);
-          intent.setClassName(provisionApp[0], provisionApp[1]);
-          return (packageManager.queryIntentActivities(intent,
-                  PackageManager.MATCH_DEFAULT_ONLY).size() > 0);
-      }
+    private static boolean isIntentAvailable(Context context) {
+        String[] provisionApp = context.getResources().getStringArray(
+                com.android.internal.R.array.config_mobile_hotspot_provision_app);
+        if (provisionApp.length < 2) {
+            return false;
+        }
+        final PackageManager packageManager = context.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName(provisionApp[0], provisionApp[1]);
+        return (packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY).size() > 0);
+    }
 
     @Override
     public void onStart() {
@@ -283,7 +280,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         }
     }
 
-        @Override
+    @Override
     public void onDestroy() {
         mDataSaverBackend.remListener(this);
         super.onDestroy();
@@ -302,7 +299,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         if (mWifiConfig == null) {
             final String s = activity.getString(
                     com.android.internal.R.string.wifi_tether_configure_ssid_default);
-           mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),
+            mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),
                     s, mSecurityType[WifiApDialog.OPEN_INDEX]));
         } else {
             int index = WifiApDialog.getSecurityTypeIndex(mWifiConfig);
@@ -333,7 +330,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
                     mRestartWifiApAfterConfigChange = false;
                     Log.d(TAG, "Restarting WifiAp due to prior config change.");
                     try {
-                         Log.d(TAG, "Sleep " + mDelayTimeBeforRestartWifiAp + "ms befor restarting WifiAp.");
+                        Log.d(TAG, "Sleep " + mDelayTimeBeforRestartWifiAp + "ms befor restarting WifiAp.");
                         Thread.sleep(mDelayTimeBeforRestartWifiAp);
                     } catch (InterruptedException ignore) {
                     }
@@ -346,7 +343,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
                     mRestartWifiApAfterConfigChange = false;
                     Log.d(TAG, "Restarting WifiAp due to prior config change.");
                     try {
-                         Log.d(TAG, "Sleep " + mDelayTimeBeforRestartWifiAp + "ms befor restarting WifiAp.");
+                        Log.d(TAG, "Sleep " + mDelayTimeBeforRestartWifiAp + "ms befor restarting WifiAp.");
                         Thread.sleep(mDelayTimeBeforRestartWifiAp);
                     } catch (InterruptedException ignore) {
                     }
@@ -388,7 +385,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
         if (choice == TETHERING_BLUETOOTH) {
             // Turn on Bluetooth first.
             BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            if( adapter == null){
+            if (adapter == null) {
                 return;
             }
             if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
@@ -400,7 +397,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
             }
         }
 
-       mCm.startTethering(choice, true, mStartTetheringCallback, mHandler);
+        mCm.startTethering(choice, true, mStartTetheringCallback, mHandler);
     }
 
     @Override
@@ -421,7 +418,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
                 updateState();
             }
         } else if (preference == mCreateNetwork) {
- //           showDialog(DIALOG_AP_SETTINGS);
+            //           showDialog(DIALOG_AP_SETTINGS);
         }
 
         return super.onPreferenceTreeClick(preference);
@@ -441,13 +438,14 @@ public class HotPotFragment extends LeanbackPreferenceFragment
 
     private BluetoothProfile.ServiceListener mProfileServiceListener =
             new BluetoothProfile.ServiceListener() {
-        public void onServiceConnected(int profile, BluetoothProfile proxy) {
-            mBluetoothPan.set((BluetoothPan) proxy);
-        }
-        public void onServiceDisconnected(int profile) {
-            mBluetoothPan.set(null);
-        }
-    };
+                public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                    mBluetoothPan.set((BluetoothPan) proxy);
+                }
+
+                public void onServiceDisconnected(int profile) {
+                    mBluetoothPan.set(null);
+                }
+            };
 
     private void updateState() {
         String[] available = mCm.getTetherableIfaces();
@@ -457,14 +455,14 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     }
 
     private void updateState(String[] available, String[] tethered,
-            String[] errored) {
+                             String[] errored) {
         updateUsbState(available, tethered, errored);
         updateBluetoothState(available, tethered, errored);
     }
 
 
     private void updateUsbState(String[] available, String[] tethered,
-            String[] errored) {
+                                String[] errored) {
         boolean usbAvailable = mUsbConnected && !mMassStorageActive;
         int usbError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
         for (String s : available) {
@@ -483,7 +481,7 @@ public class HotPotFragment extends LeanbackPreferenceFragment
             }
         }
         boolean usbErrored = false;
-        for (String s: errored) {
+        for (String s : errored) {
             for (String regex : mUsbRegexs) {
                 if (s.matches(regex)) usbErrored = true;
             }
@@ -517,9 +515,9 @@ public class HotPotFragment extends LeanbackPreferenceFragment
     }
 
     private void updateBluetoothState(String[] available, String[] tethered,
-            String[] errored) {
+                                      String[] errored) {
         boolean bluetoothErrored = false;
-        for (String s: errored) {
+        for (String s : errored) {
             for (String regex : mBluetoothRegexs) {
                 if (s.matches(regex)) bluetoothErrored = true;
             }

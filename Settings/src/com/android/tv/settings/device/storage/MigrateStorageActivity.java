@@ -73,7 +73,7 @@ public class MigrateStorageActivity extends Activity {
     };
 
     public static Intent getLaunchIntent(Context context, String volumeId,
-            boolean migrateHere) {
+                                         boolean migrateHere) {
         final Intent i = new Intent(context, MigrateStorageActivity.class);
         i.putExtra(VolumeInfo.EXTRA_VOLUME_ID, volumeId);
         i.putExtra(EXTRA_MIGRATE_HERE, migrateHere);
@@ -209,7 +209,7 @@ public class MigrateStorageActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder(getContext())
                     .id(ACTION_CONFIRM)
                     .title(R.string.storage_wizard_migrate_confirm_action_move_now)
@@ -259,7 +259,7 @@ public class MigrateStorageActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             final StorageManager storageManager =
                     getContext().getSystemService(StorageManager.class);
             mCandidateVolumes =
@@ -284,7 +284,7 @@ public class MigrateStorageActivity extends Activity {
         @Override
         public void onGuidedActionClicked(GuidedAction action) {
             final VolumeInfo volumeInfo = mCandidateVolumes.get((int) action.getId());
-            ((MigrateStorageActivity)getActivity()).onChoose(volumeInfo);
+            ((MigrateStorageActivity) getActivity()).onChoose(volumeInfo);
         }
     }
 

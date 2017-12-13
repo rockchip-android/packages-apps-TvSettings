@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.android.settingslib.RestrictedPreference;
 import com.android.tv.settings.R;
 

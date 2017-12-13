@@ -146,11 +146,12 @@ public final class Ranking {
         sRankMap.put(LegalSettings.class.getName(), RANK_DEVICE_INFO);
 
         sBaseRankMap.put("com.android.settings", 0);
-    */}
+    */
+    }
 
     public static int getRankForClassName(String className) {
         Integer rank = sRankMap.get(className);
-        return (rank != null) ? (int) rank: RANK_OTHERS;
+        return (rank != null) ? (int) rank : RANK_OTHERS;
     }
 
     public static int getBaseRankForAuthority(String authority) {

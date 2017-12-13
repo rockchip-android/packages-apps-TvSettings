@@ -33,22 +33,27 @@ import android.widget.TextView;
 import android.os.DisplayOutputManager;
 import android.os.SystemProperties;
 import android.support.annotation.Keep;
+
 import com.android.tv.settings.R;
 import com.android.tv.settings.data.ConstData;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import android.os.SystemProperties;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import android.support.v14.preference.SwitchPreference;
 
 @Keep
 public class DeviceFragment extends LeanbackPreferenceFragment implements Preference.OnPreferenceChangeListener,
-Preference.OnPreferenceClickListener{
+        Preference.OnPreferenceClickListener {
     protected static final String TAG = "DeviceFragment";
     public static final String KEY_RESOLUTION = "resolution";
     public static final String KEY_COLOR = "color";
@@ -94,9 +99,10 @@ Preference.OnPreferenceClickListener{
      */
     protected DisplayManager mDisplayManager;
     /**
-    * 原来的分辨率
-    */
+     * 原来的分辨率
+     */
     private String mOldResolution;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,18 +135,18 @@ Preference.OnPreferenceClickListener{
     }
 
 
-    protected void initData(){
+    protected void initData() {
         mStrPlatform = SystemProperties.get("ro.board.platform");
         mIsUseDisplayd = SystemProperties.getBoolean("ro.rk.displayd.enable", true);
-        mDisplayManager = (DisplayManager)getActivity().getSystemService(Context.DISPLAY_SERVICE);
+        mDisplayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
         mPreferenceScreen = getPreferenceScreen();
         mAdvancedSettingsPreference = findPreference(KEY_ADVANCED_SETTINGS);
-        mCecEnablePreference = (SwitchPreference)findPreference(KEY_CEC_ENABLE);
-        mResolutionPreference = (ListPreference)findPreference(KEY_RESOLUTION);
-        mColorPreference = (ListPreference)findPreference(KEY_COLOR);
+        mCecEnablePreference = (SwitchPreference) findPreference(KEY_CEC_ENABLE);
+        mResolutionPreference = (ListPreference) findPreference(KEY_RESOLUTION);
+        mColorPreference = (ListPreference) findPreference(KEY_COLOR);
 
         mZoomPreference = findPreference(KEY_ZOOM);
-        mTextTitle = (TextView)getActivity().findViewById(android.support.v7.preference.R.id.decor_title);
+        mTextTitle = (TextView) getActivity().findViewById(android.support.v7.preference.R.id.decor_title);
         if (!mIsUseDisplayd) {
             mDisplayInfo = getDisplayInfo();
         } else {
@@ -152,37 +158,38 @@ Preference.OnPreferenceClickListener{
         //mPreferenceScreen.removePreference(mAdvancedSettingsPreference);
     }
 
-    private void refreshHdmiCecStat(){
-       if(mCecEnablePreference!=null){
-         try {
-           if("1".equals(readStrFromHdmiFile("/sys/devices/virtual/misc/cec/enable"))){
-              mCecEnablePreference.setEnabled(true);
-              if("true".equals(SystemProperties.get("persist.sys.hdmi.cec_enable","true")))
-                   mCecEnablePreference.setChecked(true);
-               else
-                   mCecEnablePreference.setChecked(false);
-            } else {
-               mCecEnablePreference.setEnabled(false);
+    private void refreshHdmiCecStat() {
+        if (mCecEnablePreference != null) {
+            try {
+                if ("1".equals(readStrFromHdmiFile("/sys/devices/virtual/misc/cec/enable"))) {
+                    mCecEnablePreference.setEnabled(true);
+                    if ("true".equals(SystemProperties.get("persist.sys.hdmi.cec_enable", "true")))
+                        mCecEnablePreference.setChecked(true);
+                    else
+                        mCecEnablePreference.setChecked(false);
+                } else {
+                    mCecEnablePreference.setEnabled(false);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
 
-       }
+        }
 
     }
+
     private String readStrFromHdmiFile(String filename) throws IOException {
-        Log.d(TAG,"readStrFromHdmiFile - " + filename);
+        Log.d(TAG, "readStrFromHdmiFile - " + filename);
         File f = new File(filename);
         InputStreamReader reader = new InputStreamReader(new FileInputStream(f));
         BufferedReader br = new BufferedReader(reader);
         String line = br.readLine();
-        Log.d(TAG,"readStrFromHdmiFile - " + line);
+        Log.d(TAG, "readStrFromHdmiFile - " + line);
         return line;
     }
 
-    protected void rebuildView(){
-        if(mDisplayInfo == null)
+    protected void rebuildView() {
+        if (mDisplayInfo == null)
             return;
         mResolutionPreference.setEntries(mDisplayInfo.getModes());
         mResolutionPreference.setEntryValues(mDisplayInfo.getModes());
@@ -192,7 +199,7 @@ Preference.OnPreferenceClickListener{
     }
 
 
-    protected void initEvent(){
+    protected void initEvent() {
         mResolutionPreference.setOnPreferenceChangeListener(this);
         mColorPreference.setOnPreferenceChangeListener(this);
         mZoomPreference.setOnPreferenceClickListener(this);
@@ -202,36 +209,36 @@ Preference.OnPreferenceClickListener{
     /**
      * 还原分辨率值
      */
-    public void updateResolutionValue(){
-        if(mDisplayInfo == null)
+    public void updateResolutionValue() {
+        if (mDisplayInfo == null)
             return;
         String resolutionValue = null;
-        if(!mIsUseDisplayd){
+        if (!mIsUseDisplayd) {
             resolutionValue = DrmDisplaySetting.getCurDisplayMode(mDisplayInfo);
             Log.i(TAG, "drm resolutionValue:" + resolutionValue);
-            if(resolutionValue != null)
+            if (resolutionValue != null)
                 mResolutionPreference.setValue(resolutionValue);
             /*show mResolutionPreference current item*/
             List<String> modes = DrmDisplaySetting.getDisplayModes(mDisplayInfo);
-            Log.i(TAG, "setValueIndex modes.toString()= "+modes.toString());
+            Log.i(TAG, "setValueIndex modes.toString()= " + modes.toString());
             int index = modes.indexOf(resolutionValue);
             if (index < 0) {
                 Log.w(TAG, "DeviceFragment - updateResolutionValue - warning index(" + index + ") < 0, set index = 0");
                 index = 0;
             }
-            Log.i(TAG, "mResolutionPreference setValueIndex index= "+index);
+            Log.i(TAG, "mResolutionPreference setValueIndex index= " + index);
             mResolutionPreference.setValueIndex(index);
-        }else{
+        } else {
             DisplayOutputManager displayOutputManager = null;
-            try{
+            try {
                 displayOutputManager = new DisplayOutputManager();
                 resolutionValue = displayOutputManager.getCurrentMode(mDisplayInfo.getDisplayId() == 0 ? 0 : 1, mDisplayInfo.getType());
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.i(TAG, "updateResolutionValue->exception:" + e);
             }
-            if(resolutionValue != null)
+            if (resolutionValue != null)
                 mResolutionPreference.setValue(resolutionValue);
-            if(mOldResolution == null)
+            if (mOldResolution == null)
                 mOldResolution = resolutionValue;
         }
     }
@@ -239,54 +246,54 @@ Preference.OnPreferenceClickListener{
     @Override
     public boolean onPreferenceChange(Preference preference, Object obj) {
         Log.i(TAG, "onPreferenceChange:" + obj);
-        if(preference == mResolutionPreference){
-            if(!mIsUseDisplayd){
-                int index = mResolutionPreference.findIndexOfValue((String)obj);
+        if (preference == mResolutionPreference) {
+            if (!mIsUseDisplayd) {
+                int index = mResolutionPreference.findIndexOfValue((String) obj);
                 DrmDisplaySetting.setDisplayModeTemp(mDisplayInfo, index);
                 showConfirmSetModeDialog();
-            }else{
+            } else {
                 DisplayOutputManager displayOutputManager = null;
-                try{
+                try {
                     displayOutputManager = new DisplayOutputManager();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Log.i(TAG, "onPreferenceChange->exception:" + e);
                 }
 
-                if(displayOutputManager != null){
-                    displayOutputManager.setMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), (String)obj);
+                if (displayOutputManager != null) {
+                    displayOutputManager.setMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), (String) obj);
                     showConfirmSetModeDialog();
                 }
             }
-        }else if(preference == mColorPreference) {
+        } else if (preference == mColorPreference) {
             if (!mIsUseDisplayd) {
-                 DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(),mDisplayInfo.getType(),(String)obj);
+                DrmDisplaySetting.setColorMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), (String) obj);
             } else {
-                }
+            }
         }
         return true;
     }
 
-     @Override
+    @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if(preference == mCecEnablePreference){
-             boolean isChecked = mCecEnablePreference.isChecked();
-             SystemProperties.set("persist.sys.hdmi.cec_enable",isChecked ? "true" : "false");
-             return true;
+        if (preference == mCecEnablePreference) {
+            boolean isChecked = mCecEnablePreference.isChecked();
+            SystemProperties.set("persist.sys.hdmi.cec_enable", isChecked ? "true" : "false");
+            return true;
         }
-       
+
         return super.onPreferenceTreeClick(preference);
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        if(preference == mZoomPreference) {
+        if (preference == mZoomPreference) {
             Intent screenScaleIntent = new Intent(getActivity(), ScreenScaleActivity.class);
             screenScaleIntent.putExtra(ConstData.IntentKey.PLATFORM, mStrPlatform);
             screenScaleIntent.putExtra(ConstData.IntentKey.DISPLAY_INFO, mDisplayInfo);
             startActivity(screenScaleIntent);
         } else if (preference == mResolutionPreference) {
             //updateResolutionValue();
-        }else if(preference == mAdvancedSettingsPreference){
+        } else if (preference == mAdvancedSettingsPreference) {
             Intent advancedIntent = new Intent(getActivity(), AdvancedDisplaySettingsActivity.class);
             advancedIntent.putExtra(ConstData.IntentKey.DISPLAY_ID, mDisplayInfo.getDisplayId());
             startActivity(advancedIntent);
@@ -302,18 +309,18 @@ Preference.OnPreferenceClickListener{
             public void onDismiss(boolean isok) {
                 Log.i(TAG, "showConfirmSetModeDialog->onDismiss->isok:" + isok);
                 Log.i(TAG, "showConfirmSetModeDialog->onDismiss->mOldResolution:" + mOldResolution);
-                if(!mIsUseDisplayd)
+                if (!mIsUseDisplayd)
                     updateResolutionValue();
-                else{
+                else {
                     DisplayOutputManager displayOutputManager = null;
-                    try{
+                    try {
                         displayOutputManager = new DisplayOutputManager();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.i(TAG, "onPreferenceChange->exception:" + e);
                     }
-                    if(isok && displayOutputManager != null){
+                    if (isok && displayOutputManager != null) {
                         displayOutputManager.saveConfig();
-                    }else if(!isok && displayOutputManager != null && mOldResolution != null){
+                    } else if (!isok && displayOutputManager != null && mOldResolution != null) {
                         //还原原来的分辨率
                         displayOutputManager.setMode(mDisplayInfo.getDisplayId(), mDisplayInfo.getType(), mOldResolution);
                     }

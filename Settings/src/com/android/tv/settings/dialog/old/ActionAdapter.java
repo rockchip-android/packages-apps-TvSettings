@@ -322,8 +322,8 @@ public class ActionAdapter extends BaseAdapter implements ScrollAdapter,
                 indicatorView.setVisibility(View.INVISIBLE);
 
                 BitmapDownloader.getInstance(mContext).getBitmap(new BitmapWorkerOptions.Builder(
-                        mContext).resource(iconUri)
-                        .width(indicatorView.getLayoutParams().width).build(),
+                                mContext).resource(iconUri)
+                                .width(indicatorView.getLayoutParams().width).build(),
                         new BitmapCallback() {
                             @Override
                             public void onBitmapRetrieved(Bitmap bitmap) {
@@ -440,7 +440,7 @@ public class ActionAdapter extends BaseAdapter implements ScrollAdapter,
     }
 
     private void prepareAndAnimateView(final View v, float initAlpha, float destAlpha, int duration,
-            int delay, Interpolator interpolator, final boolean pressed) {
+                                       int delay, Interpolator interpolator, final boolean pressed) {
         if (v != null && v.getWindowToken() != null) {
             final Action action = (Action) v.getTag(R.id.action_title);
 
@@ -479,7 +479,7 @@ public class ActionAdapter extends BaseAdapter implements ScrollAdapter,
     }
 
     private void fadeCheckmarks(final View v, final Action action, int duration, int delay,
-            Interpolator interpolator) {
+                                Interpolator interpolator) {
         int actionCheckSetId = action.getCheckSetId();
         if (actionCheckSetId != Action.NO_CHECK_SET) {
             // Find any actions that are checked and are in the same group
@@ -532,7 +532,7 @@ public class ActionAdapter extends BaseAdapter implements ScrollAdapter,
      * action nicely takes up the entire screen.
      */
     private static Integer getDescriptionMaxHeight(Context context, TextView title,
-            TextView description) {
+                                                   TextView description) {
         if (sDescriptionMaxHeight == null) {
             final Resources res = context.getResources();
             final float verticalPadding = res.getDimension(R.dimen.list_item_vertical_padding);

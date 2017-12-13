@@ -34,6 +34,7 @@ public class FormatAsPrivateStepFragment extends GuidedStepFragment {
 
     public interface Callback {
         void onRequestFormatAsPrivate(String diskId);
+
         void onCancelFormatDialog();
     }
 
@@ -46,7 +47,8 @@ public class FormatAsPrivateStepFragment extends GuidedStepFragment {
     }
 
     @Override
-    public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+    public @NonNull
+    GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         return new GuidanceStylist.Guidance(
                 getString(R.string.storage_wizard_format_as_private_title),
                 getString(R.string.storage_wizard_format_as_private_description), "",

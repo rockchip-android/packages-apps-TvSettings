@@ -176,7 +176,7 @@ public class WifiConnectionActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         WifiFormPageType formPageType = getFormPageType(formPage);
         if (formPageType == WifiFormPageType.CONNECT) {
             mConnectPage = formPage;
@@ -224,7 +224,7 @@ public class WifiConnectionActivity extends WifiMultiPagedFormActivity
 
     private void connect() {
         if (!WifiConfigHelper.isNetworkSaved(mConfiguration) &&
-            mAdvancedWifiOptionsFlow != null) {
+                mAdvancedWifiOptionsFlow != null) {
             mAdvancedWifiOptionsFlow.updateConfiguration(mConfiguration);
         }
         addPage(WifiFormPageType.CONNECT);

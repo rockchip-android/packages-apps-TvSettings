@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.android.tv.settings.vpn;
 
@@ -11,7 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.os.ServiceManager;
 import android.net.IConnectivityManager;
+
 import com.android.tv.settings.BaseInputActivity;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,59 +38,64 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
+
 import java.net.InetAddress;
+
 import com.android.tv.settings.R;
 import com.android.tv.settings.data.ConstData;
+
 /**
  * @author GaoFei
- * VPN创建Activity
+ *         VPN创建Activity
  */
 public class VpnCreateActivity extends BaseInputActivity implements TextWatcher,
-View.OnClickListener, AdapterView.OnItemSelectedListener,
-CompoundButton.OnCheckedChangeListener{
-     private static final String TAG = "VpnCreateActivity";
-     private final IConnectivityManager mService = IConnectivityManager.Stub.asInterface(
-                ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
-     private final KeyStore mKeyStore = KeyStore.getInstance();
-     private View.OnClickListener mListener;
-     private VpnProfile mProfile;
+        View.OnClickListener, AdapterView.OnItemSelectedListener,
+        CompoundButton.OnCheckedChangeListener {
+    private static final String TAG = "VpnCreateActivity";
+    private final IConnectivityManager mService = IConnectivityManager.Stub.asInterface(
+            ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+    private final KeyStore mKeyStore = KeyStore.getInstance();
+    private View.OnClickListener mListener;
+    private VpnProfile mProfile;
 
-     private boolean mEditing = true;
-     private boolean mExists;
+    private boolean mEditing = true;
+    private boolean mExists;
 
-     private View mView;
+    private View mView;
 
-     private TextView mName;
-     private Spinner mType;
-     private TextView mServer;
-     private TextView mUsername;
-     private TextView mPassword;
-     private TextView mSearchDomains;
-     private TextView mDnsServers;
-     private TextView mRoutes;
-     private CheckBox mMppe;
-     private TextView mL2tpSecret;
-     private TextView mIpsecIdentifier;
-     private TextView mIpsecSecret;
-     private Spinner mIpsecUserCert;
-     private Spinner mIpsecCaCert;
-     private Spinner mIpsecServerCert;
-     private CheckBox mSaveLogin;
-     private CheckBox mShowOptions;
-     private CheckBox mAlwaysOnVpn;
-     private Button mBtnOK;
-     private Button mBtnCancel;
-     private Button mBtnForget;
-     private Button mBtnEdit;
+    private TextView mName;
+    private Spinner mType;
+    private TextView mServer;
+    private TextView mUsername;
+    private TextView mPassword;
+    private TextView mSearchDomains;
+    private TextView mDnsServers;
+    private TextView mRoutes;
+    private CheckBox mMppe;
+    private TextView mL2tpSecret;
+    private TextView mIpsecIdentifier;
+    private TextView mIpsecSecret;
+    private Spinner mIpsecUserCert;
+    private Spinner mIpsecCaCert;
+    private Spinner mIpsecServerCert;
+    private CheckBox mSaveLogin;
+    private CheckBox mShowOptions;
+    private CheckBox mAlwaysOnVpn;
+    private Button mBtnOK;
+    private Button mBtnCancel;
+    private Button mBtnForget;
+    private Button mBtnEdit;
+
     @Override
     public void init() {
         mView = getContentView();
         Intent intent = getIntent();
-        mProfile = (VpnProfile)intent.getParcelableExtra(ConstData.IntentKey.VPN_PROFILE);
-        if(mProfile == null)
+        mProfile = (VpnProfile) intent.getParcelableExtra(ConstData.IntentKey.VPN_PROFILE);
+        if (mProfile == null)
             mProfile = new VpnProfile(Long.toHexString(System.currentTimeMillis()));
         mEditing = intent.getBooleanExtra(ConstData.IntentKey.VPN_EDITING, true);
         mExists = intent.getBooleanExtra(ConstData.IntentKey.VPN_EXIST, false);
@@ -113,10 +120,10 @@ CompoundButton.OnCheckedChangeListener{
         mSaveLogin = (CheckBox) mView.findViewById(R.id.save_login);
         mShowOptions = (CheckBox) mView.findViewById(R.id.show_options);
         mAlwaysOnVpn = (CheckBox) mView.findViewById(R.id.always_on_vpn);
-        mBtnOK = (Button)mView.findViewById(R.id.btn_ok);
-        mBtnCancel = (Button)mView.findViewById(R.id.btn_cancel);
-        mBtnForget = (Button)mView.findViewById(R.id.btn_forget);
-        mBtnEdit = (Button)mView.findViewById(R.id.btn_edit);
+        mBtnOK = (Button) mView.findViewById(R.id.btn_ok);
+        mBtnCancel = (Button) mView.findViewById(R.id.btn_cancel);
+        mBtnForget = (Button) mView.findViewById(R.id.btn_forget);
+        mBtnEdit = (Button) mView.findViewById(R.id.btn_edit);
         // Second, copy values from the profile.
         mName.setText(mProfile.name);
         mType.setSelection(mProfile.type);
@@ -231,8 +238,8 @@ CompoundButton.OnCheckedChangeListener{
     public String getInputTitle() {
         return getString(R.string.create_vpn);
     }
-    
-  
+
+
     @Override
     public void afterTextChanged(Editable field) {
         mBtnOK.setEnabled(validate(mEditing));
@@ -282,9 +289,9 @@ CompoundButton.OnCheckedChangeListener{
 
             updateLockdownVpn(false, profile);
             finish();
-        }else if(view == mBtnCancel){
+        } else if (view == mBtnCancel) {
             finish();
-        }else if(view == mBtnEdit){
+        } else if (view == mBtnEdit) {
             Intent editIntent = new Intent(this, VpnCreateActivity.class);
             editIntent.putExtra(ConstData.IntentKey.VPN_PROFILE, mProfile);
             editIntent.putExtra(ConstData.IntentKey.VPN_EXIST, true);
@@ -292,7 +299,7 @@ CompoundButton.OnCheckedChangeListener{
             startActivity(editIntent);
             finish();
         }
-        
+
     }
 
     @Override
@@ -429,7 +436,7 @@ CompoundButton.OnCheckedChangeListener{
         String[] certificates = mKeyStore.list(prefix);
 
         if (certificates == null || certificates.length == 0) {
-            certificates = new String[] {first};
+            certificates = new String[]{first};
         } else {
             String[] array = new String[certificates.length + 1];
             array[0] = first;
@@ -502,13 +509,13 @@ CompoundButton.OnCheckedChangeListener{
         profile.saveLogin = mSaveLogin.isChecked() || (mEditing && hasLogin);
         return profile;
     }
-    
-    
-    private void setButton(Button button, View.OnClickListener onClickListener){
+
+
+    private void setButton(Button button, View.OnClickListener onClickListener) {
         //button.setText(text);
         button.setOnClickListener(onClickListener);
     }
-    
+
     private void updateLockdownVpn(boolean isVpnAlwaysOn, VpnProfile profile) {
         // Save lockdown vpn
         if (isVpnAlwaysOn) {
@@ -530,7 +537,7 @@ CompoundButton.OnCheckedChangeListener{
             }
         }
     }
-    
+
     private void disconnect(VpnProfile profile) {
         try {
             LegacyVpnInfo connected = mService.getLegacyVpnInfo(UserHandle.myUserId());
@@ -543,7 +550,7 @@ CompoundButton.OnCheckedChangeListener{
             Log.e(TAG, "Failed to disconnect", e);
         }
     }
-    
+
     private void connect(VpnProfile profile) throws RemoteException {
         try {
             mService.startLegacyVpn(profile);
@@ -557,50 +564,51 @@ CompoundButton.OnCheckedChangeListener{
         super.onConfigurationChanged(newConfig);
     }
 
-    private void updateFocus(){
-        if(!mEditing){
+    private void updateFocus() {
+        if (!mEditing) {
             mPassword.setNextFocusDownId(R.id.save_login);
             mAlwaysOnVpn.setNextFocusDownId(R.id.btn_ok);
-        }else if(!mExists){
+        } else if (!mExists) {
             mName.setNextFocusDownId(R.id.type);
             mType.setNextFocusDownId(mServer.getId());
             mPassword.setNextFocusDownId(R.id.always_on_vpn);
             mAlwaysOnVpn.setNextFocusDownId(R.id.btn_ok);
             switch (mType.getSelectedItemPosition()) {
-            case 0:
-                mServer.setNextFocusDownId(mMppe.getId());
-                mAlwaysOnVpn.setNextFocusDownId(mBtnOK.getId());
-                break;
-            case 1:case 2:
-                mServer.setNextFocusDownId(mL2tpSecret.getId());
-                if(mShowOptions.getVisibility() == View.VISIBLE)
-                    mIpsecSecret.setNextFocusDownId(mShowOptions.getId());
-                else
-                    mIpsecSecret.setNextFocusDownId(mSearchDomains.getId());
-                break;
-            case 3:
-                mServer.setNextFocusDownId(mIpsecIdentifier.getId());
-                if(mShowOptions.getVisibility() == View.VISIBLE)
-                    mIpsecSecret.setNextFocusDownId(mShowOptions.getId());
-                else
-                    mIpsecSecret.setNextFocusDownId(mSearchDomains.getId());
-                break;
-            case 4:
-                mServer.setNextFocusDownId(mIpsecUserCert.getId());
-                if(mShowOptions.getVisibility() == View.VISIBLE)
-                    mIpsecServerCert.setNextFocusDownId(mShowOptions.getId());
-                else
-                    mIpsecServerCert.setNextFocusDownId(mSearchDomains.getId());
-                break;
-            case 5:
-                mServer.setNextFocusDownId(mIpsecCaCert.getId());
-                if(mShowOptions.getVisibility() == View.VISIBLE)
-                    mIpsecServerCert.setNextFocusDownId(mShowOptions.getId());
-                else
-                    mIpsecServerCert.setNextFocusDownId(mSearchDomains.getId());
-                break;
-            default:
-                break;
+                case 0:
+                    mServer.setNextFocusDownId(mMppe.getId());
+                    mAlwaysOnVpn.setNextFocusDownId(mBtnOK.getId());
+                    break;
+                case 1:
+                case 2:
+                    mServer.setNextFocusDownId(mL2tpSecret.getId());
+                    if (mShowOptions.getVisibility() == View.VISIBLE)
+                        mIpsecSecret.setNextFocusDownId(mShowOptions.getId());
+                    else
+                        mIpsecSecret.setNextFocusDownId(mSearchDomains.getId());
+                    break;
+                case 3:
+                    mServer.setNextFocusDownId(mIpsecIdentifier.getId());
+                    if (mShowOptions.getVisibility() == View.VISIBLE)
+                        mIpsecSecret.setNextFocusDownId(mShowOptions.getId());
+                    else
+                        mIpsecSecret.setNextFocusDownId(mSearchDomains.getId());
+                    break;
+                case 4:
+                    mServer.setNextFocusDownId(mIpsecUserCert.getId());
+                    if (mShowOptions.getVisibility() == View.VISIBLE)
+                        mIpsecServerCert.setNextFocusDownId(mShowOptions.getId());
+                    else
+                        mIpsecServerCert.setNextFocusDownId(mSearchDomains.getId());
+                    break;
+                case 5:
+                    mServer.setNextFocusDownId(mIpsecCaCert.getId());
+                    if (mShowOptions.getVisibility() == View.VISIBLE)
+                        mIpsecServerCert.setNextFocusDownId(mShowOptions.getId());
+                    else
+                        mIpsecServerCert.setNextFocusDownId(mSearchDomains.getId());
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -125,7 +125,7 @@ public final class DevicePickerFragment extends BaseDevicePickerFragment {
     }
 
     public void onDeviceBondStateChanged(CachedBluetoothDevice cachedDevice,
-            int bondState) {
+                                         int bondState) {
         if (bondState == BluetoothDevice.BOND_BONDED) {
             BluetoothDevice device = cachedDevice.getDevice();
             if (device.equals(mSelectedDevice)) {

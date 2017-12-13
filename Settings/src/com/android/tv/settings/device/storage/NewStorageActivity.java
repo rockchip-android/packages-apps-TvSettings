@@ -56,7 +56,7 @@ public class NewStorageActivity extends Activity {
             "com.android.tv.settings.device.storage.NewStorageActivity.MISSING_STORAGE";
 
     public static Intent getNewStorageLaunchIntent(Context context, String volumeId,
-            String diskId) {
+                                                   String diskId) {
         final Intent i = new Intent(context, NewStorageActivity.class);
         i.setAction(ACTION_NEW_STORAGE);
         i.putExtra(VolumeInfo.EXTRA_VOLUME_ID, volumeId);
@@ -171,7 +171,8 @@ public class NewStorageActivity extends Activity {
         }
 
         @Override
-        public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+        public @NonNull
+        GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
             return new GuidanceStylist.Guidance(
                     getString(R.string.storage_new_title),
                     mDescription,
@@ -181,7 +182,7 @@ public class NewStorageActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             if (TextUtils.isEmpty(mVolumeId)) {
                 actions.add(new GuidedAction.Builder(getContext())
                         .title(R.string.storage_new_action_format_public)
@@ -314,7 +315,8 @@ public class NewStorageActivity extends Activity {
         }
 
         @Override
-        public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+        public @NonNull
+        GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
             return new GuidanceStylist.Guidance(
                     getString(R.string.storage_missing_title, mDescription),
                     getString(R.string.storage_missing_description),
@@ -324,7 +326,7 @@ public class NewStorageActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder(getContext())
                     .clickAction(GuidedAction.ACTION_ID_OK)
                     .build());
@@ -357,6 +359,7 @@ public class NewStorageActivity extends Activity {
     public static class DiskReceiver extends BroadcastReceiver {
 
         private StorageManager mStorageManager;
+
         @Override
         public void onReceive(Context context, Intent intent) {
             final UserManager userManager =
@@ -451,7 +454,7 @@ public class NewStorageActivity extends Activity {
                     Toast.makeText(context, R.string.sd_mounted, Toast.LENGTH_SHORT)
                             .show();
                     break;
-                }else if(disk.isUsb()){
+                } else if (disk.isUsb()) {
                     Toast.makeText(context, R.string.usb_mounted, Toast.LENGTH_SHORT)
                             .show();
                     break;

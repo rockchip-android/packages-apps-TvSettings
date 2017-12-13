@@ -57,7 +57,7 @@ public class FormPage implements Parcelable {
      * Create a form page resulting in a password input field.
      *
      * @param title the title of this form page. Should be unique for this
-     *            Activity.
+     *              Activity.
      * @return an incomplete form page suitable for use in MultiPagedForm.
      */
     public static FormPage createPasswordInputForm(String title) {
@@ -68,7 +68,7 @@ public class FormPage implements Parcelable {
      * Create a form page resulting in a text input field.
      *
      * @param title the title of this form page. Should be unique for this
-     *            Activity.
+     *              Activity.
      * @return an incomplete form page suitable for use in MultiPagedForm.
      */
     public static FormPage createTextInputForm(String title) {
@@ -78,8 +78,8 @@ public class FormPage implements Parcelable {
     /**
      * Create a form page resulting in a list of choices.
      *
-     * @param title the title of this form page. Should be unique for this
-     *            Activity.
+     * @param title       the title of this form page. Should be unique for this
+     *                    Activity.
      * @param formChoices the choices for this form page.
      * @return an incomplete form page suitable for use in MultiPagedForm.
      */
@@ -90,13 +90,13 @@ public class FormPage implements Parcelable {
     /**
      * Create a form page which launches an intent to get its results.
      *
-     * @param title the title of this form page. Should be unique for this
-     *            Activity.
+     * @param title      the title of this form page. Should be unique for this
+     *                   Activity.
      * @param formIntent the intent to launch for this form page. This intent
-     *            should return the form page's results via the result intent's
-     *            extras bundle. This bundle must contain the
-     *            DATA_KEY_SUMMARY_STRING key as this key is used to display the
-     *            results of the intent to the user.
+     *                   should return the form page's results via the result intent's
+     *                   extras bundle. This bundle must contain the
+     *                   DATA_KEY_SUMMARY_STRING key as this key is used to display the
+     *                   results of the intent to the user.
      * @return an incomplete form page suitable for use in MultiPagedForm.
      */
     public static FormPage createIntentForm(String title, Intent formIntent) {
@@ -113,7 +113,7 @@ public class FormPage implements Parcelable {
     private boolean mCompleted;
 
     public FormPage(String pageTitle, Type formType, ArrayList<String> formChoices,
-            Intent formIntent) {
+                    Intent formIntent) {
         mPageTitle = pageTitle;
         mFormType = formType;
         mFormChoices = formChoices;

@@ -36,7 +36,7 @@ public class InputCustomNameFragment extends GuidedStepFragment {
     private CharSequence mName;
 
     public static void prepareArgs(@NonNull Bundle args, CharSequence defaultName,
-            CharSequence currentName) {
+                                   CharSequence currentName) {
         args.putCharSequence(ARG_DEFAULT_NAME, defaultName);
         args.putCharSequence(ARG_CURRENT_NAME, currentName);
     }
@@ -62,7 +62,7 @@ public class InputCustomNameFragment extends GuidedStepFragment {
 
     @Override
     public void onCreateButtonActions(@NonNull List<GuidedAction> actions,
-            Bundle savedInstanceState) {
+                                      Bundle savedInstanceState) {
         actions.add(new GuidedAction.Builder(getContext())
                 .clickAction(GuidedAction.ACTION_ID_OK)
                 .build());
@@ -73,7 +73,7 @@ public class InputCustomNameFragment extends GuidedStepFragment {
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions,
-            Bundle savedInstanceState) {
+                                Bundle savedInstanceState) {
         actions.add(new GuidedAction.Builder(getContext())
                 .title(mName)
                 .editable(true)

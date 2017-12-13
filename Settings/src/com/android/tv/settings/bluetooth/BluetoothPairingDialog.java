@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.android.tv.settings.bluetooth;
 
@@ -37,8 +37,8 @@ import java.util.Locale;
 
 /**
  * @author GaoFei
- * BluetoothPairingDialog asks the user to enter a PIN / Passkey / simple confirmation
- * for pairing with a remote Bluetooth device. It is an activity that appears as a dialog.
+ *         BluetoothPairingDialog asks the user to enter a PIN / Passkey / simple confirmation
+ *         for pairing with a remote Bluetooth device. It is an activity that appears as a dialog.
  */
 public final class BluetoothPairingDialog extends AlertActivity implements
         CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener, TextWatcher {
@@ -67,7 +67,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
                 int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE,
-                                                   BluetoothDevice.ERROR);
+                        BluetoothDevice.ERROR);
                 if (bondState == BluetoothDevice.BOND_BONDED ||
                         bondState == BluetoothDevice.BOND_NONE) {
                     dismiss();
@@ -89,7 +89,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
         Intent intent = getIntent();
         if (!intent.getAction().equals(BluetoothDevice.ACTION_PAIRING_REQUEST)) {
             Log.e(TAG, "Error: this activity may be started only with intent " +
-                  BluetoothDevice.ACTION_PAIRING_REQUEST);
+                    BluetoothDevice.ACTION_PAIRING_REQUEST);
             finish();
             return;
         }
@@ -115,7 +115,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
 
             case BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION:
                 int passkey =
-                    intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY, BluetoothDevice.ERROR);
+                        intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY, BluetoothDevice.ERROR);
                 if (passkey == BluetoothDevice.ERROR) {
                     Log.e(TAG, "Invalid Confirmation Passkey received, not showing any dialog");
                     mDevice.setPairingConfirmation(false);
@@ -134,7 +134,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
             case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY:
             case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PIN:
                 int pairingKey =
-                    intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY, BluetoothDevice.ERROR);
+                        intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY, BluetoothDevice.ERROR);
                 if (pairingKey == BluetoothDevice.ERROR) {
                     Log.e(TAG, "Invalid Confirmation Passkey or PIN received, not showing any dialog");
                     finish();
@@ -192,7 +192,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
         }
         if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_ALLOWED) {
             contactSharing.setChecked(true);
-        } else if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_REJECTED){
+        } else if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_REJECTED) {
             contactSharing.setChecked(false);
         } else {
             if (mDevice.getBluetoothClass().getDeviceClass()
@@ -248,8 +248,8 @@ public final class BluetoothPairingDialog extends AlertActivity implements
         messageViewCaptionHint.setText(messageIdHint);
         messageView2.setText(messageId);
         mPairingView.setInputType(InputType.TYPE_CLASS_NUMBER);
-        mPairingView.setFilters(new InputFilter[] {
-                new LengthFilter(maxLength) });
+        mPairingView.setFilters(new InputFilter[]{
+                new LengthFilter(maxLength)});
 
         return view;
     }
@@ -268,7 +268,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
         }
         if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_ALLOWED) {
             contactSharing.setChecked(true);
-        } else if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_REJECTED){
+        } else if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_REJECTED) {
             contactSharing.setChecked(false);
         } else {
             if (mDevice.getBluetoothClass().getDeviceClass()
@@ -428,7 +428,7 @@ public final class BluetoothPairingDialog extends AlertActivity implements
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             onCancel();
         }
-        return super.onKeyDown(keyCode,event);
+        return super.onKeyDown(keyCode, event);
     }
 
     public void onClick(DialogInterface dialog, int which) {

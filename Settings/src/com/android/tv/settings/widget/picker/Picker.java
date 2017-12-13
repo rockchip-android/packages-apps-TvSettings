@@ -108,7 +108,7 @@ public abstract class Picker extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         mColumns = getColumns();
         if (mColumns == null || mColumns.size() == 0) {
@@ -274,7 +274,7 @@ public abstract class Picker extends Fragment {
     }
 
     private void updateColumn(VerticalGridView column, boolean animateAlpha,
-            ArrayList<Animator> animList) {
+                              ArrayList<Animator> animList) {
         if (column == null) {
             return;
         }
@@ -308,7 +308,7 @@ public abstract class Picker extends Fragment {
     }
 
     private void setOrAnimateAlpha(View view, boolean selected, boolean focused, boolean animate,
-            ArrayList<Animator> animList) {
+                                   ArrayList<Animator> animList) {
         if (selected) {
             // set alpha for main item (selected) in the column
             if ((focused && !mKeyDown) || mClicked) {
@@ -331,7 +331,7 @@ public abstract class Picker extends Fragment {
     }
 
     private void setOrAnimateAlphaInternal(View view, boolean animate, float destAlpha,
-            float startAlpha, ArrayList<Animator> animList, Interpolator interpolator) {
+                                           float startAlpha, ArrayList<Animator> animList, Interpolator interpolator) {
         view.clearAnimation();
         if (!animate) {
             view.setAlpha(destAlpha);
@@ -358,7 +358,8 @@ public abstract class Picker extends Fragment {
      * Classes extending {@link Picker} can override this function to supply the
      * behavior when a list has been scrolled
      */
-    protected void onScroll(int column, View v, int position) {}
+    protected void onScroll(int column, View v, int position) {
+    }
 
     private float getFloat(@DimenRes int resourceId) {
         TypedValue buffer = new TypedValue();
@@ -469,7 +470,7 @@ public abstract class Picker extends Fragment {
         }
 
         public PickerLayout(Context context, AttributeSet attrs, int defStyleAttr,
-                int defStyleRes) {
+                            int defStyleRes) {
             super(context, attrs, defStyleAttr, defStyleRes);
         }
 

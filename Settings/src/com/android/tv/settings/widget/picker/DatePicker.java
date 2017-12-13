@@ -55,8 +55,8 @@ public class DatePicker extends Picker {
     /**
      * Creates a new instance of DatePicker
      *
-     * @param format         String containing a permutation of Y, M and D, indicating the order
-     *                       of the fields Year, Month and Day to be displayed in the DatePicker.
+     * @param format String containing a permutation of Y, M and D, indicating the order
+     *               of the fields Year, Month and Day to be displayed in the DatePicker.
      */
     public static DatePicker newInstance(String format) {
         return newInstance(format, MAX_YEAR - DEFAULT_YEAR_RANGE, DEFAULT_YEAR_RANGE, true);
@@ -65,14 +65,14 @@ public class DatePicker extends Picker {
     /**
      * Creates a new instance of DatePicker
      *
-     * @param format         String containing a permutation of Y, M and D, indicating the order
-     *                       of the fields Year, Month and Day to be displayed in the DatePicker.
-     * @param startYear      The lowest number to be displayed in the Year selector.
-     * @param yearRange      Number of entries to be displayed in the Year selector.
-     * @param startOnToday   Indicates if the date should be set to the current date by default.
+     * @param format       String containing a permutation of Y, M and D, indicating the order
+     *                     of the fields Year, Month and Day to be displayed in the DatePicker.
+     * @param startYear    The lowest number to be displayed in the Year selector.
+     * @param yearRange    Number of entries to be displayed in the Year selector.
+     * @param startOnToday Indicates if the date should be set to the current date by default.
      */
     public static DatePicker newInstance(String format, int startYear, int yearRange,
-            boolean startOnToday) {
+                                         boolean startOnToday) {
         DatePicker datePicker = new DatePicker();
         if (startYear <= 0) {
             throw new IllegalArgumentException("The start year must be > 0. Got " + startYear);

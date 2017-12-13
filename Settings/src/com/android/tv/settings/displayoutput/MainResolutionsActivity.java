@@ -6,9 +6,9 @@ import com.android.tv.settings.TvSettingsActivity;
 
 /**
  * @author GaoFei
- * 分辨率设置Activity
+ *         分辨率设置Activity
  */
-public class MainResolutionsActivity extends TvSettingsActivity{
+public class MainResolutionsActivity extends TvSettingsActivity {
 
     @Override
     protected Fragment createSettingsFragment() {

@@ -98,10 +98,12 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
 
         WifiTracker.WifiListener wifiListener = new WifiTracker.WifiListener() {
             @Override
-            public void onWifiStateChanged(int state) {}
+            public void onWifiStateChanged(int state) {
+            }
 
             @Override
-            public void onConnectedChanged() {}
+            public void onConnectedChanged() {
+            }
 
             @Override
             public void onAccessPointsChanged() {
@@ -200,7 +202,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
     @Override
     public void addPage(WifiFormPageType formPageType) {
         for (int i = mFormPages.size() - 1; i >= 0; i--) {
-            if (getFormPageType(mFormPages.get (i)) == formPageType) {
+            if (getFormPageType(mFormPages.get(i)) == formPageType) {
                 for (int j = mFormPages.size() - 1; j >= i; j--) {
                     mFormPages.remove(j);
                 }
@@ -352,7 +354,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         WifiFormPageType formPageType = getFormPageType(formPage);
 
         if (formPageType == WifiFormPageType.CONNECT) {
@@ -376,7 +378,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
                     getLastPage(formPageType),
                     formPageType == WifiFormPageType.CHOOSE_NETWORK ? mUserActivityListener : null,
                     formPageType != WifiFormPageType.SUCCESS, formPage, listener, forward,
-                            (mAdvancedWifiOptionsFlow != null) ? mAdvancedWifiOptionsFlow
+                    (mAdvancedWifiOptionsFlow != null) ? mAdvancedWifiOptionsFlow
                             .isEmptyTextAllowed(formPageType) : false);
             if (formPageType == WifiFormPageType.CHOOSE_NETWORK) {
                 mNetworkListFragment = (SelectFromListWizardFragment) fragment;
@@ -406,7 +408,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
 
     private void connect() {
         if (!WifiConfigHelper.isNetworkSaved(mConfiguration) &&
-            mAdvancedWifiOptionsFlow != null) {
+                mAdvancedWifiOptionsFlow != null) {
             mAdvancedWifiOptionsFlow.updateConfiguration(mConfiguration);
         }
         addPage(WifiFormPageType.CONNECT);
@@ -459,7 +461,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
         }
 
         int wpsPinnedPos = mShowWpsAtTop ? SelectFromListWizardFragment.PinnedListItem.FIRST
-                                         : SelectFromListWizardFragment.PinnedListItem.LAST;
+                : SelectFromListWizardFragment.PinnedListItem.LAST;
 
         SelectFromListWizardFragment.PinnedListItem wpsItem =
                 new SelectFromListWizardFragment.PinnedListItem(
@@ -490,7 +492,7 @@ public class WifiSetupActivity extends WifiMultiPagedFormActivity
             // clear out the saved password.
             if (mPasswordPage != null
                     && (mConfiguration == null
-                               || !scanResult.SSID.equals(mConfiguration.getPrintableSsid()))) {
+                    || !scanResult.SSID.equals(mConfiguration.getPrintableSsid()))) {
                 mPasswordPage.clearData();
             }
 

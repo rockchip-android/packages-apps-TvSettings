@@ -9,9 +9,8 @@ import com.android.tv.settings.device.sound.SoundActivity.SettingsFragment;
 
 /**
  * @author GaoFei
- *
  */
-public class DisplayActivity extends TvSettingsActivity{
+public class DisplayActivity extends TvSettingsActivity {
     @Override
     protected Fragment createSettingsFragment() {
         return DisplayFragment.newInstance();

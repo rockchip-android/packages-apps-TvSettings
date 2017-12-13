@@ -26,11 +26,11 @@ public interface FormPageResultListener {
     /**
      * Called when the specified page has been completed.
      *
-     * @param page the page that has been completed.
+     * @param page          the page that has been completed.
      * @param bundleResults the results of the page completion. This bundle
-     *            should contain a minimum of a String with the key
-     *            {@link FormPage#DATA_KEY_SUMMARY_STRING}. Any other keys are
-     *            optional and application-specific.
+     *                      should contain a minimum of a String with the key
+     *                      {@link FormPage#DATA_KEY_SUMMARY_STRING}. Any other keys are
+     *                      optional and application-specific.
      */
     void onBundlePageResult(FormPage page, Bundle bundleResults);
 }

@@ -27,7 +27,7 @@ public class RockRadioPreference extends Preference {
 
     public RockRadioPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mAccessibilityManager = (AccessibilityManager) getContext( )
+        mAccessibilityManager = (AccessibilityManager) getContext()
                 .getSystemService(Service.ACCESSIBILITY_SERVICE);
     }
 
@@ -38,8 +38,8 @@ public class RockRadioPreference extends Preference {
     }
 
     public RockRadioPreference(Context context) {
-        super(context,null);
-    }  
+        super(context, null);
+    }
 
     @Override
     public boolean isPersistent() {
@@ -74,12 +74,11 @@ public class RockRadioPreference extends Preference {
         setChecked(newValue);
     }
 
-    /** 
-     * Sets the checked state and saves it to the {@link SharedPreferences}. 
-     *  
-     * @param checked 
-     *            The checked state. 
-     */  
+    /**
+     * Sets the checked state and saves it to the {@link SharedPreferences}.
+     *
+     * @param checked The checked state.
+     */
     public void setChecked(boolean checked) {
         if (mChecked != checked) {
             mChecked = checked;
@@ -88,12 +87,12 @@ public class RockRadioPreference extends Preference {
             notifyChanged();
         }
     }
-  
-    /** 
-     * Returns the checked state. 
-     *  
-     * @return The checked state. 
-     */  
+
+    /**
+     * Returns the checked state.
+     *
+     * @return The checked state.
+     */
     public boolean isChecked() {
         return mChecked;
     }
@@ -104,12 +103,11 @@ public class RockRadioPreference extends Preference {
         return shouldDisable || super.shouldDisableDependents();
     }
 
-    /** 
-     * Sets the summary to be shown when checked. 
-     *  
-     * @param summary 
-     *            The summary to be shown when checked. 
-     */  
+    /**
+     * Sets the summary to be shown when checked.
+     *
+     * @param summary The summary to be shown when checked.
+     */
     public void setSummaryOn(CharSequence summary) {
         mSummaryOn = summary;
         if (isChecked()) {
@@ -118,9 +116,8 @@ public class RockRadioPreference extends Preference {
     }
 
     /**
+     * @param summaryResId The summary as a resource.
      * @see #setSummaryOn(CharSequence)
-     * @param summaryResId
-     *            The summary as a resource.
      */
     public void setSummaryOn(int summaryResId) {
         setSummaryOn(getContext().getString(summaryResId));
@@ -130,7 +127,7 @@ public class RockRadioPreference extends Preference {
      * Returns the summary to be shown when checked.
      *
      * @return The summary.
-     */  
+     */
     public CharSequence getSummaryOn() {
         return mSummaryOn;
     }
@@ -138,8 +135,7 @@ public class RockRadioPreference extends Preference {
     /**
      * Sets the summary to be shown when unchecked.
      *
-     * @param summary
-     *            The summary to be shown when unchecked.
+     * @param summary The summary to be shown when unchecked.
      */
     public void setSummaryOff(CharSequence summary) {
         mSummaryOff = summary;
@@ -148,10 +144,9 @@ public class RockRadioPreference extends Preference {
         }
     }
 
-    /** 
+    /**
+     * @param summaryResId The summary as a resource.
      * @see #setSummaryOff(CharSequence)
-     * @param summaryResId
-     *            The summary as a resource. 
      */
     public void setSummaryOff(int summaryResId) {
         setSummaryOff(getContext().getString(summaryResId));
@@ -165,12 +160,13 @@ public class RockRadioPreference extends Preference {
     public CharSequence getSummaryOff() {
         return mSummaryOff;
     }
-    /** 
+
+    /**
      * Returns whether dependents are disabled when this preference is on (
      * {@code true}) or when this preference is off ({@code false}).
      *
      * @return Whether dependents are disabled when this preference is on (
-     *         {@code true}) or when this preference is off ({@code false})
+     * {@code true}) or when this preference is off ({@code false})
      */
     public boolean getDisableDependentsState() {
         return mDisableDependentsState;
@@ -180,9 +176,8 @@ public class RockRadioPreference extends Preference {
      * Sets whether dependents are disabled when this preference is on (
      * {@code true}) or when this preference is off ({@code false}).
      *
-     * @param disableDependentsState
-     *            The preference state that should disable dependents.
-     */  
+     * @param disableDependentsState The preference state that should disable dependents.
+     */
     public void setDisableDependentsState(boolean disableDependentsState) {
         mDisableDependentsState = disableDependentsState;
     }
@@ -191,11 +186,13 @@ public class RockRadioPreference extends Preference {
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getBoolean(index, false);
     }
+
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
         setChecked(restoreValue ? getPersistedBoolean(mChecked)
                 : (Boolean) defaultValue);
     }
+
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
@@ -207,6 +204,7 @@ public class RockRadioPreference extends Preference {
         myState.checked = isChecked();
         return myState;
     }
+
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
@@ -219,8 +217,10 @@ public class RockRadioPreference extends Preference {
         super.onRestoreInstanceState(myState.getSuperState());
         setChecked(myState.checked);
     }
+
     private static class SavedState extends BaseSavedState {
         boolean checked;
+
         public SavedState(Parcel source) {
             super(source);
             checked = source.readInt() == 1;
@@ -238,14 +238,14 @@ public class RockRadioPreference extends Preference {
 
         public static final Parcelable.Creator<SavedState> CREATOR =
                 new Parcelable.Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
 
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }  
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+    }
 }
 

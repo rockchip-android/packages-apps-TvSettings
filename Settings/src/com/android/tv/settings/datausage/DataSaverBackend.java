@@ -49,7 +49,7 @@ public class DataSaverBackend {
     public DataSaverBackend(Context context) {
         mContext = context;
         mIPolicyManager = INetworkPolicyManager.Stub.asInterface(
-                        ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
+                ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
         mPolicyManager = NetworkPolicyManager.from(context);
     }
 
@@ -224,7 +224,9 @@ public class DataSaverBackend {
 
     public interface Listener {
         void onDataSaverChanged(boolean isDataSaving);
+
         void onWhitelistStatusChanged(int uid, boolean isWhitelisted);
+
         void onBlacklistStatusChanged(int uid, boolean isBlacklisted);
     }
 }

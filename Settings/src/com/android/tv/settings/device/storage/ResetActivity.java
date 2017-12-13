@@ -74,7 +74,7 @@ public class ResetActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder(getContext())
                     .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build());
@@ -119,7 +119,7 @@ public class ResetActivity extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             actions.add(new GuidedAction.Builder(getContext())
                     .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build());

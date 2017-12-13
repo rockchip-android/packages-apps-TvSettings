@@ -59,7 +59,7 @@ public class AudioCommon {
 
     public static final int SND_DEVICE_MODE_BASE = 0;
     public static final int SND_DEVICE_MUTE = SND_DEVICE_MODE_BASE + 1;
-    public static final int SND_DEVICE_PCM = SND_DEVICE_MODE_BASE +2;
+    public static final int SND_DEVICE_PCM = SND_DEVICE_MODE_BASE + 2;
     public static final int SND_DEVICE_BITSTREAM = SND_DEVICE_MODE_BASE + 3;
     public static final int SND_DEVICE_BITSTREAM_5POINT1 = SND_DEVICE_MODE_BASE + 4;
     public static final int SND_DEVICE_BITSTREAM_7POINT1 = SND_DEVICE_MODE_BASE + 5;
@@ -67,6 +67,7 @@ public class AudioCommon {
     public static final int SND_DEVICE_MANUAL_IDENTIFY = SND_DEVICE_MODE_BASE + 7;
 
     private static AudioManager mAudioManager = null;
+
     /*
      * at the moment ,if the audio device is not usb audio. we recorgnise it as
      * soc audio device. soc audio must be at the "0" place.
@@ -102,7 +103,7 @@ public class AudioCommon {
     }
 
     public static void setDeviceConnectionState(Context ctx, int device,
-            int state) {
+                                                int state) {
         if (mAudioManager == null)
             mAudioManager = (AudioManager) ctx
                     .getSystemService(Context.AUDIO_SERVICE);
@@ -112,20 +113,21 @@ public class AudioCommon {
     }
 
     public static boolean isHdmiAutoIdentify() {
-        if(SystemProperties.get(HW_AUDIO_HDMI_AUTO_IDENTIFY, "false").equals("true"))
+        if (SystemProperties.get(HW_AUDIO_HDMI_AUTO_IDENTIFY, "false").equals("true"))
             return true;
         else
             return false;
     }
+
     public static int getHdmiOutputMode() {
         if (SystemProperties.get(HW_AUDIO_HDMI_MUTE, "false").equals("true")) {
             return SND_DEVICE_MUTE;
-        } else if (SystemProperties.get(HW_AUDIO_HDMI_BYPASS,"false").equals("true")) {
+        } else if (SystemProperties.get(HW_AUDIO_HDMI_BYPASS, "false").equals("true")) {
             if (SystemProperties.get(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "7.1").equals("5.1"))
                 return SND_DEVICE_BITSTREAM_5POINT1;
             else if (SystemProperties.get(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "7.1").equals("7.1"))
                 return SND_DEVICE_BITSTREAM_7POINT1;
-        } else if (SystemProperties.get(HW_AUDIO_HDMI_BYPASS,"false").equals("false")) {
+        } else if (SystemProperties.get(HW_AUDIO_HDMI_BYPASS, "false").equals("false")) {
             return SND_DEVICE_PCM;
         }
         return SND_DEVICE_MODE_BASE;
@@ -133,40 +135,40 @@ public class AudioCommon {
 
     public static void setHdmiOutputMode(Context ctx, int mode) {
         switch (mode) {
-        case SND_DEVICE_MUTE:
-            SystemProperties.set(HW_AUDIO_HDMI_MUTE, "true");
-            break;
-        case SND_DEVICE_PCM:
-            SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "false");
-            SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "false");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_DEFAULT, SND_PCM_STREAM_PLAYBACK, "0");
-            break;
-        case SND_DEVICE_BITSTREAM_5POINT1:
-            SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "5.1");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
-            break;
-        case SND_DEVICE_BITSTREAM_7POINT1:
-            SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "7.1");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
-            break;
-        case SND_DEVICE_AUTO_IDENTIFY:
-            SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_HDMI_AUTO_IDENTIFY, "true");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
-            break;
-        case SND_DEVICE_MANUAL_IDENTIFY:
-            SystemProperties.set(HW_AUDIO_HDMI_AUTO_IDENTIFY, "false");
-        default:
-            break;
+            case SND_DEVICE_MUTE:
+                SystemProperties.set(HW_AUDIO_HDMI_MUTE, "true");
+                break;
+            case SND_DEVICE_PCM:
+                SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "false");
+                SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "false");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_DEFAULT, SND_PCM_STREAM_PLAYBACK, "0");
+                break;
+            case SND_DEVICE_BITSTREAM_5POINT1:
+                SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "5.1");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
+                break;
+            case SND_DEVICE_BITSTREAM_7POINT1:
+                SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_BITSTREAM_CHANNELS, "7.1");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
+                break;
+            case SND_DEVICE_AUTO_IDENTIFY:
+                SystemProperties.set(HW_AUDIO_HDMI_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_HDMI_AUTO_IDENTIFY, "true");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_HDMI_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, HDMI_PASSTHROUGH_KEY);
+                break;
+            case SND_DEVICE_MANUAL_IDENTIFY:
+                SystemProperties.set(HW_AUDIO_HDMI_AUTO_IDENTIFY, "false");
+            default:
+                break;
         }
     }
 
@@ -182,27 +184,28 @@ public class AudioCommon {
 
     public static void setSpdifOutputMode(Context ctx, int mode) {
         switch (mode) {
-        case SND_DEVICE_MUTE:
-            SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "true");
-            break;
-        case SND_DEVICE_PCM:
-            SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "false");
-            SystemProperties.set(HW_AUDIO_SPDIF_BYPASS, "false");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_DEFAULT, SND_PCM_STREAM_PLAYBACK, "0");
-            break;
-        case SND_DEVICE_BITSTREAM:
-            SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "false");
-            SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
-            SystemProperties.set(HW_AUDIO_SPDIF_BYPASS, "true");
-            doAudioDevicesRouting(ctx, SND_DEV_TYPE_SPDIF_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, SPDIF_PASSTHROUGH_KEY);
-            break;
-        default:
-            break;
+            case SND_DEVICE_MUTE:
+                SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "true");
+                break;
+            case SND_DEVICE_PCM:
+                SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "false");
+                SystemProperties.set(HW_AUDIO_SPDIF_BYPASS, "false");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_DEFAULT, SND_PCM_STREAM_PLAYBACK, "0");
+                break;
+            case SND_DEVICE_BITSTREAM:
+                SystemProperties.set(HW_AUDIO_SPDIF_MUTE, "false");
+                SystemProperties.set(MEDIA_CFG_AUDIO_BYPASS, "true");
+                SystemProperties.set(HW_AUDIO_SPDIF_BYPASS, "true");
+                doAudioDevicesRouting(ctx, SND_DEV_TYPE_SPDIF_PASSTHROUGH, SND_PCM_STREAM_PLAYBACK, SPDIF_PASSTHROUGH_KEY);
+                break;
+            default:
+                break;
 
         }
     }
-    public static boolean hasSpdif(){
+
+    public static boolean hasSpdif() {
 
         boolean hasspdif = false;
 
@@ -251,51 +254,51 @@ public class AudioCommon {
      * it can be extended.
      */
     public static void doAudioDevicesRouting(Context ctx, int deviceType,
-            int streamType, String state) {
+                                             int streamType, String state) {
 
         switch (deviceType) {
 
-        case SND_DEV_TYPE_SPDIF_PASSTHROUGH:
-            //doUsbAudioDevicesRouting(streamType, "-1");
-            if (streamType == SND_PCM_STREAM_PLAYBACK) {
-                setDeviceConnectionState(ctx,AudioManager.DEVICE_OUT_AUX_DIGITAL, 0);
-                setDeviceConnectionState(ctx,
-                        AudioManager.DEVICE_OUT_SPDIF, 1);
-                setLastSocPlayback(state);
-            }
-            break;
-        case SND_DEV_TYPE_HDMI_PASSTHROUGH:
-            //doUsbAudioDevicesRouting(streamType, "-1");
-            if(streamType == SND_PCM_STREAM_PLAYBACK){
-                setDeviceConnectionState(ctx,AudioManager.DEVICE_OUT_SPDIF, 0);
-                setLastSocPlayback(state);
-
-            }
-        break;
-
-        case SND_DEV_TYPE_HDMI_MULTILPCM:
-            //doUsbAudioDevicesRouting(streamType, "-1");
-            if(streamType == SND_PCM_STREAM_PLAYBACK){
-                setDeviceConnectionState(ctx,AudioManager.DEVICE_OUT_SPDIF, 0);
-                setLastSocPlayback(state);
-
-            }
-        break;
-
-        default:
-            //doUsbAudioDevicesRouting(streamType, "-1");
-            if (streamType == SND_PCM_STREAM_PLAYBACK) {
-                int connected = 0;
-                if(hasSpdif()){
-                    Slog.i(TAG, "has spdif.");
-                    connected = 1;
+            case SND_DEV_TYPE_SPDIF_PASSTHROUGH:
+                //doUsbAudioDevicesRouting(streamType, "-1");
+                if (streamType == SND_PCM_STREAM_PLAYBACK) {
+                    setDeviceConnectionState(ctx, AudioManager.DEVICE_OUT_AUX_DIGITAL, 0);
+                    setDeviceConnectionState(ctx,
+                            AudioManager.DEVICE_OUT_SPDIF, 1);
+                    setLastSocPlayback(state);
                 }
+                break;
+            case SND_DEV_TYPE_HDMI_PASSTHROUGH:
+                //doUsbAudioDevicesRouting(streamType, "-1");
+                if (streamType == SND_PCM_STREAM_PLAYBACK) {
+                    setDeviceConnectionState(ctx, AudioManager.DEVICE_OUT_SPDIF, 0);
+                    setLastSocPlayback(state);
 
-                setDeviceConnectionState(ctx,AudioManager.DEVICE_OUT_SPDIF, connected);
-                setLastSocPlayback(state);
+                }
+                break;
 
-            }
-            break;
+            case SND_DEV_TYPE_HDMI_MULTILPCM:
+                //doUsbAudioDevicesRouting(streamType, "-1");
+                if (streamType == SND_PCM_STREAM_PLAYBACK) {
+                    setDeviceConnectionState(ctx, AudioManager.DEVICE_OUT_SPDIF, 0);
+                    setLastSocPlayback(state);
+
+                }
+                break;
+
+            default:
+                //doUsbAudioDevicesRouting(streamType, "-1");
+                if (streamType == SND_PCM_STREAM_PLAYBACK) {
+                    int connected = 0;
+                    if (hasSpdif()) {
+                        Slog.i(TAG, "has spdif.");
+                        connected = 1;
+                    }
+
+                    setDeviceConnectionState(ctx, AudioManager.DEVICE_OUT_SPDIF, connected);
+                    setLastSocPlayback(state);
+
+                }
+                break;
         }
 
         if (deviceType == SND_DEV_TYPE_DEFAULT)
@@ -314,32 +317,32 @@ public class AudioCommon {
             card = card * 10;
         state = Integer.toString(card);
         switch (streamType) {
-        case SND_PCM_STREAM_PLAYBACK:
-            try {
-                fw = new FileWriter(USB_AUDIO_PLAYBACK_SWITCH_STATE_FILE);
-                fw.write(state);
-                fw.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            break;
-        case SND_PCM_STREAM_CAPTURE:
-            try {
-                fw = new FileWriter(USB_AUDIO_CAPTURE_SWITCH_STATE_FILE);
-                fw.write(state);
-                fw.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            break;
+            case SND_PCM_STREAM_PLAYBACK:
+                try {
+                    fw = new FileWriter(USB_AUDIO_PLAYBACK_SWITCH_STATE_FILE);
+                    fw.write(state);
+                    fw.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case SND_PCM_STREAM_CAPTURE:
+                try {
+                    fw = new FileWriter(USB_AUDIO_CAPTURE_SWITCH_STATE_FILE);
+                    fw.write(state);
+                    fw.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
 
-        default:
-            Slog.e(TAG, "unknown exception!");
-            break;
+            default:
+                Slog.e(TAG, "unknown exception!");
+                break;
         }
     }
 

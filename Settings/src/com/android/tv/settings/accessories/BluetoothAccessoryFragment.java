@@ -69,7 +69,8 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
     private BluetoothGatt mDeviceGatt;
     private String mDeviceAddress;
     private String mDeviceName;
-    private @DrawableRes int mDeviceImgId;
+    private @DrawableRes
+    int mDeviceImgId;
     private boolean mUnpairing;
     private Preference mUnpairPref;
     private Preference mBatteryPref;
@@ -88,7 +89,7 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
     private BroadcastReceiver mBroadcastReceiver;
 
     public static BluetoothAccessoryFragment newInstance(String deviceAddress, String deviceName,
-            int deviceImgId) {
+                                                         int deviceImgId) {
         final Bundle b = new Bundle(3);
         prepareArgs(b, deviceAddress, deviceName, deviceImgId);
         final BluetoothAccessoryFragment f = new BluetoothAccessoryFragment();
@@ -97,7 +98,7 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
     }
 
     public static void prepareArgs(Bundle b, String deviceAddress, String deviceName,
-            int deviceImgId) {
+                                   int deviceImgId) {
         b.putString(ARG_ACCESSORY_ADDRESS, deviceAddress);
         b.putString(ARG_ACCESSORY_NAME, deviceName);
         b.putInt(ARG_ACCESSORY_ICON_ID, deviceImgId);
@@ -263,7 +264,7 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt,
-                BluetoothGattCharacteristic characteristic, int status) {
+                                         BluetoothGattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 if (DEBUG) {
                     Log.e(TAG, "Read characteristic failure on " + gatt + " " + characteristic);
@@ -341,7 +342,7 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
         };
 
         public static void prepareArgs(@NonNull Bundle args, BluetoothDevice device,
-                String deviceName, @DrawableRes int deviceImgId) {
+                                       String deviceName, @DrawableRes int deviceImgId) {
             args.putParcelable(ARG_DEVICE, device);
             args.putString(ARG_ACCESSORY_NAME, deviceName);
             args.putInt(ARG_ACCESSORY_ICON_ID, deviceImgId);
@@ -392,7 +393,7 @@ public class BluetoothAccessoryFragment extends LeanbackPreferenceFragment {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             final Context context = getContext();
             actions.add(new GuidedAction.Builder(context)
                     .clickAction(GuidedAction.ACTION_ID_OK).build());

@@ -22,6 +22,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
 import com.android.tv.settings.R;
 
 /**
@@ -77,7 +78,7 @@ public abstract class ManageablePreference extends GearPreference {
     /**
      * Update the preference summary string (see {@see Preference#setSummary}) with a string
      * reflecting connection status and always-on setting.
-     *
+     * <p>
      * State is not shown for {@code STATE_NONE}.
      */
     protected void updateSummary() {

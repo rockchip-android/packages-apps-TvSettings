@@ -4,6 +4,7 @@ import com.android.tv.settings.R;
 
 import android.content.Context;
 import android.os.Handler;
+
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
 import android.os.storage.StorageManager;
 import android.os.storage.StorageEventListener;
 import android.content.Intent;
@@ -21,8 +23,7 @@ import android.text.TextUtils;
 
 import android.util.Log;
 
-public class UsbModeSettings
-{
+public class UsbModeSettings {
     private static final String TAG = "UsbModeSettings";
     public static final String HOST_MODE = new String("1");
     public static final String SLAVE_MODE = new String("2");
@@ -39,53 +40,44 @@ public class UsbModeSettings
 
     private boolean mLock = false;
 
-    public UsbModeSettings(Context context)
-    {
+    public UsbModeSettings(Context context) {
         mContext = context;
         mSocName = SystemProperties.get("sys.rk.soc");
-        if(TextUtils.isEmpty(mSocName))
+        if (TextUtils.isEmpty(mSocName))
             mSocName = SystemProperties.get("ro.board.platform");
-        if(!TextUtils.isEmpty(mSocName) && mSocName.contains("rk3399")){
+        if (!TextUtils.isEmpty(mSocName) && mSocName.contains("rk3399")) {
             file = new File(filename_rk3399);
-        }else{
+        } else {
             file = new File(filename_rk3328);
         }
-        mStorageManager = (StorageManager)mContext.getSystemService(Context.STORAGE_SERVICE);
+        mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
         checkFile();
     }
 
-    public boolean getDefaultValue(){
-        if(checkFile())
-        {
-            Log.d("UsbModeSelect","/data/otg.cfg not exist,but temp file exist");
+    public boolean getDefaultValue() {
+        if (checkFile()) {
+            Log.d("UsbModeSelect", "/data/otg.cfg not exist,but temp file exist");
             mMode = ReadFromFile(file);
-            if(mMode.equals(HOST_MODE)){
+            if (mMode.equals(HOST_MODE)) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }
-        else
-        {
+        } else {
             mMode = HOST_MODE;
             return false;
         }
     }
 
-    private String ReadFromFile(File file)
-    {
-        if(checkFile())
-        {
-            try
-            {
-                FileInputStream fin= new FileInputStream(file);
-                BufferedReader reader= new BufferedReader(new InputStreamReader(fin));
+    private String ReadFromFile(File file) {
+        if (checkFile()) {
+            try {
+                FileInputStream fin = new FileInputStream(file);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(fin));
                 String config = reader.readLine();
                 fin.close();
                 return config;
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 Log.i(TAG, "ReadFromFile exception:" + e);
                 e.printStackTrace();
             }
@@ -94,79 +86,67 @@ public class UsbModeSettings
         return null;
     }
 
-    private void Write2File(File file,String mode)
-    {
-        if(!checkFile() || (mode == null) )
-            return ;
-        Log.d("UsbModeSelect","Write2File,write mode = "+mode);
+    private void Write2File(File file, String mode) {
+        if (!checkFile() || (mode == null))
+            return;
+        Log.d("UsbModeSelect", "Write2File,write mode = " + mode);
 
-        try
-        {
+        try {
             FileOutputStream fout = new FileOutputStream(file);
             PrintWriter pWriter = new PrintWriter(fout);
             pWriter.println(mode);
             pWriter.flush();
             pWriter.close();
             fout.close();
-        }
-        catch(IOException re)
-        {
+        } catch (IOException re) {
         }
     }
 
-    public void onUsbModeClick(String mode)
-    {
-        if(mLock)
-            return ;
+    public void onUsbModeClick(String mode) {
+        if (mLock)
+            return;
         mLock = true;
         mMode = mode;
-        synchronized (this)
-        {
+        synchronized (this) {
             new Thread(mUsbSwitch).start();
         }
     }
 
-    private  Runnable mUsbSwitch = new Runnable()
-    {
-        public synchronized void run()
-        {
-            Log.d("UsbModeSettings","mUsbSwitch Runnable() in*******************");
-            if(mStorageManager != null)
-            {
-                if(mMode == HOST_MODE)
-                {
+    private Runnable mUsbSwitch = new Runnable() {
+        public synchronized void run() {
+            Log.d("UsbModeSettings", "mUsbSwitch Runnable() in*******************");
+            if (mStorageManager != null) {
+                if (mMode == HOST_MODE) {
                     mStorageManager.disableUsbMassStorage();
-                    Log.d("UsbModeSettings","mStorageManager.disableUsbMassStorage()*******************");
+                    Log.d("UsbModeSettings", "mStorageManager.disableUsbMassStorage()*******************");
                     Write2File(file, mMode);
-                }
-                else
-                {
+                } else {
                     Write2File(file, mMode);
-                    Log.d("UsbModeSettings","mStorageManager.enableUsbMassStorage()  in *******************");
+                    Log.d("UsbModeSettings", "mStorageManager.enableUsbMassStorage()  in *******************");
                     mStorageManager.enableUsbMassStorage();
-                    Log.d("UsbModeSettings","mStorageManager.enableUsbMassStorage()   out*******************");
+                    Log.d("UsbModeSettings", "mStorageManager.enableUsbMassStorage()   out*******************");
                 }
             }
-            Log.d("UsbModeSettings","mUsbSwitch Runnable() out*******************");
+            Log.d("UsbModeSettings", "mUsbSwitch Runnable() out*******************");
             mLock = false;
         }
     };
 
-    private boolean checkFile(){
-        if(file == null){
+    private boolean checkFile() {
+        if (file == null) {
             Log.e(TAG, "file is null pointer");
             return false;
         }
         String fileName = file.getName();
-        if(!file.exists()){
+        if (!file.exists()) {
             Log.e(TAG, fileName + " not exist!!!");
             return false;
         }
-        if(!file.canRead()){
+        if (!file.canRead()) {
             Log.e(TAG, fileName + " can't read!!!");
             return false;
         }
-        if(!file.canWrite()){
+        if (!file.canWrite()) {
             Log.e(TAG, fileName + " can't write!!!");
             return false;
         }

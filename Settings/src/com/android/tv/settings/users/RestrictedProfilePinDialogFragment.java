@@ -31,7 +31,9 @@ public class RestrictedProfilePinDialogFragment extends PinDialogFragment {
 
     public interface Callback extends ResultListener {
         void saveLockPassword(String pin, int quality);
+
         boolean checkPassword(String password, int userId);
+
         boolean hasLockscreenSecurity();
     }
 

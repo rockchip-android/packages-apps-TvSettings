@@ -60,12 +60,12 @@ public class BaseContentFragment {
     }
 
     public static Bundle buildArgs(String title, String breadcrumb, String description, Uri iconUri,
-            int backgroundColor) {
+                                   int backgroundColor) {
         return buildArgs(title, breadcrumb, description, 0, iconUri, null, backgroundColor);
     }
 
     public static Bundle buildArgs(String title, String breadcrumb, String description,
-            Bitmap iconBitmap) {
+                                   Bitmap iconBitmap) {
         return buildArgs(title, breadcrumb, description, 0, null, iconBitmap, Color.TRANSPARENT);
     }
 
@@ -207,8 +207,8 @@ public class BaseContentFragment {
                         };
 
                         bitmapDownloader.getBitmap(new BitmapWorkerOptions.Builder(
-                                mActivity).resource(iconUri)
-                                .width(iconImageView.getLayoutParams().width).build(),
+                                        mActivity).resource(iconUri)
+                                        .width(iconImageView.getLayoutParams().width).build(),
                                 mBitmapCallBack);
                     }
                 } else {
@@ -261,7 +261,7 @@ public class BaseContentFragment {
     }
 
     public void setTextToExtra(View parent, int textViewResourceId,
-            String extraLabel) {
+                               String extraLabel) {
         String text = mFragment.getArguments().getString(extraLabel, null);
         setText(parent, textViewResourceId, text);
     }
@@ -316,6 +316,7 @@ public class BaseContentFragment {
     /**
      * Unlike {@link #setIcon(int)} and {@link #setIcon(Uri)}, this will only work if called
      * after {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     *
      * @param iconDrawable
      */
     public void setIcon(Drawable iconDrawable) {

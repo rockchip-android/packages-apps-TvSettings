@@ -55,7 +55,8 @@ public class PickerConstants {
         }
     }
 
-    private PickerConstants() {}
+    private PickerConstants() {
+    }
 
     private static String[] createStringIntArrays(int lastNumber, boolean startAtZero, int minLen) {
         int range = startAtZero ? (lastNumber + 1) : lastNumber;

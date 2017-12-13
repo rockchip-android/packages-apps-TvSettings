@@ -156,7 +156,7 @@ public class StatusFragment extends LeanbackPreferenceFragment {
         }
 
         mConnectivityIntentFilter = new IntentFilter();
-        for (String intent: CONNECTIVITY_INTENTS) {
+        for (String intent : CONNECTIVITY_INTENTS) {
             mConnectivityIntentFilter.addAction(intent);
         }
 
@@ -191,7 +191,7 @@ public class StatusFragment extends LeanbackPreferenceFragment {
     }
 
     private boolean hasWimax() {
-        return  mCM.getNetworkInfo(ConnectivityManager.TYPE_WIMAX) != null;
+        return mCM.getNetworkInfo(ConnectivityManager.TYPE_WIMAX) != null;
     }
 
     @Override
@@ -256,6 +256,7 @@ public class StatusFragment extends LeanbackPreferenceFragment {
     /**
      * Returns the default link's IP addresses, if any, taking into account IPv4 and IPv6 style
      * addresses.
+     *
      * @param cm ConnectivityManager
      * @return the formatted and newline-separated IP addresses, or null if none.
      */

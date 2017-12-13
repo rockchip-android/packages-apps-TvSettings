@@ -50,7 +50,7 @@ public class BluetoothAccessoryActivity extends TvSettingsActivity {
     public static class SettingsFragment extends BaseSettingsFragment {
 
         public static SettingsFragment newInstance(String deviceAddress, String deviceName,
-                int deviceImgId) {
+                                                   int deviceImgId) {
             final Bundle b = new Bundle(3);
             b.putString(EXTRA_ACCESSORY_ADDRESS, deviceAddress);
             b.putString(EXTRA_ACCESSORY_NAME, deviceName);

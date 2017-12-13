@@ -37,7 +37,8 @@ public class ForgetPrivateConfirmFragment extends GuidedStepFragment {
     }
 
     @Override
-    public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+    public @NonNull
+    GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         return new GuidanceStylist.Guidance(
                 getString(R.string.storage_wizard_forget_confirm_title),
                 getString(R.string.storage_wizard_forget_confirm_description), "",

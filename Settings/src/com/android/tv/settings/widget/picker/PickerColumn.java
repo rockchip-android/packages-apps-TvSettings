@@ -46,16 +46,16 @@ public class PickerColumn implements Parcelable {
     public static Parcelable.Creator<PickerColumn>
             CREATOR = new Parcelable.Creator<PickerColumn>() {
 
-                @Override
-                public PickerColumn createFromParcel(Parcel source) {
-                    return new PickerColumn(source);
-                }
+        @Override
+        public PickerColumn createFromParcel(Parcel source) {
+            return new PickerColumn(source);
+        }
 
-                @Override
-                public PickerColumn[] newArray(int size) {
-                    return new PickerColumn[size];
-                }
-            };
+        @Override
+        public PickerColumn[] newArray(int size) {
+            return new PickerColumn[size];
+        }
+    };
 
     @Override
     public int describeContents() {

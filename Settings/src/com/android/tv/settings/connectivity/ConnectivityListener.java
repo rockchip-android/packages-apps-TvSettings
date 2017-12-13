@@ -37,6 +37,7 @@ import com.android.settingslib.wifi.AccessPoint;
 import com.android.settingslib.wifi.WifiTracker;
 
 import java.util.List;
+
 import android.util.Log;
 
 /**
@@ -74,7 +75,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
     private final EthernetManager.Listener mEthernetListener = new EthernetManager.Listener() {
         @Override
         public void onAvailabilityChanged(boolean isAvailable) {
-            Log.d(TAG,"mEthernetListener");
+            Log.d(TAG, "mEthernetListener");
             mListener.onConnectivityChange();
         }
     };
@@ -85,7 +86,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
             if (netType == ConnectivityManager.TYPE_ETHERNET)
                 mListener.onConnectivityChange();
         }
-    };   
+    };
 
     public static class ConnectivityStatus {
         public static final int NETWORK_NONE = 1;
@@ -97,17 +98,20 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
         public String mWifiSsid;
         public int mWifiSignalStrength;
 
-        boolean isEthernetConnected() { return mNetworkType == NETWORK_ETHERNET; }
+        boolean isEthernetConnected() {
+            return mNetworkType == NETWORK_ETHERNET;
+        }
+
         boolean isWifiConnected() {
-            return mNetworkType == NETWORK_WIFI_OPEN ||  mNetworkType == NETWORK_WIFI_SECURE;
+            return mNetworkType == NETWORK_WIFI_OPEN || mNetworkType == NETWORK_WIFI_SECURE;
         }
 
         @Override
         public String toString() {
             return
                     "mNetworkType " + mNetworkType +
-                    "  miWifiSsid " + mWifiSsid +
-                    "  mWifiSignalStrength " + mWifiSignalStrength;
+                            "  miWifiSsid " + mWifiSsid +
+                            "  mWifiSignalStrength " + mWifiSignalStrength;
         }
     }
 
@@ -162,9 +166,9 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
     public ConnectivityStatus getConnectivityStatus() {
         return mConnectivityStatus;
     }
-    
-    public boolean getConnectStatus(){
-        return mEthernetManager.getEthernetConnectState() 
+
+    public boolean getConnectStatus() {
+        return mEthernetManager.getEthernetConnectState()
                 == mEthernetManager.ETHER_STATE_CONNECTED;
     }
 
@@ -295,8 +299,8 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
             for (WifiConfiguration configuredNetwork : configuredNetworks) {
                 if (configuredNetwork.networkId == networkId) {
                     return configuredNetwork.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ||
-                        configuredNetwork.allowedKeyManagement.get(KeyMgmt.WPA_EAP) ||
-                        configuredNetwork.allowedKeyManagement.get(KeyMgmt.IEEE8021X);
+                            configuredNetwork.allowedKeyManagement.get(KeyMgmt.WPA_EAP) ||
+                            configuredNetwork.allowedKeyManagement.get(KeyMgmt.IEEE8021X);
                 }
             }
         }
@@ -309,8 +313,8 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
 
     public void setWifiEnabled(boolean enable) {
         //check wifiApState first
-        if(mayDisableTethering(enable)){
-            Log.d(TAG,"disable WifiAp first");
+        if (mayDisableTethering(enable)) {
+            Log.d(TAG, "disable WifiAp first");
             mWifiManager.setWifiApEnabled(null, false);
         }
         mWifiManager.setWifiEnabled(enable);
@@ -319,7 +323,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener {
     private boolean mayDisableTethering(boolean isChecked) {
         final int wifiApState = mWifiManager.getWifiApState();
         return isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) ||
-            (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED));
+                (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED));
     }
 
     private boolean setNetworkType(int networkType) {

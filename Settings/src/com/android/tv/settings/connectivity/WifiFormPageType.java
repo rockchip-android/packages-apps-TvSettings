@@ -31,47 +31,47 @@ import java.util.ArrayList;
  */
 public enum WifiFormPageType implements FormPageDisplayer.FormPageInfo {
     CHOOSE_NETWORK(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE, R.string.title_select_wifi_network,
-            0, new int[] { R.string.other_network },
-            new int[] { R.drawable.ic_wifi_add}),
+            0, new int[]{R.string.other_network},
+            new int[]{R.drawable.ic_wifi_add}),
     ENTER_SSID(FormPageDisplayer.DISPLAY_TYPE_TEXT_INPUT, R.string.title_ssid, 0,
             TextInputWizardFragment.INPUT_TYPE_NO_SUGGESTIONS),
     CHOOSE_SECURITY(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE, R.string.security_type, 0,
-            new int[] { R.string.wifi_security_type_none, R.string.wifi_security_type_wep,
-            R.string.wifi_security_type_wpa, R.string.wifi_security_type_eap }),
+            new int[]{R.string.wifi_security_type_none, R.string.wifi_security_type_wep,
+                    R.string.wifi_security_type_wpa, R.string.wifi_security_type_eap}),
     ENTER_PASSWORD(FormPageDisplayer.DISPLAY_TYPE_PSK_INPUT,
             R.string.wifi_setup_input_password, 0, 0),
     CONNECT(FormPageDisplayer.DISPLAY_TYPE_LOADING, R.string.wifi_connecting, 0),
     CONNECT_FAILED(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_could_not_connect, 0, new int[] { R.string.wifi_action_try_again,
-            R.string.wifi_action_view_available_networks }),
+            R.string.title_wifi_could_not_connect, 0, new int[]{R.string.wifi_action_try_again,
+            R.string.wifi_action_view_available_networks}),
     CONNECT_TIMEOUT(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_could_not_connect_timeout, 0, new int[] {
-            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks }),
+            R.string.title_wifi_could_not_connect_timeout, 0, new int[]{
+            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks}),
     CONNECT_AUTHENTICATION_FAILURE(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_could_not_connect_authentication_failure, 0, new int[] {
-            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks }),
+            R.string.title_wifi_could_not_connect_authentication_failure, 0, new int[]{
+            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks}),
     CONNECT_REJECTED_BY_AP(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_could_not_connect_ap_reject, 0, new int[] {
-            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks }),
+            R.string.title_wifi_could_not_connect_ap_reject, 0, new int[]{
+            R.string.wifi_action_try_again, R.string.wifi_action_view_available_networks}),
     SAVE(FormPageDisplayer.DISPLAY_TYPE_LOADING, R.string.wifi_saving, 0),
     SAVE_FAILED(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_could_not_save, 0, new int[] { R.string.wifi_action_ok }),
+            R.string.title_wifi_could_not_save, 0, new int[]{R.string.wifi_action_ok}),
     SAVE_SUCCESS(FormPageDisplayer.DISPLAY_TYPE_LOADING, R.string.wifi_setup_save_success, 0),
     SUCCESS(FormPageDisplayer.DISPLAY_TYPE_LOADING, R.string.wifi_setup_connection_success, 0),
     SUMMARY_CONNECTED_WIFI(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
             R.string.wifi_summary_title_connected,
-            R.string.wifi_summary_description_connected_to_wifi_network, new int[] {
-            R.string.wifi_action_dont_change_network, R.string.wifi_action_change_network }),
+            R.string.wifi_summary_description_connected_to_wifi_network, new int[]{
+            R.string.wifi_action_dont_change_network, R.string.wifi_action_change_network}),
     SUMMARY_CONNECTED_NON_WIFI(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.wifi_summary_title_connected, 0, new int[] { R.string.wifi_action_ok }),
+            R.string.wifi_summary_title_connected, 0, new int[]{R.string.wifi_action_ok}),
     SUMMARY_NOT_CONNECTED(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.wifi_summary_title_not_connected, 0, new int[] { R.string.wifi_action_ok }),
+            R.string.wifi_summary_title_not_connected, 0, new int[]{R.string.wifi_action_ok}),
     ADVANCED_OPTIONS(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_advanced_options, 0, new int[] { R.string.wifi_action_advanced_no,
-            R.string.wifi_action_advanced_yes }),
+            R.string.title_wifi_advanced_options, 0, new int[]{R.string.wifi_action_advanced_no,
+            R.string.wifi_action_advanced_yes}),
     PROXY_SETTINGS(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE, R.string.title_wifi_proxy_settings,
-            R.string.proxy_warning_limited_support, new int[] { R.string.wifi_action_proxy_none,
-            R.string.wifi_action_proxy_manual }),
+            R.string.proxy_warning_limited_support, new int[]{R.string.wifi_action_proxy_none,
+            R.string.wifi_action_proxy_manual}),
     PROXY_HOSTNAME(FormPageDisplayer.DISPLAY_TYPE_TEXT_INPUT, R.string.title_wifi_proxy_hostname,
             R.string.proxy_hostname_description, TextInputWizardFragment.INPUT_TYPE_NO_SUGGESTIONS,
             R.string.proxy_hostname_hint),
@@ -83,7 +83,7 @@ public enum WifiFormPageType implements FormPageDisplayer.FormPageInfo {
             TextInputWizardFragment.INPUT_TYPE_NO_SUGGESTIONS,
             R.string.proxy_exclusionlist_hint),
     IP_SETTINGS(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE, R.string.title_wifi_ip_settings, 0,
-            new int[] { R.string.wifi_action_dhcp, R.string.wifi_action_static }),
+            new int[]{R.string.wifi_action_dhcp, R.string.wifi_action_static}),
     IP_ADDRESS(FormPageDisplayer.DISPLAY_TYPE_TEXT_INPUT, R.string.title_wifi_ip_address,
             R.string.wifi_ip_address_description, TextInputWizardFragment.INPUT_TYPE_NO_SUGGESTIONS,
             R.string.wifi_ip_address_hint),
@@ -107,16 +107,16 @@ public enum WifiFormPageType implements FormPageDisplayer.FormPageInfo {
             R.string.wifi_pppoe_password_description, TextInputWizardFragment.INPUT_TYPE_NO_SUGGESTIONS),
     PPPOE_CONNECTING(FormPageDisplayer.DISPLAY_TYPE_LOADING, R.string.wifi_pppoe_connecting, 0),
     PPPOE_CONNECT_FAILED(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_pppoe_connect_failed, 0, new int[] {
+            R.string.title_pppoe_connect_failed, 0, new int[]{
             R.string.wifi_action_try_again, R.string.wifi_action_return}),
     PROXY_SETTINGS_INVALID(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_proxy_settings_invalid, 0, new int[] {
-            R.string.wifi_action_try_again }),
+            R.string.title_wifi_proxy_settings_invalid, 0, new int[]{
+            R.string.wifi_action_try_again}),
     IP_SETTINGS_INVALID(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE,
-            R.string.title_wifi_ip_settings_invalid, 0, new int[] {
-            R.string.wifi_action_try_again }),
+            R.string.title_wifi_ip_settings_invalid, 0, new int[]{
+            R.string.wifi_action_try_again}),
     KNOWN_NETWORK(FormPageDisplayer.DISPLAY_TYPE_LIST_CHOICE, R.string.title_wifi_known_network, 0,
-            new int[] { R.string.wifi_connect, R.string.wifi_forget_network }),
+            new int[]{R.string.wifi_connect, R.string.wifi_forget_network}),
     WPS(FormPageDisplayer.DISPLAY_TYPE_LOADING, 0, 0);
 
     private final int mDisplayType;
@@ -133,12 +133,12 @@ public enum WifiFormPageType implements FormPageDisplayer.FormPageInfo {
     }
 
     WifiFormPageType(int displayType, int titleResource, int descriptionResource,
-            int textType) {
+                     int textType) {
         this(displayType, titleResource, descriptionResource, textType, 0);
     }
 
     WifiFormPageType(int displayType, int titleResource, int descriptionResource,
-            int textType, int defaultPrefillResource) {
+                     int textType, int defaultPrefillResource) {
         mDisplayType = displayType;
         mTitleResource = titleResource;
         mDescriptionResource = descriptionResource;
@@ -149,12 +149,12 @@ public enum WifiFormPageType implements FormPageDisplayer.FormPageInfo {
     }
 
     WifiFormPageType(int displayType, int titleResource, int descriptionResource,
-            int[] defaultListItemTitles) {
+                     int[] defaultListItemTitles) {
         this(displayType, titleResource, descriptionResource, defaultListItemTitles, null);
     }
 
     WifiFormPageType(int displayType, int titleResource, int descriptionResource,
-            int[] defaultListItemTitles, int[] defaultListItemIcons) {
+                     int[] defaultListItemTitles, int[] defaultListItemIcons) {
         mDisplayType = displayType;
         mTitleResource = titleResource;
         mDescriptionResource = descriptionResource;

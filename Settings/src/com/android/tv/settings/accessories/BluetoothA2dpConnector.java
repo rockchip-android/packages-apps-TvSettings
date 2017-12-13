@@ -77,36 +77,36 @@ public class BluetoothA2dpConnector implements BluetoothDevicePairer.BluetoothCo
     private BluetoothProfile.ServiceListener mServiceConnection =
             new BluetoothProfile.ServiceListener() {
 
-        @Override
-        public void onServiceDisconnected(int profile) {
-            Log.w(TAG, "Service disconnected, perhaps unexpectedly");
-            unregisterConnectionStateReceiver();
-            closeA2dpProfileProxy();
-            mOpenConnectionCallback.failed();
-        }
+                @Override
+                public void onServiceDisconnected(int profile) {
+                    Log.w(TAG, "Service disconnected, perhaps unexpectedly");
+                    unregisterConnectionStateReceiver();
+                    closeA2dpProfileProxy();
+                    mOpenConnectionCallback.failed();
+                }
 
-        @Override
-        public void onServiceConnected(int profile, BluetoothProfile proxy) {
-            if (DEBUG) {
-                Log.d(TAG, "Connection made to bluetooth proxy." );
-            }
-            BluetoothA2dp mA2dpProfile = (BluetoothA2dp) proxy;
-            if (DEBUG) {
-                Log.d(TAG, "Connecting to target: " + mTarget.getAddress());
-            }
+                @Override
+                public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                    if (DEBUG) {
+                        Log.d(TAG, "Connection made to bluetooth proxy.");
+                    }
+                    BluetoothA2dp mA2dpProfile = (BluetoothA2dp) proxy;
+                    if (DEBUG) {
+                        Log.d(TAG, "Connecting to target: " + mTarget.getAddress());
+                    }
 
-            registerConnectionStateReceiver();
+                    registerConnectionStateReceiver();
 
-            // TODO need to start a timer, otherwise if the connection fails we might be
-            // stuck here forever
-            mA2dpProfile.connect(mTarget);
+                    // TODO need to start a timer, otherwise if the connection fails we might be
+                    // stuck here forever
+                    mA2dpProfile.connect(mTarget);
 
-            // must set PRIORITY_AUTO_CONNECT or auto-connection will not
-            // occur, however this setting does not appear to be sticky
-            // across a reboot
-            mA2dpProfile.setPriority(mTarget, BluetoothProfile.PRIORITY_AUTO_CONNECT);
-        }
-    };
+                    // must set PRIORITY_AUTO_CONNECT or auto-connection will not
+                    // occur, however this setting does not appear to be sticky
+                    // across a reboot
+                    mA2dpProfile.setPriority(mTarget, BluetoothProfile.PRIORITY_AUTO_CONNECT);
+                }
+            };
 
     private BluetoothA2dpConnector() {
     }

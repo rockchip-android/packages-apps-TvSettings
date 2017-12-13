@@ -40,6 +40,7 @@ public class FormatAsPublicStepFragment extends GuidedStepFragment {
 
     public interface Callback {
         void onRequestFormatAsPublic(String diskId, String volumeId);
+
         void onCancelFormatDialog();
     }
 
@@ -68,7 +69,8 @@ public class FormatAsPublicStepFragment extends GuidedStepFragment {
     }
 
     @Override
-    public @NonNull GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
+    public @NonNull
+    GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         return new GuidanceStylist.Guidance(
                 getString(R.string.storage_wizard_format_as_public_title),
                 getString(R.string.storage_wizard_format_as_public_description), "",

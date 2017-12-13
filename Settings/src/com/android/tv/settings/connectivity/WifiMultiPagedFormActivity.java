@@ -44,7 +44,7 @@ public abstract class WifiMultiPagedFormActivity extends MultiPagedForm
 
     @Override
     protected abstract void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward);
+                                        boolean forward);
 
     protected abstract boolean onPageComplete(WifiFormPageType formPageType, FormPage formPage);
 
@@ -124,11 +124,11 @@ public abstract class WifiMultiPagedFormActivity extends MultiPagedForm
     }
 
     protected Fragment displayPage(FormPageInfo formPageInfo, String titleArgument,
-            String descriptionArgument,
-            ArrayList<SelectFromListWizardFragment.ListItem> extraChoices,
-            FormPage previousFormPage, UserActivityListener userActivityListener,
-            boolean showProgress, FormPage currentFormPage,
-            FormPageResultListener formPageResultListener, boolean forward, boolean emptyAllowed) {
+                                   String descriptionArgument,
+                                   ArrayList<SelectFromListWizardFragment.ListItem> extraChoices,
+                                   FormPage previousFormPage, UserActivityListener userActivityListener,
+                                   boolean showProgress, FormPage currentFormPage,
+                                   FormPageResultListener formPageResultListener, boolean forward, boolean emptyAllowed) {
         return mFormPageDisplayer.displayPage(formPageInfo, titleArgument, descriptionArgument,
                 extraChoices, previousFormPage, userActivityListener, showProgress, currentFormPage,
                 formPageResultListener, forward, emptyAllowed);

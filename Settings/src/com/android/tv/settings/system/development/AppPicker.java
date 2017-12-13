@@ -92,7 +92,7 @@ public class AppPicker extends Activity {
 
         @Override
         public void onCreateActions(@NonNull List<GuidedAction> actions,
-                Bundle savedInstanceState) {
+                                    Bundle savedInstanceState) {
             final List<ApplicationInfo> pkgs =
                     getActivity().getPackageManager().getInstalledApplications(0);
             final PackageManager pm = getActivity().getPackageManager();
@@ -107,7 +107,7 @@ public class AppPicker extends Activity {
                     // On a user build, we only allow debugging of apps that
                     // are marked as debuggable.  Otherwise (for platform development)
                     // we allow all apps.
-                    if ((ai.flags&ApplicationInfo.FLAG_DEBUGGABLE) == 0
+                    if ((ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0
                             && "user".equals(Build.TYPE)) {
                         continue;
                     }
@@ -142,6 +142,7 @@ public class AppPicker extends Activity {
 
             Collections.sort(actions, new Comparator<GuidedAction>() {
                 private final Collator mCollator = Collator.getInstance();
+
                 @Override
                 public int compare(GuidedAction a, GuidedAction b) {
                     return mCollator.compare(a.getTitle(), b.getTitle());

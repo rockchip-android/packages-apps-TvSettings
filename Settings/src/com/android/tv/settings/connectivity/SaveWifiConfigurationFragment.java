@@ -39,7 +39,7 @@ public class SaveWifiConfigurationFragment extends MessageWizardFragment
     private static final String EXTRA_CONFIGURATION = "configuration";
 
     public static SaveWifiConfigurationFragment newInstance(String title,
-            NetworkConfiguration configuration) {
+                                                            NetworkConfiguration configuration) {
         SaveWifiConfigurationFragment fragment = new SaveWifiConfigurationFragment();
         Bundle args = new Bundle();
         args.putInt(EXTRA_NETWORK_TYPE, configuration.getNetworkType());

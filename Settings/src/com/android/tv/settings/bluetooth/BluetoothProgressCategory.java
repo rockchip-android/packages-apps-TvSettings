@@ -39,7 +39,7 @@ public class BluetoothProgressCategory extends ProgressCategory {
     }
 
     public BluetoothProgressCategory(Context context, AttributeSet attrs, int defStyleAttr,
-            int defStyleRes) {
+                                     int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         setEmptyTextRes(R.string.bluetooth_no_devices_found);

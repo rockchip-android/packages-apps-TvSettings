@@ -40,7 +40,7 @@ import java.util.Stack;
  * such as setup, add network, and add credit cards
  */
 public abstract class MultiPagedForm extends DialogActivity implements ActionAdapter.Listener,
-    FormPageResultListener, FormResultListener {
+        FormPageResultListener, FormResultListener {
 
     private static final int INTENT_FORM_PAGE_DATA_REQUEST = 1;
     private static final String TAG = "MultiPagedForm";
@@ -151,8 +151,8 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      *
      * @param formPage the page that was completed.
      * @return true if the form can continue to the next incomplete page, or
-     *         false if the data input is invalid and the form page must be
-     *         completed again.
+     * false if the data input is invalid and the form page must be
+     * completed again.
      */
     protected abstract boolean onPageComplete(FormPage formPage);
 
@@ -161,7 +161,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * them.
      *
      * @param formPages the pages that were completed. Any pages removed during
-     *            the completion of the form are not included.
+     *                  the completion of the form are not included.
      */
     protected abstract void onComplete(ArrayList<FormPage> formPages);
 
@@ -170,7 +170,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * cancel the form and discard the results.
      *
      * @param formPages the pages that were completed. Any pages removed during
-     *            the completion of the form are not included.
+     *                  the completion of the form are not included.
      */
     protected abstract void onCancel(ArrayList<FormPage> formPages);
 
@@ -181,7 +181,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * @param listener the listener to notify when the page is complete.
      */
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         switch (formPage.getType()) {
             case PASSWORD_INPUT:
                 setContentAndActionFragments(getContentFragment(formPage),
@@ -205,7 +205,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * Override this to fully customize the display of the form results.
      *
      * @param formPages the pages that were whose results should be displayed.
-     * @param listener the listener to notify when the form is complete or has been cancelled.
+     * @param listener  the listener to notify when the form is complete or has been cancelled.
      */
     protected void displayFormResults(ArrayList<FormPage> formPages, FormResultListener listener) {
         setContentAndActionFragments(createResultContentFragment(),
@@ -228,7 +228,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
 
     /**
      * @return the action title to indicate the form should be canceled and its
-     *         results discarded.
+     * results discarded.
      */
     protected String getFormCancelActionTitle() {
         return "";
@@ -261,7 +261,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * fragment will be overridden.
      *
      * @param initialText initial text that should be displayed in the edit
-     *            field.
+     *                    field.
      * @return an EditTextFragment for password input.
      */
     protected EditTextFragment getPasswordEditTextFragment(String initialText) {
@@ -274,7 +274,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * will be overridden.
      *
      * @param initialText initial text that should be displayed in the edit
-     *            field.
+     *                    field.
      * @return an EditTextFragment for custom input.
      */
     protected EditTextFragment getEditTextFragment(String initialText) {
@@ -285,14 +285,14 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * Override this to provide a custom ActionFragment for displaying a form
      * page for a list of choices.
      *
-     * @param formPage the page the ActionFragment is for.
-     * @param actions the actions the ActionFragment should display.
+     * @param formPage       the page the ActionFragment is for.
+     * @param actions        the actions the ActionFragment should display.
      * @param selectedAction the action in actions that is currently selected,
-     *            or null if none are selected.
+     *                       or null if none are selected.
      * @return an ActionFragment displaying the given actions.
      */
     protected ActionFragment getActionFragment(FormPage formPage, ArrayList<Action> actions,
-            Action selectedAction) {
+                                               Action selectedAction) {
         ActionFragment actionFragment = ActionFragment.newInstance(actions);
         if (selectedAction != null) {
             int indexOfSelection = actions.indexOf(selectedAction);
@@ -348,7 +348,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
      * before onCreate or during onPageComplete.
      *
      * @param formPage all pages after this page in the form will be removed
-     *            from the form.
+     *                 from the form.
      */
     protected void clearAfter(FormPage formPage) {
         int indexOfPage = mFormPages.indexOf(formPage);
@@ -423,7 +423,7 @@ public abstract class MultiPagedForm extends DialogActivity implements ActionAda
     }
 
     private Fragment createResultActionFragment(final ArrayList<FormPage> formPages,
-            final FormResultListener listener) {
+                                                final FormResultListener listener) {
 
         mListener = new ActionAdapter.Listener() {
 

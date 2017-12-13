@@ -22,7 +22,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.io.*;
+
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.net.wifi.WifiConfiguration;
@@ -30,25 +32,22 @@ import android.net.wifi.WifiManager;
 import android.net.ConnectivityManager;
 import android.support.v7.preference.Preference;
 import android.os.Handler;
+
 import com.android.tv.settings.datausage.DataSaverBackend;
+
 import android.content.Intent;
 import android.content.BroadcastReceiver;
 
 
-
-
-
 import static android.net.ConnectivityManager.TETHERING_WIFI;
+
 import java.lang.ref.WeakReference;
-
-
-
 
 
 import java.nio.charset.Charset;
 
 public class HotpotDialogActivity extends BaseInputActivity implements View.OnClickListener,
-        TextWatcher, AdapterView.OnItemSelectedListener,DataSaverBackend.Listener{
+        TextWatcher, AdapterView.OnItemSelectedListener, DataSaverBackend.Listener {
 
     static final int BUTTON_SUBMIT = DialogInterface.BUTTON_POSITIVE;
     private static final String DATA_SAVER_FOOTER = "disabled_on_data_saver";
@@ -122,7 +121,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
 
         mStartTetheringCallback = new OnStartTetheringCallback(this);
 
-        mSsid = (EditText)findViewById(R.id.ssid);
+        mSsid = (EditText) findViewById(R.id.ssid);
         mSsid.requestFocus();
         mPassword = (EditText) findViewById(R.id.password);
         my_save_button = (Button) findViewById(R.id.OK);
@@ -134,9 +133,9 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
         if (mWifiConfig != null) {
             mSsid.setText(mWifiConfig.SSID);
             if (mWifiConfig.apBand == 0) {
-               mBandIndex = 0;
+                mBandIndex = 0;
             } else {
-               mBandIndex = 1;
+                mBandIndex = 1;
             }
 
             security.setSelection(getSecurityTypeIndex(mWifiConfig));
@@ -148,6 +147,7 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
         mChannel.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     boolean mInit = true;
+
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int position,
                                                long id) {
@@ -192,19 +192,19 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
     }
 
     @Override
-    public void onBlacklistStatusChanged(int uid, boolean isBlacklisted)  {
+    public void onBlacklistStatusChanged(int uid, boolean isBlacklisted) {
     }
 
-    class myListener implements OnClickListener{
+    class myListener implements OnClickListener {
         @Override
         public void onClick(View view) {
-            switch(view.getId()){
-                case R.id.OK:{
+            switch (view.getId()) {
+                case R.id.OK: {
                     mWifiConfig = getConfig();
-                    if(mWifiConfig != null){
+                    if (mWifiConfig != null) {
                         if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
-                            Log.d("TetheringSettings","Wifi AP config changed while enabled, stop and restart");
-                            }
+                            Log.d("TetheringSettings", "Wifi AP config changed while enabled, stop and restart");
+                        }
                         mWifiManager.setWifiApConfiguration(mWifiConfig);
                         HotPotFragment.mRestartWifiApAfterConfigChange = true;
                         Intent intent = new Intent();
@@ -212,7 +212,8 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
                         sendBroadcast(intent);
                         finish();
                     }
-                }   break;
+                }
+                break;
                 case R.id.NO:
                     finish();
                     break;
@@ -280,9 +281,9 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
             while ((tempString = reader.readLine()) != null) {
                 Log.d(TAG, "Get wifi chip name: " + tempString);
                 if (tempString.contains("AP6234") || tempString.contains("AP6330")
-                    || tempString.contains("AP6335") || tempString.contains("AP6354")
-                    || tempString.contains("AP6441") || tempString.contains("AP6356S")
-            || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
+                        || tempString.contains("AP6335") || tempString.contains("AP6354")
+                        || tempString.contains("AP6441") || tempString.contains("AP6356S")
+                        || tempString.contains("RTL8822BS") || tempString.contains("RTL8822BU")) {
                     reader.close();
                     return true;
                 }
@@ -294,27 +295,28 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException e1) {}
+                } catch (IOException e1) {
+                }
             }
         }
 
         return false;
     }
 
-     public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mPassword.setInputType(
                 InputType.TYPE_CLASS_TEXT |
-                (((CheckBox) findViewById(R.id.show_password)).isChecked() ?
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
-                InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        (((CheckBox) findViewById(R.id.show_password)).isChecked() ?
+                                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                                InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
 
     public void onClick(View view) {
         mPassword.setInputType(
                 InputType.TYPE_CLASS_TEXT | (((CheckBox) view).isChecked() ?
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
-                InputType.TYPE_TEXT_VARIATION_PASSWORD));
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD));
     }
 
     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -368,4 +370,4 @@ public class HotpotDialogActivity extends BaseInputActivity implements View.OnCl
 
         }
     }
-        }
+}

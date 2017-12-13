@@ -46,7 +46,7 @@ public final class BluetoothPairingRequest extends BroadcastReceiver {
 
         int majorDeviceClass = device.getBluetoothClass().getMajorDeviceClass();
         if (majorDeviceClass != BluetoothClass.Device.Major.PERIPHERAL &&
-            majorDeviceClass != BluetoothClass.Device.Major.AUDIO_VIDEO) {
+                majorDeviceClass != BluetoothClass.Device.Major.AUDIO_VIDEO) {
             Log.d(TAG, "Not peripheral or audio device, skip here.");
             return;
         }

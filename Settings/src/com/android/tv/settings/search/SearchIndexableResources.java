@@ -15,6 +15,7 @@
  */
 
 package com.android.tv.settings.search;
+
 import android.provider.SearchIndexableResource;
 
 import java.util.Collection;
@@ -287,7 +288,8 @@ public final class SearchIndexableResources {
                         R.xml.zen_mode_visual_interruptions_settings,
                         ZenModeVisualInterruptionSettings.class.getName(),
                         R.drawable.ic_settings_notifications));
-    */}
+    */
+    }
 
     private SearchIndexableResources() {
     }

@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.SystemProperties;
 import android.support.v7.preference.Preference;
 import android.util.Log;
+
 import com.android.tv.settings.R;
 import com.android.settingslib.bluetooth.BluetoothDiscoverableTimeoutReceiver;
 import com.android.settingslib.bluetooth.LocalBluetoothAdapter;
@@ -91,7 +92,7 @@ final class BluetoothDiscoverableEnabler implements Preference.OnPreferenceClick
     };
 
     BluetoothDiscoverableEnabler(LocalBluetoothAdapter adapter,
-            Preference discoveryPreference) {
+                                 Preference discoveryPreference) {
         mUiHandler = new Handler();
         mLocalAdapter = adapter;
         mDiscoveryPreference = discoveryPreference;

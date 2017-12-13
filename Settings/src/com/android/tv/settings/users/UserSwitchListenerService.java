@@ -56,8 +56,8 @@ public class UserSwitchListenerService extends Service {
                 if (DEBUG) {
                     Log.d(TAG,
                             "boot completed, user is " + UserHandle.myUserId()
-                            + " boot user id: "
-                            + bootUserId);
+                                    + " boot user id: "
+                                    + bootUserId);
                 }
                 if (UserHandle.myUserId() != bootUserId) {
                     switchUserNow(bootUserId);
@@ -124,7 +124,7 @@ public class UserSwitchListenerService extends Service {
 
                         @Override
                         public void onForegroundProfileSwitch(int profileId)
-                            throws RemoteException {
+                                throws RemoteException {
                         }
                     }, UserSwitchListenerService.class.getName());
         } catch (RemoteException e) {

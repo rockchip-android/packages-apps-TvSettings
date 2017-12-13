@@ -37,10 +37,10 @@ public class RequestPermissionHelperActivity extends AlertActivity implements
     private static final String TAG = "RequestPermissionHelperActivity";
 
     public static final String ACTION_INTERNAL_REQUEST_BT_ON =
-        "com.android.settings.bluetooth.ACTION_INTERNAL_REQUEST_BT_ON";
+            "com.android.settings.bluetooth.ACTION_INTERNAL_REQUEST_BT_ON";
 
     public static final String ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE =
-        "com.android.settings.bluetooth.ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE";
+            "com.android.settings.bluetooth.ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE";
 
     private LocalBluetoothAdapter mLocalAdapter;
 
@@ -128,6 +128,7 @@ public class RequestPermissionHelperActivity extends AlertActivity implements
 
     /**
      * Parse the received Intent and initialize mLocalBluetoothAdapter.
+     *
      * @return true if an error occurred; false otherwise
      */
     private boolean parseIntent() {

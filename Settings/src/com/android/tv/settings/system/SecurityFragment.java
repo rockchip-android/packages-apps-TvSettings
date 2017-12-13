@@ -81,7 +81,9 @@ public class SecurityFragment extends LeanbackPreferenceFragment
             PIN_MODE_RESTRICTED_PROFILE_SWITCH_OUT,
             PIN_MODE_RESTRICTED_PROFILE_CHANGE_PASSWORD,
             PIN_MODE_RESTRICTED_PROFILE_DELETE})
-    private @interface PinMode {}
+    private @interface PinMode {
+    }
+
     private static final int PIN_MODE_CHOOSE_LOCKSCREEN = 1;
     private static final int PIN_MODE_RESTRICTED_PROFILE_SWITCH_OUT = 2;
     private static final int PIN_MODE_RESTRICTED_PROFILE_CHANGE_PASSWORD = 3;

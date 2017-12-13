@@ -42,8 +42,9 @@ public class ProgressDialogFragment extends Fragment {
     private int mWidth = -1;
 
     @Override
-    public @Nullable View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            Bundle savedInstanceState) {
+    public @Nullable
+    View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                      Bundle savedInstanceState) {
         final ViewGroup view =
                 (ViewGroup) inflater.inflate(R.layout.progress_fragment, container, false);
 

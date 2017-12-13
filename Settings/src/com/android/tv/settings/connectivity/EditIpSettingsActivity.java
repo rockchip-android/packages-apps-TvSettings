@@ -97,7 +97,7 @@ public class EditIpSettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected boolean onPageComplete(WifiFormPageType formPageType, FormPage formPage) {
-        switch(formPageType) {
+        switch (formPageType) {
             case SAVE:
                 addResultWifiFormPage(Integer.valueOf(formPage.getDataSummary()));
                 break;
@@ -116,7 +116,7 @@ public class EditIpSettingsActivity extends WifiMultiPagedFormActivity
 
     @Override
     protected void displayPage(FormPage formPage, FormPageResultListener listener,
-            boolean forward) {
+                               boolean forward) {
         WifiFormPageType formPageType = getFormPageType(formPage);
         if (formPageType == WifiFormPageType.SAVE) {
             mSavePage = formPage;

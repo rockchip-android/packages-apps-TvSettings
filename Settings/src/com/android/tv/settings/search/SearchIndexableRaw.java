@@ -21,9 +21,9 @@ import android.provider.SearchIndexableData;
 
 /**
  * Indexable raw data for Search.
- *
+ * <p>
  * This is the raw data used by the Indexer and should match its data model.
- *
+ * <p>
  * See {@link Indexable} and {@link android.provider.SearchIndexableResource}.
  */
 public class SearchIndexableRaw extends SearchIndexableData {

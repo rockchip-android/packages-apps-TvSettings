@@ -21,7 +21,9 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.android.tv.settings.R;
+
 /**
  * A category with a progress spinner
  */
@@ -41,7 +43,7 @@ public class ProgressCategory extends ProgressCategoryBase {
     }
 
     public ProgressCategory(Context context, AttributeSet attrs,
-            int defStyleAttr) {
+                            int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
