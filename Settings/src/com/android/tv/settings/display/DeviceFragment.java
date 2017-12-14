@@ -156,6 +156,8 @@ public class DeviceFragment extends LeanbackPreferenceFragment implements Prefer
         refreshHdmiCecStat();
         //if(!mStrPlatform.contains("3328"))
         //mPreferenceScreen.removePreference(mAdvancedSettingsPreference);
+        if(mStrPlatform.contains("3328"))
+            mPreferenceScreen.removePreference(mColorPreference);
     }
 
     private void refreshHdmiCecStat() {
